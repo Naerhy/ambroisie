@@ -1,0 +1,25 @@
+{
+	"title": "Beignets de courgette",
+	"mealType": "lunch",
+	"season": "all",
+	"difficulty": "easy",
+	"cookingTime": "medium",
+	"vegetarian": true,
+	"servings": 4,
+	"ingredients": [
+		"1 petite courgette râpée",
+		"130g de farine",
+		"15g de gruyère râpé",
+		"2 oeufs",
+		"1 cuillère à café de levure chimique",
+		"100ml de lait",
+		"sel & poivre"
+	],
+	"directions": [
+		"Laver et râper la courgette.",
+		"Dans un saladier, battre les oeufs et mélanger tous les ingrédients jusqu'a ce que le tout soit homogène.",
+		"Pendant ce temps, faire chauffer la friteuse à 180°C.",
+		"Une fois l'huile bien chaude, y déposer les petits tas de pâte (elle est liquide, mais pas d'inquiétude, elle va prendre directement en arrivant dans l'huile).",
+		"Laisser cuire jusqu'à ce que les beignets soient bien dorés."
+	]
+}
