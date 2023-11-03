@@ -1,4 +1,4 @@
-export interface Recipe {
+interface _Recipe {
 	title: string;
 	mealType: "lunch" | "dinner" | "all";
 	season: "spring" | "summer" | "autumn" | "winter" | "all";
@@ -9,3 +9,5 @@ export interface Recipe {
 	ingredients: string[];
 	directions: string[];
 }
+
+export type Recipe = _Recipe & { filename: string };

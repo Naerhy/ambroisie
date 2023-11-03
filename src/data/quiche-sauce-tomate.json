@@ -1,0 +1,25 @@
+{
+	"title": "Quiche a la sauce tomate",
+	"mealType": "dinner",
+	"season": "all",
+	"difficulty": "medium",
+	"cookingTime": "medium",
+	"vegetarian": false,
+	"servings": 4,
+	"ingredients": [
+		"1 pâte feuilletée",
+		"3 oeufs",
+		"100g de crème fraîche",
+		"50g de sauce tomate (pas de coulis ou de concentré, de la sauce)",
+		"1 cuillère à café de levure chimique",
+		"100g de lardons allumettes",
+		"70g d'emental râpé"
+	],
+	"directions": [
+		"Placer la pâte avec une feuille de papier cuisson dans un plat à tarte.",
+		"Faire dorer les lardons dans une poêle.",
+		"Mélanger les œufs avec la crème fraîche et la sauce tomate puis saler, bien battre le tout pour obtenir un appareil homogène, ajouter le fromage râpé.",
+		"Une fois les lardons dorés, les répartir sur la pâte puis ajouter l'appareil.",
+		"Enfourner à 200°C pendant 30 minutes."
+	]
+}

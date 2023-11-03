@@ -1,24 +1,33 @@
 <script lang="ts">
-    import type { Recipe } from "../interfaces";
+	import type { Recipe } from "../interfaces";
 
 	export let recipe: Recipe;
+
+	let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
 </script>
 
 <li>
-	<div class="image"></div>
+	<img src={imgUrl} alt="Thumbnail of the recipe" />
 	<h3>{recipe.title}</h3>
 </li>
 
 <style>
 	li {
 		border: 1px solid var(--highlight);
-		border-radius: 0.375rem;
-		padding: 1rem;
+		border-radius: 0.25rem;
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		width: 300px;
 	}
 
-	.image {
-		background-color: red;
+	li:hover {
+		background-color: var(--surface-l15);
+	}
+
+	img {
 		height: 150px;
-		width: 260px;
+		object-fit: cover;
+		width: 100%;
 	}
 </style>

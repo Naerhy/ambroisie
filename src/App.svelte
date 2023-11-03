@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Footer from "./components/Footer.svelte";
-	import RecipeCard from "./components/RecipeCard.svelte";
 	import type { Recipe } from "./interfaces";
+	import Footer from "./components/Footer.svelte";
+	import RecipesList from "./components/RecipesList.svelte";
+	import Button from "./components/Button.svelte";
 
 	let recipes: Recipe[] = [];
 	let recipesShown = false;
@@ -11,7 +12,10 @@
 		const files = import.meta.glob("./data/*.json");
 		const _recipes: Recipe[] = [];
 		for (const path in files) {
-			const recipe: Recipe = (await files[path]()).default;
+			const recipe: Recipe = {
+				filename: path.replace("./data/", "").replace(".json", ""),
+				...(await files[path]()).default
+			};
 			_recipes.push(recipe);
 		}
 		recipes = _recipes;
@@ -19,27 +23,21 @@
 	}
 </script>
 
-<main>
+<header>
 	<h1>Ambroisie</h1>
 	<p>
-		Bienvenue sur cette encyclopedie de recettes, ou vous pourrez retrouver un tas d'idees pour vos
+		Bienvenue sur cette <span>encyclopedie de recettes</span>, ou vous pourrez retrouver un tas d'idees pour vos
 		prochains repas, en fonction de nombreux criteres que vous pourrez definir.
 	</p>
-	{#if recipesShown}
-		<input type="text" />
-		<button type="button">Filter</button>
-		{#if recipes.length === 0}
-			<p>No recipe to display...</p>
+</header>
+<main>
+	<section class="{recipesShown ? 'recipes' : 'no-recipes'}">
+		{#if recipesShown}
+		<RecipesList {recipes} />
 		{:else}
-		<ul>
-			{#each recipes as recipe}
-				<RecipeCard {recipe} />
-			{/each}
-		</ul>
+		<Button type="button" on:click={loadFiles}>Load recipes</Button>
 		{/if}
-	{:else}
-		<button type="button" on:click={loadFiles}>Load recipes</button>
-	{/if}
+	</section>
 </main>
 <Footer />
 
@@ -52,20 +50,43 @@
 		--highlight: #ef6c00;
 		--highlight-d15: #e05d00;
 		--on-highlight: #212121;
+		background-color: var(--surface);
 	}
 
 	:global(#app) {
-		background-color: var(--surface);
 		display: flex;
 		flex-direction: column;
+		margin: auto;
 		min-height: 100vh;
+		width: 80%;
+	}
+
+	header {
+		padding: 3rem 0;
+		text-align: center;
+	}
+
+	header h1 {
+		color: var(--on-surface);
+		font-size: 3.75rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	header p {
+		color: var(--on-surface-alt);
+	}
+
+	span {
+		color: var(--highlight);
 	}
 
 	main {
 		flex: 1 1 auto;
 	}
 
-	ul {
+	.no-recipes {
 		display: flex;
+		justify-content: center;
 	}
 </style>
