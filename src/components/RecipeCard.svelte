@@ -13,21 +13,34 @@
 
 <style>
 	li {
-		border: 1px solid var(--highlight);
-		border-radius: 0.25rem;
 		cursor: pointer;
 		display: flex;
 		flex-direction: column;
+		position: relative;
 		width: 300px;
 	}
 
 	li:hover {
-		background-color: var(--surface-l15);
+		outline: 2px solid var(--highlight);
 	}
 
 	img {
 		height: 150px;
 		object-fit: cover;
+		width: 100%;
+	}
+
+	h3 {
+		backdrop-filter: blur(2px);
+		background-color: rgba(0, 0, 0, 0.5);
+		bottom: 0;
+		color: var(--on-surface);
+		font-weight: 700;
+		overflow: hidden;
+		padding: 0.25rem;
+		position: absolute;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		width: 100%;
 	}
 </style>
