@@ -1,7 +1,6 @@
 {
 	"title": "Quiche a la sauce tomate",
-	"mealType": "dinner",
-	"season": "all",
+	"mealTypes": ["dinner"],
 	"difficulty": "medium",
 	"cookingTime": "medium",
 	"vegetarian": false,

@@ -31,13 +31,13 @@
 	</p>
 </header>
 <main>
-	<section class="{recipesShown ? 'recipes' : 'no-recipes'}">
-		{#if recipesShown}
-		<RecipesList {recipes} />
-		{:else}
+	{#if recipesShown}
+	<RecipesList {recipes} />
+	{:else}
+	<div class="btn-recipes">
 		<Button type="button" on:click={loadFiles}>Load recipes</Button>
-		{/if}
-	</section>
+	</div>
+	{/if}
 </main>
 <Footer />
 
@@ -82,10 +82,12 @@
 	}
 
 	main {
+		align-items: flex-start;
+		display: flex;
 		flex: 1 1 auto;
 	}
 
-	.no-recipes {
+	.btn-recipes {
 		display: flex;
 		justify-content: center;
 	}

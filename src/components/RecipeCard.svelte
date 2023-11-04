@@ -2,11 +2,12 @@
 	import type { Recipe } from "../interfaces";
 
 	export let recipe: Recipe;
+	export let isVisible: boolean;
 
 	let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
 </script>
 
-<li>
+<li class:hidden={!isVisible}>
 	<img src={imgUrl} alt="Thumbnail of the recipe" />
 	<h3>{recipe.title}</h3>
 </li>
@@ -18,6 +19,10 @@
 		flex-direction: column;
 		position: relative;
 		width: 300px;
+	}
+
+	li.hidden {
+		display: none;
 	}
 
 	li:hover {

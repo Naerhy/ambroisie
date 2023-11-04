@@ -1,7 +1,6 @@
 {
 	"title": "Beignets de courgette",
-	"mealType": "lunch",
-	"season": "all",
+	"mealTypes": ["lunch"],
 	"difficulty": "easy",
 	"cookingTime": "medium",
 	"vegetarian": true,
