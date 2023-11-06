@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Recipe } from "../interfaces";
 	import RecipeCard from "./RecipeCard.svelte";
+    import RecipeModal from "./RecipeModal.svelte";
 
 	export let recipes: Recipe[];
 
@@ -9,6 +10,8 @@
 	let difficulties: string[] = ["easy", "medium", "hard"];
 	let cookingTimes: string[] = ["short", "medium", "long"];
 	let vegetarian = false;
+
+	let focusedRecipeId = -1;
 </script>
 
 <aside>
@@ -131,18 +134,21 @@
 	</div>
 </aside>
 <section>
+	{#if focusedRecipeId !== -1}
+	<RecipeModal recipe={recipes[focusedRecipeId]} on:click={() => focusedRecipeId = -1} />
+	{/if}
 	{#if recipes.length === 0}
 	<p>No recipe to display...</p>
 	{:else}
 	<ul>
-		{#each recipes as recipe}
+		{#each recipes as recipe, index}
 		{@const isVisible = recipe.title.toLowerCase().includes(filter)
 			&& recipe.mealTypes.some((mealType) => mealTypes.includes(mealType))
 			&& difficulties.includes(recipe.difficulty)
 			&& cookingTimes.includes(recipe.cookingTime)
 			&& (!vegetarian || recipe.vegetarian)
 		}
-		<RecipeCard {recipe} {isVisible} />
+		<RecipeCard {recipe} {isVisible} on:click={() => focusedRecipeId = index} />
 		{/each}
 	</ul>
 	{/if}
