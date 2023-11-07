@@ -4,41 +4,42 @@
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
 
-	let recipes: Recipe[] = [];
-	let recipesShown = false;
-
-	async function loadFiles(): Promise<void> {
-		// TODO: wrap into a try/catch?
+	async function loadFiles(): Promise<Recipe[]> {
+		// no need to wrap into try/catch because Svelte already wraps it when
+		// calling it from html
 		const files = import.meta.glob("./data/*.json");
-		const _recipes: Recipe[] = [];
+		const recipes: Recipe[] = [];
 		for (const path in files) {
 			const recipe: Recipe = {
 				filename: path.replace("./data/", "").replace(".json", ""),
 				...(await files[path]()).default
 			};
-			_recipes.push(recipe);
+			recipes.push(recipe);
 		}
-		recipes = _recipes;
-		recipesShown = true;
+		return recipes;
 	}
 </script>
 
 <header>
 	<h1>Ambroisie</h1>
-	<p>
-		Bienvenue sur cette <span>encyclopedie de recettes</span>, ou vous pourrez retrouver un tas d'idees pour vos
-		prochains repas, en fonction de nombreux criteres que vous pourrez definir.
-	</p>
 </header>
-<main>
-	{#if recipesShown}
+{#await loadFiles() then recipes}
+<main class="loaded">
 	<RecipesList {recipes} />
-	{:else}
-	<div class="btn-recipes">
-		<Button type="button" on:click={loadFiles}>Load recipes</Button>
-	</div>
-	{/if}
 </main>
+{:catch error}
+{@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}
+<main class="error">
+	<section>
+		<h3>Oops!</h3>
+		<p>
+			The website encountered an error while trying to load the recipes.<br>
+			Reason: {errMsg}.
+		</p>
+		<Button type="button" on:click={() => location.reload()}>Reload</Button>
+	</section>
+</main>
+{/await}
 <Footer />
 
 <style>
@@ -58,37 +59,45 @@
 		flex-direction: column;
 		margin: auto;
 		min-height: 100vh;
+		row-gap: 2rem;
 		width: 80%;
 	}
 
-	header {
-		padding: 3rem 0;
-		text-align: center;
-	}
-
 	header h1 {
+		border-bottom: 1px solid var(--highlight);
 		color: var(--on-surface);
 		font-size: 3.75rem;
 		font-weight: 700;
 		line-height: 1;
 	}
 
-	header p {
-		color: var(--on-surface-alt);
-	}
-
-	span {
-		color: var(--highlight);
-	}
-
 	main {
-		align-items: flex-start;
-		display: flex;
 		flex: 1 1 auto;
 	}
 
-	.btn-recipes {
+	.loaded {
+		align-items: flex-start;
+		display: flex;
+	}
+
+	.error {
+		align-items: center;
 		display: flex;
 		justify-content: center;
+	}
+
+	.error section {
+		border: 1px solid var(--highlight);
+		border-radius: 0.375rem;
+		color: var(--on-surface);
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		row-gap: 1rem;
+	}
+
+	.error h3 {
+		font-weight: 700;
+		text-align: center;
 	}
 </style>
