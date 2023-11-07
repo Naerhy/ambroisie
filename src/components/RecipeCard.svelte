@@ -11,14 +11,12 @@
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <li class:hidden={!isVisible} on:click>
 	<img src={imgUrl} alt="Thumbnail of the recipe" />
-	<h3>{recipe.title}</h3>
+	<h6>{recipe.title}</h6>
 </li>
 
 <style>
 	li {
 		cursor: pointer;
-		display: flex;
-		flex-direction: column;
 		position: relative;
 		width: 300px;
 	}
@@ -37,7 +35,7 @@
 		width: 100%;
 	}
 
-	h3 {
+	h6 {
 		backdrop-filter: blur(2px);
 		background-color: rgba(0, 0, 0, 0.5);
 		bottom: 0;

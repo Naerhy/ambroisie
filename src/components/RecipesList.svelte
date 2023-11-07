@@ -17,117 +17,59 @@
 <aside>
 	<input type="text" placeholder="Filter..." bind:value={filter} />
 	<div>
-		<h5>Meal type</h5>
-		<div>
+		<h4>Meal type</h4>
+		{#each ["breakfast", "lunch", "tea", "dinner"] as mealType}
+		<div class="checkbox">
 			<input
 				type="checkbox"
-				id="meal-type-breakfast"
+				id={`meal-type-${mealType}`}
 				name="meal-type"
-				value="breakfast"
+				value={mealType}
 				bind:group={mealTypes}
 			/>
-			<label for="meal-type-breakfast">Breakfast</label>
+			<label for={`meal-type-${mealType}`}>
+				{mealType.charAt(0).toUpperCase() + mealType.slice(1)}
+			</label>
 		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="meal-type-lunch"
-				name="meal-type"
-				value="lunch"
-				bind:group={mealTypes}
-			/>
-			<label for="meal-type-lunch">Lunch</label>
-		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="meal-type-tea"
-				name="meal-type"
-				value="tea"
-				bind:group={mealTypes}
-			/>
-			<label for="meal-type-tea">Tea</label>
-		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="meal-type-dinner"
-				name="meal-type"
-				value="dinner"
-				bind:group={mealTypes}
-			/>
-			<label for="meal-type-dinner">Dinner</label>
-		</div>
+		{/each}
 	</div>
 	<div>
-		<h5>Difficulty</h5>
-		<div>
+		<h4>Difficulty</h4>
+		{#each ["easy", "medium", "hard"] as difficulty}
+		<div class="checkbox">
 			<input
 				type="checkbox"
-				id="difficulty-easy"
+				id={`difficulty-${difficulty}`}
 				name="difficulty"
-				value="easy"
+				value={difficulty}
 				bind:group={difficulties}
 			/>
-			<label for="difficulty-easy">Easy</label>
+			<label for={`difficulty-${difficulty}`}>
+				{difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+			</label>
 		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="difficulty-medium"
-				name="difficulty"
-				value="medium"
-				bind:group={difficulties}
-			/>
-			<label for="difficulty-medium">Medium</label>
-		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="difficulty-hard"
-				name="difficulty"
-				value="hard"
-				bind:group={difficulties}
-			/>
-			<label for="difficulty-hard">Hard</label>
-		</div>
+		{/each}
 	</div>
 	<div>
-		<h5>Cooking time</h5>
-		<div>
+		<h4>Cooking time</h4>
+		{#each ["short", "medium", "long"] as cookingTime}
+		<div class="checkbox">
 			<input
 				type="checkbox"
-				id="cooking-time-short"
+				id={`cooking-time-${cookingTime}`}
 				name="cooking-time"
-				value="short"
+				value={cookingTime}
 				bind:group={cookingTimes}
 			/>
-			<label for="cooking-time-short">Short</label>
+			<label for={`cooking-time-${cookingTime}`}>
+				{cookingTime.charAt(0).toUpperCase() + cookingTime.slice(1)}
+			</label>
 		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="cooking-time-medium"
-				name="cooking-time"
-				value="medium"
-				bind:group={cookingTimes}
-			/>
-			<label for="cooking-time-medium">Medium</label>
-		</div>
-		<div>
-			<input
-				type="checkbox"
-				id="cooking-time-long"
-				name="cooking-time"
-				value="long"
-				bind:group={cookingTimes}
-			/>
-			<label for="cooking-time-long">Long</label>
-		</div>
+		{/each}
 	</div>
 	<div>
-		<h5>Dietary practice</h5>
-		<div>
+		<h4>Dietary practice</h4>
+		<div class="checkbox">
 			<input type="checkbox" id="vegetarian" name="vegetarian" bind:checked={vegetarian} />
 			<label for="vegetarian">Vegetarianism</label>
 		</div>
@@ -163,13 +105,19 @@
 		row-gap: 1rem;
 	}
 
-	aside h5 {
+	aside h4 {
 		color: var(--on-surface);
+		font-size: 1.125rem;
 		font-weight: 700;
+		line-height: 1.75rem;
 	}
 
 	aside label {
 		color: var(--on-surface-alt);
+	}
+
+	.checkbox {
+		margin-left: 0.5rem;
 	}
 
 	input[type=text] {

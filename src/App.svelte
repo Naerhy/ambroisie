@@ -31,7 +31,7 @@
 {@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}
 <main class="error">
 	<section>
-		<h3>Oops!</h3>
+		<h2>Oops!</h2>
 		<p>
 			The website encountered an error while trying to load the recipes.<br>
 			Reason: {errMsg}.
@@ -62,9 +62,11 @@
 		row-gap: 2rem;
 		width: 80%;
 	}
+	header {
+		border-bottom: 1px solid var(--highlight);
+	}
 
 	header h1 {
-		border-bottom: 1px solid var(--highlight);
 		color: var(--on-surface);
 		font-size: 3.75rem;
 		font-weight: 700;
@@ -96,8 +98,10 @@
 		row-gap: 1rem;
 	}
 
-	.error h3 {
+	.error h2 {
+		font-size: 2.25rem;
 		font-weight: 700;
+		line-height: 2.5rem;
 		text-align: center;
 	}
 </style>
