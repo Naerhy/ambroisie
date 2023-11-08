@@ -5,12 +5,16 @@
 	export let isVisible: boolean;
 
 	let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
+
+	function handleError(): void {
+		imgUrl = new URL("../assets/images/no-image.jpg", import.meta.url).href;
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <li class:hidden={!isVisible} on:click>
-	<img src={imgUrl} alt="Thumbnail of the recipe" />
+	<img src={imgUrl} alt="Thumbnail of the recipe" on:error={handleError} />
 	<h6>{recipe.title}</h6>
 </li>
 

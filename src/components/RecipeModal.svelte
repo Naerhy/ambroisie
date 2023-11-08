@@ -4,6 +4,10 @@
 	export let recipe: Recipe;
 
 	let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
+
+	function handleError(): void {
+		imgUrl = new URL("../assets/images/no-image.jpg", import.meta.url).href;
+	}
 </script>
 
 <div class="overlay">
@@ -13,7 +17,7 @@
 		</button>
 		<div class="header">
 			<div class="photo">
-				<img src={imgUrl} alt="Recipe" />
+				<img src={imgUrl} alt="Recipe" on:error={handleError} />
 			</div>
 			<div class="info">
 				<h3>{recipe.title}</h3>
