@@ -15,19 +15,37 @@
 		<button type="button" on:click>
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 		</button>
-		<div class="header">
+		<h2>{recipe.title}</h2>
+		<div class="infos">
+			<ul>
+				<li>
+					<span>Meal types:</span>
+					{recipe.mealTypes.join(", ")}
+				</li>
+				<li>
+					<span>Difficulty:</span>
+					{recipe.difficulty}
+				</li>
+				<li>
+					<span>Cooking time:</span>
+					{recipe.cookingTime}
+				</li>
+				<li>
+					<span>Vegetarian:</span>
+					{recipe.vegetarian ? "yes" : "no"}
+				</li>
+				<li>
+					<span>Servings:</span>
+					{recipe.servings.toString()}
+				</li>
+			</ul>
+		</div>
+		<div class="middle">
 			<div class="photo">
 				<img src={imgUrl} alt="Recipe" on:error={handleError} />
 			</div>
-			<div class="info">
-				<h3>{recipe.title}</h3>
-				<div class="recap">
-					<p>Meal types: {recipe.mealTypes.join(", ")}</p>
-					<p>Difficulty: {recipe.difficulty}</p>
-					<p>Cooking time: {recipe.cookingTime}</p>
-					<p>Vegetarian: {recipe.vegetarian ? "yes" : "no"}</p>
-					<p>Servings: {recipe.servings.toString()}</p>
-				</div>
+			<div class="ingredients">
+				<h3>Ingredients</h3>
 				<ul>
 					{#each recipe.ingredients as ingredient}
 					<li>{ingredient}</li>
@@ -35,11 +53,14 @@
 				</ul>
 			</div>
 		</div>
-		<ol>
-			{#each recipe.directions as direction}
-			<li>{direction}</li>
-			{/each}
-		</ol>
+		<div class="directions">
+			<h3>Directions</h3>
+			<ol>
+				{#each recipe.directions as direction}
+				<li>{direction}</li>
+				{/each}
+			</ol>
+		</div>
 	</div>
 </div>
 
@@ -60,10 +81,13 @@
 	.content {
 		background-color: var(--surface);
 		border: 1px solid var(--highlight);
-		max-height: 80%;
+		display: flex;
+		flex-direction: column;
+		max-height: 85%;
 		overflow-y: auto;
 		padding: 1.5rem;
 		position: relative;
+		row-gap: 1rem;
 		width: 50%;
 		color: var(--on-surface-alt);
 	}
@@ -72,70 +96,61 @@
 		color: var(--on-surface);
 	}
 
-	.header {
-		column-gap: 1rem;
-		display: flex;
-	}
-
-	.header > div {
-		flex: 1 1 0%;
-	}
-
-	.info {
-		display: flex;
-		flex-direction: column;
-		row-gap: 1rem;
-	}
-
-	.recap {
-		border: 1px solid var(--highlight);
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: repeat(3, 1fr);
-		padding: 0.5rem;
-	}
-
-	.recap p:nth-child(1) {
-		grid-column: 1 / 3;
-		grid-row: 1 / 2;
-	}
-
-	.recap p:nth-child(2) {
-		grid-column: 1 / 2;
-		grid-row: 2 / 3;
-	}
-
-	.recap p:nth-child(3) {
-		grid-column: 2 / 3;
-		grid-row: 2 / 3;
-	}
-
-	.recap p:nth-child(4) {
-		grid-column: 1 / 2;
-		grid-row: 3 / 4;
-	}
-
-	.recap p:nth-child(5) {
-		grid-column: 2 / 3;
-		grid-row: 3 / 4;
-	}
-
-	.photo {
-		border: 1px solid var(--highlight);
-	}
-
-	h3 {
+	h2, h3 {
 		color: var(--on-surface);
 		font-weight: 700;
 	}
 
-	ul {
+	h2 {
+		font-size: 2.25rem;
+		line-height: 2.5rem;
+		text-align: center;
+	}
+
+	h3 {
+		font-size: 1.5rem;
+		line-height: 2rem;
+	}
+
+	.infos ul {
+		column-gap: 0.25rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.infos li {
+		background-color: var(--highlight);
+		color: var(--on-highlight);
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		padding: 0.25rem 0.5rem;
+		text-align: center;
+	}
+
+	span {
+		display: block;
+		font-weight: 700;
+	}
+
+	.middle {
+		column-gap: 1rem;
+		display: flex;
+	}
+
+	.middle > div {
+		flex: 1 1 0%;
+	}
+
+	.middle ul {
 		list-style: disc inside;
+	}
+
+	.photo img {
+		border: 1px solid var(--highlight);
 	}
 
 	ol {
 		list-style: decimal inside;
-		margin-top: 1rem;
 	}
 
 	button {

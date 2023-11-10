@@ -3,6 +3,9 @@
 	import Footer from "./components/Footer.svelte";
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
+	import RecipeModal from "./components/RecipeModal.svelte";
+
+	let focusedRecipeId: Recipe | null = null;
 
 	async function loadFiles(): Promise<Recipe[]> {
 		// no need to wrap into try/catch because Svelte already wraps it when
@@ -18,14 +21,21 @@
 		}
 		return recipes;
 	}
+
+	function handleClickRecipe(event: any): void {
+		focusedRecipeId = event.detail.recipe;
+	}
 </script>
 
+{#if focusedRecipeId !== null}
+<RecipeModal recipe={focusedRecipeId} on:click={() => focusedRecipeId = null} />
+{/if}
 <header>
 	<h1>Ambroisie</h1>
 </header>
 {#await loadFiles() then recipes}
 <main class="loaded">
-	<RecipesList {recipes} />
+	<RecipesList {recipes} on:clickrecipe={handleClickRecipe} />
 </main>
 {:catch error}
 {@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}

@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
 	import type { Recipe } from "../interfaces";
 	import RecipeCard from "./RecipeCard.svelte";
-    import RecipeModal from "./RecipeModal.svelte";
 
 	export let recipes: Recipe[];
+
+	const dispatch = createEventDispatcher();
 
 	let filter = "";
 	let mealTypes: string[] = ["breakfast", "lunch", "tea", "dinner"];
@@ -11,7 +13,9 @@
 	let cookingTimes: string[] = ["short", "medium", "long"];
 	let vegetarian = false;
 
-	let focusedRecipeId = -1;
+	function clickRecipe(recipe: Recipe): void {
+		dispatch("clickrecipe", { recipe });
+	}
 </script>
 
 <aside>
@@ -76,21 +80,18 @@
 	</div>
 </aside>
 <section>
-	{#if focusedRecipeId !== -1}
-	<RecipeModal recipe={recipes[focusedRecipeId]} on:click={() => focusedRecipeId = -1} />
-	{/if}
 	{#if recipes.length === 0}
 	<p>No recipe to display...</p>
 	{:else}
 	<ul>
-		{#each recipes as recipe, index}
+		{#each recipes as recipe}
 		{@const isVisible = recipe.title.toLowerCase().includes(filter)
 			&& recipe.mealTypes.some((mealType) => mealTypes.includes(mealType))
 			&& difficulties.includes(recipe.difficulty)
 			&& cookingTimes.includes(recipe.cookingTime)
 			&& (!vegetarian || recipe.vegetarian)
 		}
-		<RecipeCard {recipe} {isVisible} on:click={() => focusedRecipeId = index} />
+		<RecipeCard {recipe} {isVisible} on:click={() => clickRecipe(recipe)} />
 		{/each}
 	</ul>
 	{/if}
