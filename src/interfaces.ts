@@ -1,7 +1,7 @@
 interface _Recipe {
 	title: string;
+	homemade: boolean;
 	mealTypes: ("breakfast" | "lunch" | "tea" | "dinner")[];
-	// season: "spring" | "summer" | "autumn" | "winter" | "all";
 	difficulty: "easy" | "medium" | "hard";
 	cookingTime: "short" | "medium" | "long";
 	vegetarian: boolean;

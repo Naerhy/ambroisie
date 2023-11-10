@@ -1,5 +1,6 @@
 {
 	"title": "Palmiers",
+	"homemade": true,
 	"mealTypes": ["tea"],
 	"difficulty": "hard",
 	"cookingTime": "medium",

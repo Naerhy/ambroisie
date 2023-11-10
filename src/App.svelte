@@ -61,6 +61,7 @@
 		--highlight: #ef6c00;
 		--highlight-d15: #e05d00;
 		--on-highlight: #212121;
+		--error: red;
 		background-color: var(--surface);
 	}
 
