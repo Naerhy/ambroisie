@@ -1,9 +1,9 @@
 <script lang="ts">
+	import type { RecipeFN } from "../types";
 	import { createEventDispatcher } from "svelte";
-	import type { Recipe } from "../interfaces";
 	import RecipeCard from "./RecipeCard.svelte";
 
-	export let recipes: Recipe[];
+	export let recipes: RecipeFN[];
 
 	const dispatch = createEventDispatcher();
 
@@ -13,7 +13,7 @@
 	let cookingTimes: string[] = ["short", "medium", "long"];
 	let vegetarian = false;
 
-	function clickRecipe(recipe: Recipe): void {
+	function clickRecipe(recipe: RecipeFN): void {
 		dispatch("clickrecipe", { recipe });
 	}
 </script>
@@ -80,9 +80,6 @@
 	</div>
 </aside>
 <section>
-	{#if recipes.length === 0}
-	<p>No recipe to display...</p>
-	{:else}
 	<ul>
 		{#each recipes as recipe}
 		{@const isVisible = recipe.title.toLowerCase().includes(filter)
@@ -94,7 +91,6 @@
 		<RecipeCard {recipe} {isVisible} on:click={() => clickRecipe(recipe)} />
 		{/each}
 	</ul>
-	{/if}
 </section>
 
 <style>

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Recipe } from "../interfaces";
+	import type { RecipeFN } from "../types";
 
-	export let recipe: Recipe;
+	export let recipe: RecipeFN;
 
 	let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
 

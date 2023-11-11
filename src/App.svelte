@@ -1,23 +1,26 @@
 <script lang="ts">
-	import type { Recipe } from "./interfaces";
+	import { parseJsonRecipe } from "./validate";
+	import type { RecipeFN } from "./types";
 	import Footer from "./components/Footer.svelte";
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
 	import RecipeModal from "./components/RecipeModal.svelte";
 
-	let focusedRecipeId: Recipe | null = null;
+	let focusedRecipeId: RecipeFN | null = null;
 
-	async function loadFiles(): Promise<Recipe[]> {
+	async function loadFiles(): Promise<RecipeFN[]> {
 		// no need to wrap into try/catch because Svelte already wraps it when
 		// calling it from html
 		const files = import.meta.glob("./data/*.json");
-		const recipes: Recipe[] = [];
+		const recipes: RecipeFN[] = [];
 		for (const path in files) {
-			const recipe: Recipe = {
-				filename: path.replace("./data/", "").replace(".json", ""),
-				...(await files[path]()).default
-			};
-			recipes.push(recipe);
+			const filename = path.replace("./data/", "").replace(".json", "");
+			const recipe = parseJsonRecipe((await files[path]()).default);
+			if (recipe !== null) {
+				recipes.push({ filename, ...recipe });
+			} else {
+				console.warn(`Unable to parse recipe: ${filename}`);
+			}
 		}
 		return recipes;
 	}
