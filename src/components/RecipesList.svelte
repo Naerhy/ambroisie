@@ -14,7 +14,9 @@
 	let vegetarian = false;
 
 	function clickRecipe(recipe: RecipeFN): void {
-		dispatch("clickrecipe", { recipe });
+		if (recipe.homemade) {
+			dispatch("clickrecipe", { recipe });
+		}
 	}
 </script>
 

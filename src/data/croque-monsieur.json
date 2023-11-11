@@ -1,0 +1,11 @@
+{
+	"title": "Croque-monsieur",
+	"homemade": false,
+	"mealTypes": ["lunch", "dinner"],
+	"difficulty": "easy",
+	"cookingTime": "medium",
+	"vegetarian": false,
+	"servings": 0,
+	"ingredients": [],
+	"directions": []
+}
