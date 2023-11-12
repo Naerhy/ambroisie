@@ -67,7 +67,7 @@
 <style>
 	.overlay {
 		align-items: center;
-		background-color: rgba(0, 0, 0, 0.75);
+		background-color: rgba(0, 0, 0, 0.5);
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -79,8 +79,8 @@
 	}
 
 	.content {
-		background-color: var(--surface);
-		border: 1px solid var(--highlight);
+		background-color: var(--surface-light);
+		border-radius: 0.25rem;
 		display: flex;
 		flex-direction: column;
 		max-height: 85%;
@@ -89,15 +89,9 @@
 		position: relative;
 		row-gap: 1rem;
 		width: 50%;
-		color: var(--on-surface-alt);
-	}
-
-	svg {
-		color: var(--on-surface);
 	}
 
 	h2, h3 {
-		color: var(--on-surface);
 		font-weight: 700;
 	}
 
@@ -119,8 +113,7 @@
 	}
 
 	.infos li {
-		background-color: var(--highlight);
-		color: var(--on-highlight);
+		border: 1px solid var(--stroke);
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 		padding: 0.25rem 0.5rem;
@@ -143,10 +136,6 @@
 
 	.middle ul {
 		list-style: disc inside;
-	}
-
-	.photo img {
-		border: 1px solid var(--highlight);
 	}
 
 	ol {

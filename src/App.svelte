@@ -5,6 +5,7 @@
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
 	import RecipeModal from "./components/RecipeModal.svelte";
+	import Header from "./components/Header.svelte";
 
 	let focusedRecipeId: RecipeFN | null = null;
 
@@ -33,9 +34,7 @@
 {#if focusedRecipeId !== null}
 <RecipeModal recipe={focusedRecipeId} on:click={() => focusedRecipeId = null} />
 {/if}
-<header>
-	<h1>Ambroisie</h1>
-</header>
+<Header />
 {#await loadFiles() then recipes}
 <main class="loaded">
 	<RecipesList {recipes} on:clickrecipe={handleClickRecipe} />
@@ -57,34 +56,24 @@
 
 <style>
 	:global(:root) {
-		--surface: #212121;
-		--surface-l15: #303030;
-		--on-surface: #f5f5f5;
-		--on-surface-alt: #bdbdbd;
-		--highlight: #ef6c00;
-		--highlight-d15: #e05d00;
-		--on-highlight: #212121;
-		--error: red;
-		background-color: var(--surface);
+		--highlight: #2abb7f;
+		--highlight-d15: #1ba770;
+		--stroke: #d4d4d4;
+		--surface-dark: #171717;
+		--surface-light: #f5f5f5;
+		--text-dark-default: #171717;
+		--text-dark-subtle: #404040;
+		--text-light-default: #f5f5f5;
+		--text-light-subtle: #d4d4d4;
+		background-color: var(--surface-light);
+		color: var(--text-dark-default);
 	}
 
 	:global(#app) {
 		display: flex;
 		flex-direction: column;
-		margin: auto;
 		min-height: 100vh;
 		row-gap: 2rem;
-		width: 80%;
-	}
-	header {
-		border-bottom: 1px solid var(--highlight);
-	}
-
-	header h1 {
-		color: var(--on-surface);
-		font-size: 3.75rem;
-		font-weight: 700;
-		line-height: 1;
 	}
 
 	main {
@@ -94,6 +83,8 @@
 	.loaded {
 		align-items: flex-start;
 		display: flex;
+		margin: auto;
+		width: 80%;
 	}
 
 	.error {
@@ -103,9 +94,8 @@
 	}
 
 	.error section {
-		border: 1px solid var(--highlight);
-		border-radius: 0.375rem;
-		color: var(--on-surface);
+		border: 1px solid var(--stroke);
+		border-radius: 0.25rem;
 		display: flex;
 		flex-direction: column;
 		padding: 2rem;

@@ -25,6 +25,7 @@
 
 <style>
 	li {
+		border: 1px solid var(--stroke);
 		cursor: pointer;
 		position: relative;
 		width: 300px;
@@ -32,10 +33,6 @@
 
 	li.hidden {
 		display: none;
-	}
-
-	li:hover {
-		outline: 2px solid var(--highlight);
 	}
 
 	.icon-homemade {
@@ -52,16 +49,11 @@
 	}
 
 	h6 {
-		backdrop-filter: blur(2px);
-		background-color: rgba(0, 0, 0, 0.5);
-		bottom: 0;
-		color: var(--on-surface);
 		font-weight: 700;
-		overflow: hidden;
 		padding: 0.25rem;
-		position: absolute;
+		overflow: hidden;
+		text-align: center;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 100%;
 	}
 </style>

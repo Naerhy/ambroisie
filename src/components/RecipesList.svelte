@@ -97,7 +97,8 @@
 
 <style>
 	aside {
-		border: 1px solid var(--highlight);
+		border: 1px solid var(--stroke);
+		border-radius: 0.25rem;
 		display: flex;
 		flex-direction: column;
 		padding: 1rem;
@@ -105,14 +106,9 @@
 	}
 
 	aside h4 {
-		color: var(--on-surface);
 		font-size: 1.125rem;
 		font-weight: 700;
 		line-height: 1.75rem;
-	}
-
-	aside label {
-		color: var(--on-surface-alt);
 	}
 
 	.checkbox {
@@ -120,15 +116,14 @@
 	}
 
 	input[type=text] {
-		background-color: var(--surface-l15);
+		background-color: var(--surface-light);
+		border: 1px solid var(--stroke);
 		border-radius: 0.375rem;
-		color: var(--on-surface);
-		outline: none;
 		padding: 0.5rem;
 	}
 
 	input[type=text]::placeholder {
-		color: var(--on-surface-alt);
+		color: var(--text-dark-subtle);
 	}
 
 	input[type=text]:focus {

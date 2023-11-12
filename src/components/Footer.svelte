@@ -39,7 +39,8 @@
 <style>
 	footer {
 		align-items: center;
-		border-top: 1px solid var(--highlight);
+		background-color: var(--surface-dark);
+		color: var(--text-light-default);
 		display: flex;
 		flex-direction: column;
 		padding: 1rem 0;
@@ -47,7 +48,7 @@
 	}
 
 	q {
-		color: var(--on-surface-alt);
+		color: var(--text-light-subtle);
 		font-size: 0.875rem;
 		font-style: italic;
 		line-height: 1.25rem;
@@ -56,10 +57,6 @@
 	.links {
 		column-gap: 1rem;
 		display: flex;
-	}
-
-	svg {
-		color: var(--on-surface);
 	}
 
 	svg:hover {
