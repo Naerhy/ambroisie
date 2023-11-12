@@ -28,7 +28,6 @@
 		border: 1px solid var(--stroke);
 		cursor: pointer;
 		position: relative;
-		width: 300px;
 	}
 
 	li.hidden {
@@ -43,7 +42,7 @@
 	}
 
 	img {
-		height: 150px;
+		height: 180px;
 		object-fit: cover;
 		width: 100%;
 	}

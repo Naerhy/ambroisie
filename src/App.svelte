@@ -82,6 +82,7 @@
 
 	.loaded {
 		align-items: flex-start;
+		column-gap: 2rem;
 		display: flex;
 		margin: auto;
 		width: 80%;

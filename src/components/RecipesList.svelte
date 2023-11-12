@@ -135,9 +135,8 @@
 	}
 
 	ul {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
 		gap: 1rem;
-		justify-content: center;
+		grid-template-columns: repeat(4, 1fr);
 	}
 </style>
