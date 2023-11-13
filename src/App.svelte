@@ -56,17 +56,16 @@
 
 <style>
 	:global(:root) {
-		--highlight: #2abb7f;
-		--highlight-d15: #1ba770;
-		--stroke: #d4d4d4;
-		--surface-dark: #171717;
-		--surface-light: #f5f5f5;
-		--text-dark-default: #171717;
-		--text-dark-subtle: #404040;
-		--text-light-default: #f5f5f5;
-		--text-light-subtle: #d4d4d4;
-		background-color: var(--surface-light);
-		color: var(--text-dark-default);
+		--surface-default: #eeeeee;
+		--surface-raised: #f5f5f5;
+		--stroke: #e0e0e0;
+		--highlight: #3f51b5;
+		--highlight-d15: #3949ab;
+		--text-default: #212121;
+		--text-subtle: #757575;
+		--text-highlight: #f5f5f5;
+		background-color: var(--surface-default);
+		color: var(--text-default);
 	}
 
 	:global(#app) {
@@ -95,6 +94,7 @@
 	}
 
 	.error section {
+		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		display: flex;

@@ -25,6 +25,7 @@
 
 <style>
 	li {
+		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		cursor: pointer;
 		position: relative;
@@ -35,7 +36,7 @@
 	}
 
 	.icon-homemade {
-		color: var(--error);
+		color: #c62828;
 		right: 10px;
 		position: absolute;
 		top: 10px;

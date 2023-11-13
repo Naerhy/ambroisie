@@ -39,8 +39,8 @@
 <style>
 	footer {
 		align-items: center;
-		background-color: var(--surface-dark);
-		color: var(--text-light-default);
+		background-color: #212121;
+		color: #f5f5f5;
 		display: flex;
 		flex-direction: column;
 		padding: 2rem 0;
@@ -48,7 +48,7 @@
 	}
 
 	q {
-		color: var(--text-light-subtle);
+		color: #bdbdbd;
 		font-size: 0.875rem;
 		font-style: italic;
 		line-height: 1.25rem;

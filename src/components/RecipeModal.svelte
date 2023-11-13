@@ -79,7 +79,7 @@
 	}
 
 	.content {
-		background-color: var(--surface-light);
+		background-color: var(--surface-default);
 		border-radius: 0.25rem;
 		display: flex;
 		flex-direction: column;
@@ -113,6 +113,7 @@
 	}
 
 	.infos li {
+		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		font-size: 0.875rem;
 		line-height: 1.25rem;

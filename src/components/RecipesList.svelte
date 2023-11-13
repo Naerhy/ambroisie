@@ -97,6 +97,7 @@
 
 <style>
 	aside {
+		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		display: flex;
@@ -116,14 +117,14 @@
 	}
 
 	input[type=text] {
-		background-color: var(--surface-light);
+		background-color: var(--surface-default);
 		border: 1px solid var(--stroke);
 		border-radius: 0.375rem;
 		padding: 0.5rem;
 	}
 
 	input[type=text]::placeholder {
-		color: var(--text-dark-subtle);
+		color: var(--text-subtle);
 	}
 
 	input[type=text]:focus {
@@ -137,6 +138,6 @@
 	ul {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	}
 </style>
