@@ -43,7 +43,7 @@
 		color: var(--text-light-default);
 		display: flex;
 		flex-direction: column;
-		padding: 1rem 0;
+		padding: 2rem 0;
 		row-gap: 0.5rem;
 	}
 
