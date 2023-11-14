@@ -30,7 +30,15 @@
 	function handleClickRecipe(event: any): void {
 		focusedRecipeId = event.detail.recipe;
 	}
+
+	function handleKeyDown(event: KeyboardEvent): void {
+		if (event.code === "Escape" && focusedRecipeId !== null) {
+			focusedRecipeId = null;
+		}
+	}
 </script>
+
+<svelte:window on:keydown={handleKeyDown} />
 
 {#if focusedRecipeId !== null}
 <RecipeModal recipe={focusedRecipeId} on:click={() => focusedRecipeId = null} />
