@@ -49,7 +49,6 @@
 	}
 
 	h6 {
-		font-weight: 700;
 		padding: 0.25rem;
 		overflow: hidden;
 		text-align: center;

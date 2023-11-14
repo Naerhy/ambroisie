@@ -91,10 +91,6 @@
 		width: 50%;
 	}
 
-	h2, h3 {
-		font-weight: 700;
-	}
-
 	h2 {
 		font-size: 2.25rem;
 		line-height: 2.5rem;

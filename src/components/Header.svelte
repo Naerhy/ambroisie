@@ -1,3 +1,7 @@
+<script lang="ts">
+	import "@fontsource-variable/dancing-script";
+</script>
+
 <header>
 	<h1>Ambroisie</h1>
 </header>
@@ -11,8 +15,8 @@
 
 	header h1 {
 		color: var(--highlight);
+		font-family: "Dancing Script Variable", Arial;
 		font-size: 3.75rem;
-		font-weight: 700;
 		line-height: 1;
 		margin-left: 8rem;
 	}

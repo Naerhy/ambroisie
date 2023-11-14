@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '@fontsource-variable/inter';
 	import { parseJsonRecipe } from "./validate";
 	import type { RecipeFN } from "./types";
 	import Footer from "./components/Footer.svelte";
@@ -66,6 +67,7 @@
 		--text-highlight: #f5f5f5;
 		background-color: var(--surface-default);
 		color: var(--text-default);
+		font-family: "Inter Variable", Arial;
 	}
 
 	:global(#app) {
@@ -73,6 +75,10 @@
 		flex-direction: column;
 		min-height: 100vh;
 		row-gap: 2rem;
+	}
+
+	:global(h1, h2, h3, h4, h5, h6) {
+		font-weight: 700;
 	}
 
 	main {
@@ -105,7 +111,6 @@
 
 	.error h2 {
 		font-size: 2.25rem;
-		font-weight: 700;
 		line-height: 2.5rem;
 		text-align: center;
 	}
