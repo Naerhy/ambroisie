@@ -16,42 +16,38 @@
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 		</button>
 		<h2>{recipe.title}</h2>
-		<div class="infos">
-			<ul>
-				<li>
-					<span>Meal types:</span>
-					{recipe.mealTypes.join(", ")}
-				</li>
-				<li>
-					<span>Difficulty:</span>
-					{recipe.difficulty}
-				</li>
-				<li>
-					<span>Cooking time:</span>
-					{recipe.cookingTime}
-				</li>
-				<li>
-					<span>Vegetarian:</span>
-					{recipe.vegetarian ? "yes" : "no"}
-				</li>
-				<li>
-					<span>Servings:</span>
-					{recipe.servings.toString()}
-				</li>
-			</ul>
+		<ul class="infos">
+			<li>
+				<span>Meal types:</span>
+				{recipe.mealTypes.join(", ")}
+			</li>
+			<li>
+				<span>Difficulty:</span>
+				{recipe.difficulty}
+			</li>
+			<li>
+				<span>Cooking time:</span>
+				{recipe.cookingTime}
+			</li>
+			<li>
+				<span>Vegetarian:</span>
+				{recipe.vegetarian ? "yes" : "no"}
+			</li>
+			<li>
+				<span>Servings:</span>
+				{recipe.servings.toString()}
+			</li>
+		</ul>
+		<div class="photo">
+			<img src={imgUrl} alt="Recipe" on:error={handleError} />
 		</div>
-		<div class="middle">
-			<div class="photo">
-				<img src={imgUrl} alt="Recipe" on:error={handleError} />
-			</div>
-			<div class="ingredients">
-				<h3>Ingredients</h3>
-				<ul>
-					{#each recipe.ingredients as ingredient}
-					<li>{ingredient}</li>
-					{/each}
-				</ul>
-			</div>
+		<div class="ingredients">
+			<h3>Ingredients</h3>
+			<ul>
+				{#each recipe.ingredients as ingredient}
+				<li>{ingredient}</li>
+				{/each}
+			</ul>
 		</div>
 		<div class="directions">
 			<h3>Directions</h3>
@@ -81,17 +77,24 @@
 	.content {
 		background-color: var(--surface-default);
 		border-radius: 0.25rem;
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		gap: 1.5rem;
+		grid-template-areas:
+			"title title"
+			"infos infos"
+			"photo ingredients"
+			"directions directions";
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(4, auto);
 		max-height: 85%;
 		overflow-y: auto;
 		padding: 1.5rem;
 		position: relative;
-		row-gap: 1rem;
 		width: 50%;
 	}
 
 	h2 {
+		grid-area: title;
 		font-size: 2.25rem;
 		line-height: 2.5rem;
 		text-align: center;
@@ -102,9 +105,10 @@
 		line-height: 2rem;
 	}
 
-	.infos ul {
+	.infos {
 		column-gap: 0.25rem;
 		display: flex;
+		grid-area: infos;
 		justify-content: center;
 	}
 
@@ -122,17 +126,25 @@
 		font-weight: 700;
 	}
 
-	.middle {
-		column-gap: 1rem;
-		display: flex;
+	.photo {
+		grid-area: photo;
 	}
 
-	.middle > div {
-		flex: 1 1 0%;
+	img {
+		height: 100%;
+		object-fit: cover;
 	}
 
-	.middle ul {
+	.ingredients {
+		grid-area: ingredients;
+	}
+
+	.ingredients ul {
 		list-style: disc inside;
+	}
+
+	.directions {
+		grid-area: directions;
 	}
 
 	ol {
