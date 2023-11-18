@@ -5,7 +5,7 @@
 	import Footer from "./components/Footer.svelte";
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
-	import RecipeModal from "./components/RecipeModal.svelte";
+	import FocusedRecipe from "./components/FocusedRecipe.svelte";
 	import Header from "./components/Header.svelte";
 
 	let focusedRecipeId: RecipeFN | null = null;
@@ -41,7 +41,7 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 {#if focusedRecipeId !== null}
-<RecipeModal recipe={focusedRecipeId} on:click={() => focusedRecipeId = null} />
+<FocusedRecipe recipe={focusedRecipeId} on:click={() => focusedRecipeId = null} />
 {/if}
 <Header />
 {#await loadFiles() then recipes}

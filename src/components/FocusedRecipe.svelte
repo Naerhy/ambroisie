@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { RecipeFN } from "../types";
+	import Modal from "./Modal.svelte";
 
 	export let recipe: RecipeFN;
 
@@ -10,11 +11,8 @@
 	}
 </script>
 
-<div class="overlay">
-	<div class="content">
-		<button type="button" on:click>
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-		</button>
+<Modal on:click>
+	<div class="recipe">
 		<h2>{recipe.title}</h2>
 		<ul class="infos">
 			<li>
@@ -58,25 +56,10 @@
 			</ol>
 		</div>
 	</div>
-</div>
+</Modal>
 
 <style>
-	.overlay {
-		align-items: center;
-		background-color: rgba(0, 0, 0, 0.5);
-		display: flex;
-		height: 100%;
-		justify-content: center;
-		left: 0;
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 1;
-	}
-
-	.content {
-		background-color: var(--surface-default);
-		border-radius: 0.25rem;
+	.recipe {
 		display: grid;
 		gap: 1.5rem;
 		grid-template-areas:
@@ -86,11 +69,6 @@
 			"directions directions";
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: repeat(4, auto);
-		max-height: 85%;
-		overflow-y: auto;
-		padding: 1.5rem;
-		position: relative;
-		width: 50%;
 	}
 
 	h2 {
@@ -149,11 +127,5 @@
 
 	ol {
 		list-style: decimal inside;
-	}
-
-	button {
-		position: absolute;
-		right: 4px;
-		top: 4px;
 	}
 </style>
