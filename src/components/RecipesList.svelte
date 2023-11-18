@@ -21,7 +21,7 @@
 </script>
 
 <aside>
-	<input type="text" placeholder="Filter..." bind:value={filter} />
+	<input type="text" placeholder="Filter by name..." bind:value={filter} />
 	<div>
 		<h4>Meal type</h4>
 		{#each ["breakfast", "lunch", "tea", "dinner"] as mealType}
@@ -137,6 +137,6 @@
 	ul {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(4, minmax(100px, 1fr));
+		grid-template-columns: repeat(4, minmax(150px, 1fr));
 	}
 </style>
