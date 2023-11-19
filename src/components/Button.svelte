@@ -16,6 +16,6 @@
 	}
 
 	button:hover {
-		background-color: var(--highlight-d15);
+		background-color: var(--highlight-dark);
 	}
 </style>

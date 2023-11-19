@@ -25,7 +25,6 @@
 
 <style>
 	li {
-		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		cursor: pointer;
 		position: relative;

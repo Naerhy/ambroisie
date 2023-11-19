@@ -8,7 +8,6 @@
 
 <style>
 	header {
-		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		padding: 0.5rem 0;
 	}

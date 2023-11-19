@@ -97,7 +97,6 @@
 
 <style>
 	aside {
-		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		display: flex;
@@ -116,7 +115,7 @@
 	}
 
 	input[type=text] {
-		background-color: var(--surface-default);
+		background-color: var(--background-dark);
 		border: 1px solid var(--stroke);
 		border-radius: 0.375rem;
 		padding: 0.5rem;

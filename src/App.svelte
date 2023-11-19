@@ -65,15 +65,15 @@
 
 <style>
 	:global(:root) {
-		--surface-default: #eeeeee;
-		--surface-raised: #f5f5f5;
-		--stroke: #e0e0e0;
+		--background: #eeeeee;
+		--background-dark: #e0e0e0;
+		--stroke: #bdbdbd;
 		--highlight: #3f51b5;
-		--highlight-d15: #3949ab;
+		--highlight-dark: #3949ab;
 		--text-default: #212121;
 		--text-subtle: #757575;
 		--text-highlight: #f5f5f5;
-		background-color: var(--surface-default);
+		background-color: var(--background);
 		color: var(--text-default);
 		font-family: "Inter Variable", Arial;
 	}
@@ -108,7 +108,6 @@
 	}
 
 	.error section {
-		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		display: flex;

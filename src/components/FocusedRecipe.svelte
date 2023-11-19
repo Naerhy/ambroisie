@@ -91,7 +91,6 @@
 	}
 
 	.infos li {
-		background-color: var(--surface-raised);
 		border: 1px solid var(--stroke);
 		font-size: 0.875rem;
 		line-height: 1.25rem;

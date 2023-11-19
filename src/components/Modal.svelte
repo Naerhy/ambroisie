@@ -22,7 +22,7 @@
 	}
 
 	.content {
-		background-color: var(--surface-default);
+		background-color: var(--background);
 		border-radius: 0.25rem;
 		max-height: var(--max-height, 90%);
 		overflow-y: auto;
