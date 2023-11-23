@@ -7,8 +7,10 @@
 	import Button from "./components/Button.svelte";
 	import FocusedRecipe from "./components/FocusedRecipe.svelte";
 	import Header from "./components/Header.svelte";
+	import RecipeForm from './components/RecipeForm.svelte';
 
-	let focusedRecipeId: RecipeFN | null = null;
+	let currentPage: "home" | "form" = "home";
+	let focusedRecipe: RecipeFN | null = null;
 
 	async function loadFiles(): Promise<RecipeFN[]> {
 		// no need to wrap into try/catch because Svelte already wraps it when
@@ -28,37 +30,39 @@
 	}
 
 	function handleClickRecipe(event: any): void {
-		focusedRecipeId = event.detail.recipe;
+		focusedRecipe = event.detail.recipe;
 	}
 
 	function handleKeyDown(event: KeyboardEvent): void {
-		if (event.code === "Escape" && focusedRecipeId !== null) {
-			focusedRecipeId = null;
+		if (event.code === "Escape" && focusedRecipe !== null) {
+			focusedRecipe = null;
 		}
 	}
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
 
-{#if focusedRecipeId !== null}
-<FocusedRecipe recipe={focusedRecipeId} on:click={() => focusedRecipeId = null} />
+{#if focusedRecipe !== null}
+<FocusedRecipe recipe={focusedRecipe} on:click={() => focusedRecipe = null} />
 {/if}
-<Header />
+<Header bind:currentPage />
 {#await loadFiles() then recipes}
-<main class="loaded">
-	<RecipesList {recipes} on:clickrecipe={handleClickRecipe} />
-</main>
+{#if currentPage === "home"}
+<RecipesList {recipes} on:clickrecipe={handleClickRecipe} />
+{:else}
+<RecipeForm />
+{/if}
 {:catch error}
 {@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}
-<main class="error">
-	<section>
+<main>
+	<div>
 		<h2>Oops!</h2>
 		<p>
 			The website encountered an error while trying to load the recipes.<br>
 			Reason: {errMsg}.
 		</p>
 		<Button type="button" on:click={() => location.reload()}>Reload</Button>
-	</section>
+	</div>
 </main>
 {/await}
 <Footer />
@@ -89,25 +93,17 @@
 		font-weight: 700;
 	}
 
-	main {
+	:global(main) {
 		flex: 1 1 auto;
 	}
 
-	.loaded {
-		align-items: flex-start;
-		column-gap: 2rem;
-		display: flex;
-		margin: auto;
-		width: 80%;
-	}
-
-	.error {
+	main {
 		align-items: center;
 		display: flex;
 		justify-content: center;
 	}
 
-	.error section {
+	main div {
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		display: flex;
@@ -116,7 +112,7 @@
 		row-gap: 1rem;
 	}
 
-	.error h2 {
+	main h2 {
 		font-size: 2.25rem;
 		line-height: 2.5rem;
 		text-align: center;
