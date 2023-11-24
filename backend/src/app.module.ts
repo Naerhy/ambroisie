@@ -9,7 +9,8 @@ import * as Joi from "joi";
 	imports: [
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
-				BACKEND_PORT: Joi.number().required()
+				BACKEND_PORT: Joi.number().required(),
+				BACKEND_SECRET_CODE: Joi.number().required()
 			}),
 			isGlobal: true
 		}),

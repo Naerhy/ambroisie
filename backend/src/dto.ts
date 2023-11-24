@@ -1,3 +1,4 @@
+import { PickType } from "@nestjs/mapped-types";
 import {
 	ArrayNotEmpty,
 	IsArray,
@@ -52,3 +53,5 @@ export class AddRecipeDto {
 	@IsNumber()
 	secretCode: number;
 }
+
+export class RemoveRecipeDto extends PickType(AddRecipeDto, ["secretCode"] as const) {}

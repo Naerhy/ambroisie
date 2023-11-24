@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from "@nestjs/common";
 import { RecipesService } from "./recipes.service";
 import { Recipe } from "./recipe.entity";
-import { AddRecipeDto } from "src/dto";
+import { AddRecipeDto, RemoveRecipeDto } from "src/dto";
 
 @Controller("recipes")
 export class RecipesController {
@@ -13,8 +13,11 @@ export class RecipesController {
 	}
 
 	@Delete(":id")
-	async remove(@Param("id", ParseIntPipe) id: number): Promise<void> {
-		await this.recipesService.remove(id);
+	async remove(
+		@Param("id", ParseIntPipe) id: number,
+		@Body() removeRecipeDto: RemoveRecipeDto
+	): Promise<void> {
+		await this.recipesService.remove(id, removeRecipeDto.secretCode);
 	}
 
 	@Get()
