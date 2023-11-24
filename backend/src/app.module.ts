@@ -4,6 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Recipe } from "./recipes/recipe.entity";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
+import { ThrottlerModule } from "@nestjs/throttler";
 
 @Module({
 	imports: [
@@ -14,6 +15,7 @@ import * as Joi from "joi";
 			}),
 			isGlobal: true
 		}),
+		ThrottlerModule.forRoot([{ ttl: 60000, limit: 20 }]),
 		TypeOrmModule.forRoot({
 			type: "sqlite",
 			database: "db.sqlite",

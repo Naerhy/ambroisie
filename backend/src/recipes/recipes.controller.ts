@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from "@nestjs/common";
 import { RecipesService } from "./recipes.service";
 import { Recipe } from "./recipe.entity";
 import { AddRecipeDto, RemoveRecipeDto } from "src/dto";
+import { ThrottlerGuard } from "@nestjs/throttler";
 
 @Controller("recipes")
+@UseGuards(ThrottlerGuard)
 export class RecipesController {
 	constructor(private recipesService: RecipesService) {}
 
