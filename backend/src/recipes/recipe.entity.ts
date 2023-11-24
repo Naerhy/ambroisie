@@ -29,6 +29,6 @@ export class Recipe {
 	@Column("simple-array")
 	ingredients: string[];
 
-	@Column("simple-enum")
+	@Column("simple-array")
 	directions: string[];
 }
