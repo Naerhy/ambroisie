@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { RecipeFN } from "../types";
+	import type { Recipe } from "../types";
 	import Modal from "./Modal.svelte";
 
-	export let recipe: RecipeFN;
+	export let recipe: Recipe;
 
-	let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
+	// let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
+	let imgUrl = "";
 
 	function handleError(): void {
 		imgUrl = new URL("../assets/images/no-image.jpg", import.meta.url).href;
@@ -13,7 +14,7 @@
 
 <Modal on:click>
 	<div class="recipe">
-		<h2>{recipe.title}</h2>
+		<h2>{recipe.name}</h2>
 		<ul class="infos">
 			<li>
 				<span>Meal types:</span>
@@ -29,7 +30,7 @@
 			</li>
 			<li>
 				<span>Vegetarian:</span>
-				{recipe.vegetarian ? "yes" : "no"}
+				{recipe.isVegetarian ? "yes" : "no"}
 			</li>
 			<li>
 				<span>Servings:</span>

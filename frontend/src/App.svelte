@@ -1,7 +1,7 @@
 <script lang="ts">
+	import axios from "axios";
 	import '@fontsource-variable/inter';
-	import { parseJsonRecipe } from "./validate";
-	import type { RecipeFN } from "./types";
+	import type { Recipe } from "./types";
 	import Footer from "./components/Footer.svelte";
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
@@ -10,22 +10,13 @@
 	import RecipeForm from './components/RecipeForm.svelte';
 
 	let currentPage: "home" | "form" = "home";
-	let focusedRecipe: RecipeFN | null = null;
+	let focusedRecipe: Recipe | null = null;
 
-	async function loadFiles(): Promise<RecipeFN[]> {
+	async function loadRecipes(): Promise<Recipe[]> {
 		// no need to wrap into try/catch because Svelte already wraps it when
 		// calling it from html
-		const files = import.meta.glob("./data/*.json");
-		const recipes: RecipeFN[] = [];
-		for (const path in files) {
-			const filename = path.replace("./data/", "").replace(".json", "");
-			const recipe = parseJsonRecipe((await files[path]()).default);
-			if (recipe !== null) {
-				recipes.push({ filename, ...recipe });
-			} else {
-				console.warn(`Unable to parse recipe: ${filename}`);
-			}
-		}
+		const { data: recipes } = await axios.get<Recipe[]>("http://localhost:3000/recipes");
+		console.log(recipes); // TODO: remove log
 		return recipes;
 	}
 
@@ -46,7 +37,7 @@
 <FocusedRecipe recipe={focusedRecipe} on:click={() => focusedRecipe = null} />
 {/if}
 <Header bind:currentPage />
-{#await loadFiles() then recipes}
+{#await loadRecipes() then recipes}
 {#if currentPage === "home"}
 <RecipesList {recipes} on:clickrecipe={handleClickRecipe} />
 {:else}

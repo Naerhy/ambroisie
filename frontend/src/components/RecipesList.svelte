@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { RecipeFN } from "../types";
+	import type { Recipe } from "../types";
 	import { createEventDispatcher } from "svelte";
 	import RecipeCard from "./RecipeCard.svelte";
 	import GroupCheckboxes from "./GroupCheckboxes.svelte";
 
-	export let recipes: RecipeFN[];
+	export let recipes: Recipe[];
 
 	const dispatch = createEventDispatcher();
 
@@ -14,8 +14,8 @@
 	let cookingTimes = ["short", "medium", "long"];
 	let vegetarian = false;
 
-	function clickRecipe(recipe: RecipeFN): void {
-		if (recipe.homemade) {
+	function clickRecipe(recipe: Recipe): void {
+		if (recipe.isHomemade) {
 			dispatch("clickrecipe", { recipe });
 		}
 	}
@@ -59,11 +59,11 @@
 	<section>
 		<ul>
 			{#each recipes as recipe}
-			{@const isVisible = recipe.title.toLowerCase().includes(filter)
+			{@const isVisible = recipe.name.toLowerCase().includes(filter)
 				&& recipe.mealTypes.some((mealType) => mealTypes.includes(mealType))
 				&& difficulties.includes(recipe.difficulty)
 				&& cookingTimes.includes(recipe.cookingTime)
-				&& (!vegetarian || recipe.vegetarian)
+				&& (!vegetarian || recipe.isVegetarian)
 			}
 			<RecipeCard {recipe} {isVisible} on:click={() => clickRecipe(recipe)} />
 			{/each}
