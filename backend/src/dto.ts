@@ -22,7 +22,7 @@ export class AddRecipeDto {
 	@IsArray()
 	@ArrayNotEmpty()
 	@IsIn(["breakfast", "lunch", "tea", "dinner"], { each: true })
-	mealType: string[];
+	mealTypes: string[];
 
 	@IsString()
 	@IsIn(["easy", "medium", "hard"])

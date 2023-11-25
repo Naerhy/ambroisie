@@ -12,7 +12,7 @@ export class Recipe {
 	isHomemade: boolean;
 
 	@Column("simple-array")
-	mealType: string[];
+	mealTypes: string[];
 
 	@Column()
 	difficulty: string;
