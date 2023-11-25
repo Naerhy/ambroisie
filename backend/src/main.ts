@@ -6,6 +6,8 @@ import { ConfigService } from "@nestjs/config";
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+	// TODO: limit CORS header to specific origins only
+	app.enableCors();
 	await app.listen(app.get(ConfigService).get<number>("BACKEND_PORT")!);
 }
 
