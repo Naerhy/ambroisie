@@ -1,13 +1,14 @@
 <script lang="ts">
+	import axios from "axios";
 	import Button from "./Button.svelte";
     import GroupCheckboxes from "./GroupCheckboxes.svelte";
 
-	let title = "";
+	let name = "";
 	let difficulty = "easy";
 	let cookingTime = "short";
 	let mealTypes: string[] = [];
 	let servings = "0";
-	let photo: FileList | undefined = undefined;
+	let image: FileList | undefined = undefined;
 	let homemade = false;
 	let vegetarian = false;
 	let ingredients = "";
@@ -17,25 +18,52 @@
 	let successMsg = "";
 	let errorMsg = "";
 
-	function handleSubmit(): void {
-		/*for (const p of photo!) {
-			const reader = new FileReader();
-			reader.addEventListener("load", () => {
-				console.log(reader.result);
-			});
-			reader.addEventListener("error", () => {
-				console.log(reader.error);
-			});
-			reader.readAsDataURL(p);
-			// remove events once done
-		}*/
-		if (Math.random() < 0.5) {
-			successMsg = "";
-			errorMsg = "An error message is displayed!";
-		} else {
-			errorMsg = "";
-			successMsg = "Recipe has been succesfully added!"
+	async function handleSubmit(): Promise<void> {
+		if (image !== undefined && image.length > 0) {
+			try {
+				const imageBase64 = await imageToBase64(image.item(0)!);
+				if (typeof imageBase64 === "string") {
+					const _data = {
+						name,
+						imageBase64,
+						isHomemade: homemade,
+						mealTypes,
+						difficulty,
+						cookingTime,
+						isVegetarian: vegetarian,
+						servings: Number(servings),
+						ingredients: ingredients === "" ? [] : ingredients.split("\n"),
+						directions: directions === "" ? [] : directions.split("\n"),
+						secretCode: Number(secretCode)
+					};
+					const { data: recipe } = await axios.post("http://localhost:3000/recipes", _data);
+					successMsg = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
+				} else {
+					throw new Error("type of image base64 is not valid");
+				}
+			} catch (error: unknown) {
+				// pass error message to errorMsg variable
+				if (axios.isAxiosError(error)) {
+					if (error.response?.data) {
+						errorMsg = error.response.data.message;
+					} else {
+						errorMsg = `axios: ${error.message}`;
+					}
+				} else {
+					// TODO: check if error has generic string message first
+					console.log("unexpected error");
+				}
+			}
 		}
+	}
+
+	function imageToBase64(file: File): Promise<string | ArrayBuffer | null> {
+		return new Promise<string | ArrayBuffer | null>((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = (error) => reject(error);
+			reader.readAsDataURL(file);
+		});
 	}
 </script>
 
@@ -43,11 +71,11 @@
 	<section>
 		<h2>Add a recipe</h2>
 		<form on:submit|preventDefault={handleSubmit}>
-			<div class="title flex">
-				<label for="rf-title" class="bold">Title</label>
-				<input type="text" id="rf-title" bind:value={title} required />
+			<div class="flex">
+				<label for="rf-name" class="bold">Name</label>
+				<input type="text" id="rf-name" bind:value={name} required />
 			</div>
-			<div class="difficulty flex">
+			<div class="flex">
 				<label for="rf-difficulty" class="bold">Difficulty</label>
 				<select id="rf-difficulty" bind:value={difficulty}>
 					<option value="easy">Easy</option>
@@ -55,7 +83,7 @@
 					<option value="hard">Hard</option>
 				</select>
 			</div>
-			<div class="cooking-time flex">
+			<div class="flex">
 				<label for="rf-cooking-time" class="bold">Cooking time</label>
 				<select id="rf-cooking-time" bind:value={cookingTime}>
 					<option value="short">Short</option>
@@ -63,7 +91,7 @@
 					<option value="long">Long</option>
 				</select>
 			</div>
-			<div class="meal-type">
+			<div>
 				<GroupCheckboxes
 					title="Meal type"
 					name="meal-type"
@@ -71,7 +99,7 @@
 					bind:groupValues={mealTypes}
 				/>
 			</div>
-			<div class="servings flex">
+			<div class="flex">
 				<label for="rf-servings" class="bold">Servings</label>
 				<select id="rf-servings" bind:value={servings}>
 					{#each ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] as nb}
@@ -79,29 +107,29 @@
 					{/each}
 				</select>
 			</div>
-			<div class="photo flex">
-				<label for="rf-photo" class="bold">Photo</label>
-				<input type="file" id="rf-photo" accept="image/png,image/jpeg" bind:files={photo} required />
+			<div class="flex">
+				<label for="rf-image" class="bold">Image</label>
+				<input type="file" id="rf-image" accept="image/png,image/jpeg" bind:files={image} required />
 			</div>
-			<div class="homemade">
+			<div>
 				<input type="checkbox" id="rf-homemade" bind:checked={homemade} />
 				<label for="rf-homemade">Homemade</label>
 			</div>
-			<div class="vegetarian">
+			<div>
 				<input type="checkbox" id="rf-vegetarian" bind:checked={vegetarian} />
 				<label for="rf-vegetarian">Suitable for vegetarians</label>
 			</div>
-			<div class="ingredients flex">
+			<div class="flex">
 				<label for="rf-ingredients" class="bold">Ingredients</label>
 				<textarea id="rf-ingredients" bind:value={ingredients} rows="6" />
 			</div>
-			<div class="directions flex">
+			<div class="flex">
 				<label for="rf-directions" class="bold">Directions</label>
 				<textarea id="rf-directions" bind:value={directions} rows="6" />
 			</div>
-			<div class="secret-code flex">
+			<div class="flex">
 				<label for="rf-secret-code" class="bold">Secret code</label>
-				<input type="text" id="rf-secret-code" bind:value={secretCode} required />
+				<input type="password" id="rf-secret-code" bind:value={secretCode} required />
 			</div>
 			{#if successMsg}
 			<p class="success-msg">{successMsg}</p>
@@ -150,13 +178,13 @@
 		flex-direction: column;
 	}
 
-	input[type=text], textarea, select {
+	input[type=text], input[type=password], textarea, select {
 		border: 1px solid var(--stroke);
 		border-radius: 0.375rem;
 		padding: 0.25rem 0.5rem;
 	}
 
-	input[type=text], textarea {
+	input[type=text], input[type=password], textarea {
 		background-color: var(--background-dark);
 	}
 
@@ -164,7 +192,7 @@
 		resize: none;
 	}
 
-	input[type=text]:focus, textarea:focus {
+	input[type=text]:focus, input[type=password]:focus, textarea:focus {
 		outline: 2px solid var(--highlight);
 	}
 
