@@ -9,6 +9,9 @@ export class Recipe {
 	name: string;
 
 	@Column()
+	imageBase64: string;
+
+	@Column()
 	isHomemade: boolean;
 
 	@Column("simple-array")

@@ -3,13 +3,6 @@
 
 	export let recipe: Recipe;
 	export let isVisible: boolean;
-
-	// let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
-	let imgUrl = "";
-
-	function handleError(): void {
-		imgUrl = new URL("../assets/images/no-image.jpg", import.meta.url).href;
-	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -20,7 +13,8 @@
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
 	</div>
 	{/if}
-	<img src={imgUrl} alt="Thumbnail of the recipe" on:error={handleError} />
+	<!-- TODO: add on:error to load placeholder on error -->
+	<img src={recipe.imageBase64} alt="Thumbnail of the recipe" />
 	<h6>{recipe.name}</h6>
 </li>
 

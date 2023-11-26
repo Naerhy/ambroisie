@@ -16,6 +16,10 @@ export class AddRecipeDto {
 	@IsNotEmpty()
 	name: string;
 
+	@IsString()
+	@IsNotEmpty()
+	imageBase64: string;
+
 	@IsBoolean()
 	isHomemade: boolean;
 

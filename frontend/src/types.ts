@@ -1,7 +1,7 @@
 export interface Recipe {
 	id: number;
 	name: string;
-	imgPath: string;
+	imageBase64: string;
 	isHomemade: boolean;
 	mealTypes: ("breakfast" | "lunch" | "tea" | "dinner")[];
 	difficulty: "easy" | "medium" | "hard";

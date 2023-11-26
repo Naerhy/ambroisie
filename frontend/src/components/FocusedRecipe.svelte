@@ -3,13 +3,6 @@
 	import Modal from "./Modal.svelte";
 
 	export let recipe: Recipe;
-
-	// let imgUrl = new URL(`../assets/images/${recipe.filename}.png`, import.meta.url).href;
-	let imgUrl = "";
-
-	function handleError(): void {
-		imgUrl = new URL("../assets/images/no-image.jpg", import.meta.url).href;
-	}
 </script>
 
 <Modal on:click>
@@ -38,7 +31,8 @@
 			</li>
 		</ul>
 		<div class="photo">
-			<img src={imgUrl} alt="Recipe" on:error={handleError} />
+			<!-- TODO: add on:error to load placeholder on error -->
+			<img src={recipe.imageBase64} alt="Recipe" />
 		</div>
 		<div class="ingredients">
 			<h3>Ingredients</h3>

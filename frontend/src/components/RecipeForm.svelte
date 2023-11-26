@@ -18,6 +18,17 @@
 	let errorMsg = "";
 
 	function handleSubmit(): void {
+		/*for (const p of photo!) {
+			const reader = new FileReader();
+			reader.addEventListener("load", () => {
+				console.log(reader.result);
+			});
+			reader.addEventListener("error", () => {
+				console.log(reader.error);
+			});
+			reader.readAsDataURL(p);
+			// remove events once done
+		}*/
 		if (Math.random() < 0.5) {
 			successMsg = "";
 			errorMsg = "An error message is displayed!";
@@ -70,7 +81,7 @@
 			</div>
 			<div class="photo flex">
 				<label for="rf-photo" class="bold">Photo</label>
-				<input type="file" id="rf-photo" accept="image/png" bind:files={photo} />
+				<input type="file" id="rf-photo" accept="image/png,image/jpeg" bind:files={photo} required />
 			</div>
 			<div class="homemade">
 				<input type="checkbox" id="rf-homemade" bind:checked={homemade} />
