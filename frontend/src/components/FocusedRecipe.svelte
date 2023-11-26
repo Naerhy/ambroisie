@@ -30,7 +30,7 @@
 				{recipe.servings.toString()}
 			</li>
 		</ul>
-		<div class="photo">
+		<div class="image">
 			<!-- TODO: add on:error to load placeholder on error -->
 			<img src={recipe.imageBase64} alt="Recipe" />
 		</div>
@@ -58,7 +58,7 @@
 		display: grid;
 		gap: 1.5rem;
 		grid-template-areas:
-			"title title"
+			"name name"
 			"infos infos"
 			"photo ingredients"
 			"directions directions";
@@ -67,7 +67,7 @@
 	}
 
 	h2 {
-		grid-area: title;
+		grid-area: name;
 		font-size: 2.25rem;
 		line-height: 2.5rem;
 		text-align: center;
@@ -98,7 +98,7 @@
 		font-weight: 700;
 	}
 
-	.photo {
+	.image {
 		grid-area: photo;
 	}
 
