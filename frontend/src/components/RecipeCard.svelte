@@ -3,6 +3,12 @@
 
 	export let recipe: Recipe;
 	export let isVisible: boolean;
+
+	let imgSrc = recipe.imageBase64;
+
+	function handleError(): void {
+		imgSrc = new URL("../../assets/no-image.png", import.meta.url).href;
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -14,7 +20,7 @@
 	</div>
 	{/if}
 	<!-- TODO: add on:error to load placeholder on error -->
-	<img src={recipe.imageBase64} alt="Thumbnail of the recipe" />
+	<img src={imgSrc} alt="Thumbnail of the recipe" on:error={handleError} />
 	<h6>{recipe.name}</h6>
 </li>
 

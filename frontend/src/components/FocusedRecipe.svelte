@@ -3,6 +3,12 @@
 	import Modal from "./Modal.svelte";
 
 	export let recipe: Recipe;
+
+	let imgSrc = recipe.imageBase64;
+
+	function handleError(): void {
+		imgSrc = new URL("../../assets/no-image.png", import.meta.url).href;
+	}
 </script>
 
 <Modal on:click>
@@ -10,45 +16,57 @@
 		<h2>{recipe.name}</h2>
 		<ul class="infos">
 			<li>
-				<span>Meal types:</span>
+				<span>Id</span>
+				{recipe.id}
+			</li>
+			<li>
+				<span>Meal types</span>
 				{recipe.mealTypes.join(", ")}
 			</li>
 			<li>
-				<span>Difficulty:</span>
+				<span>Difficulty</span>
 				{recipe.difficulty}
 			</li>
 			<li>
-				<span>Cooking time:</span>
+				<span>Cooking time</span>
 				{recipe.cookingTime}
 			</li>
 			<li>
-				<span>Vegetarian:</span>
+				<span>Vegetarian</span>
 				{recipe.isVegetarian ? "yes" : "no"}
 			</li>
 			<li>
-				<span>Servings:</span>
+				<span>Servings</span>
 				{recipe.servings.toString()}
 			</li>
 		</ul>
 		<div class="image">
 			<!-- TODO: add on:error to load placeholder on error -->
-			<img src={recipe.imageBase64} alt="Recipe" />
+			<img src={imgSrc} alt="Recipe" on:error={handleError} />
 		</div>
 		<div class="ingredients">
 			<h3>Ingredients</h3>
+			{#if recipe.ingredients.length === 0}
+			<p>No ingredients have been added to the recipe.</p>
+			{:else}
 			<ul>
 				{#each recipe.ingredients as ingredient}
 				<li>{ingredient}</li>
 				{/each}
 			</ul>
+			{/if}
 		</div>
 		<div class="directions">
 			<h3>Directions</h3>
+			{#if recipe.directions.length === 0}
+			<p>No directions have been added to the recipe.</p>
+			{:else}
 			<ol>
 				{#each recipe.directions as direction}
 				<li>{direction}</li>
 				{/each}
 			</ol>
+			{/if}
 		</div>
 	</div>
 </Modal>
