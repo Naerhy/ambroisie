@@ -19,6 +19,15 @@
 			dispatch("clickrecipe", { recipe });
 		}
 	}
+
+	function shuffleRecipes(_recipes: Recipe[]): void {
+		for (let i = _recipes.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[_recipes[i], _recipes[j]] = [_recipes[j], _recipes[i]];
+		}
+	}
+
+	$: shuffleRecipes(recipes);
 </script>
 
 <main>
