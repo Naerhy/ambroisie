@@ -7,6 +7,7 @@ import {
 	IsNotEmpty,
 	IsNumber,
 	IsString,
+	Matches,
 	Max,
 	Min
 } from "class-validator";
@@ -17,7 +18,7 @@ export class AddRecipeDto {
 	name: string;
 
 	@IsString()
-	@IsNotEmpty()
+	@Matches(/^data:image\/(jpeg|png);base64,.+$/)
 	imageBase64: string;
 
 	@IsBoolean()
