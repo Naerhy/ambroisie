@@ -11,13 +11,13 @@
 
 	let currentPage: "home" | "form" = "home";
 	let focusedRecipe: Recipe | null = null;
+	let recipes: Recipe[] = [];
 
-	async function loadRecipes(): Promise<Recipe[]> {
+	async function loadRecipes(): Promise<void> {
 		// no need to wrap into try/catch because Svelte already wraps it when
 		// calling it from html
-		const { data: recipes } = await axios.get<Recipe[]>("http://localhost:3000/recipes");
-		console.log(recipes); // TODO: remove log
-		return recipes;
+		const { data: _recipes } = await axios.get<Recipe[]>("http://localhost:3000/recipes");
+		recipes = _recipes;
 	}
 
 	function handleClickRecipe(event: any): void {
@@ -37,11 +37,11 @@
 <FocusedRecipe recipe={focusedRecipe} on:click={() => focusedRecipe = null} />
 {/if}
 <Header bind:currentPage />
-{#await loadRecipes() then recipes}
+{#await loadRecipes() then}
 {#if currentPage === "home"}
-<RecipesList {recipes} on:clickrecipe={handleClickRecipe} />
+<RecipesList recipes={[...recipes]} on:clickrecipe={handleClickRecipe} />
 {:else}
-<RecipeForm />
+<RecipeForm bind:recipes />
 {/if}
 {:catch error}
 {@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}

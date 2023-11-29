@@ -1,7 +1,10 @@
 <script lang="ts">
 	import axios from "axios";
 	import Button from "./Button.svelte";
-    import GroupCheckboxes from "./GroupCheckboxes.svelte";
+	import GroupCheckboxes from "./GroupCheckboxes.svelte";
+	import type { Recipe } from "../types";
+
+	export let recipes: Recipe[];
 
 	let name = "";
 	let difficulty = "easy";
@@ -13,12 +16,18 @@
 	let vegetarian = false;
 	let ingredients = "";
 	let directions = "";
-	let secretCode = "";
+	let secretCodeAdd = "";
 
-	let successMsg = "";
-	let errorMsg = "";
+	let successMsgAdd = "";
+	let errorMsgAdd = "";
 
-	async function handleSubmit(): Promise<void> {
+	let selectedRecipe: Recipe | undefined = undefined;
+	let secretCodeRemove = "";
+
+	let successMsgRemove = "";
+	let errorMsgRemove = "";
+
+	async function handleSubmitAdd(): Promise<void> {
 		if (image !== undefined && image.length > 0) {
 			try {
 				const imageBase64 = await imageToBase64(image.item(0)!);
@@ -34,10 +43,11 @@
 						servings: Number(servings),
 						ingredients: ingredients === "" ? [] : ingredients.split("\n"),
 						directions: directions === "" ? [] : directions.split("\n"),
-						secretCode: Number(secretCode)
+						secretCode: Number(secretCodeAdd)
 					};
 					const { data: recipe } = await axios.post("http://localhost:3000/recipes", _data);
-					successMsg = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
+					recipes = [recipe, ...recipes];
+					successMsgAdd = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
 				} else {
 					throw new Error("type of image base64 is not valid");
 				}
@@ -45,9 +55,35 @@
 				// pass error message to errorMsg variable
 				if (axios.isAxiosError(error)) {
 					if (error.response?.data) {
-						errorMsg = error.response.data.message;
+						errorMsgAdd = error.response.data.message;
 					} else {
-						errorMsg = `axios: ${error.message}`;
+						errorMsgAdd = `axios: ${error.message}`;
+					}
+				} else {
+					// TODO: check if error has generic string message first
+					console.log("unexpected error");
+				}
+			}
+		}
+	}
+
+	async function handleSubmitRemove(): Promise<void> {
+		if (selectedRecipe) {
+			try {
+				const res = await axios.delete(`http://localhost:3000/recipes/${selectedRecipe.id}`, {
+					data: {
+						secretCode: Number(secretCodeRemove)
+					}
+				});
+				recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
+				successMsgRemove = "recipe has been succesfully deleted";
+			} catch (error: unknown) {
+				// pass error message to errorMsg variable
+				if (axios.isAxiosError(error)) {
+					if (error.response?.data) {
+						errorMsgRemove = error.response.data.message;
+					} else {
+						errorMsgRemove = `axios: ${error.message}`;
 					}
 				} else {
 					// TODO: check if error has generic string message first
@@ -69,92 +105,118 @@
 
 <main>
 	<section>
-		<h2>Add a recipe</h2>
-		<form on:submit|preventDefault={handleSubmit}>
-			<div class="flex">
-				<label for="rf-name" class="bold">Name</label>
-				<input type="text" id="rf-name" bind:value={name} required />
-			</div>
-			<div class="flex">
-				<label for="rf-difficulty" class="bold">Difficulty</label>
-				<select id="rf-difficulty" bind:value={difficulty}>
-					<option value="easy">Easy</option>
-					<option value="medium">Medium</option>
-					<option value="hard">Hard</option>
-				</select>
-			</div>
-			<div class="flex">
-				<label for="rf-cooking-time" class="bold">Cooking time</label>
-				<select id="rf-cooking-time" bind:value={cookingTime}>
-					<option value="short">Short</option>
-					<option value="medium">Medium</option>
-					<option value="long">Long</option>
-				</select>
-			</div>
-			<div>
-				<GroupCheckboxes
-					title="Meal type"
-					name="meal-type"
-					values={["breakfast", "lunch", "tea", "dinner"]}
-					bind:groupValues={mealTypes}
-				/>
-			</div>
-			<div class="flex">
-				<label for="rf-servings" class="bold">Servings</label>
-				<select id="rf-servings" bind:value={servings}>
-					{#each ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] as nb}
-					<option value={nb}>{nb}</option>
-					{/each}
-				</select>
-			</div>
-			<div class="flex">
-				<label for="rf-image" class="bold">Image</label>
-				<input type="file" id="rf-image" accept="image/png,image/jpeg" bind:files={image} required />
-			</div>
-			<div>
-				<input type="checkbox" id="rf-homemade" bind:checked={homemade} />
-				<label for="rf-homemade">Homemade</label>
-			</div>
-			<div>
-				<input type="checkbox" id="rf-vegetarian" bind:checked={vegetarian} />
-				<label for="rf-vegetarian">Suitable for vegetarians</label>
-			</div>
-			<div class="flex">
-				<label for="rf-ingredients" class="bold">Ingredients</label>
-				<textarea id="rf-ingredients" bind:value={ingredients} rows="6" />
-			</div>
-			<div class="flex">
-				<label for="rf-directions" class="bold">Directions</label>
-				<textarea id="rf-directions" bind:value={directions} rows="6" />
-			</div>
-			<div class="flex">
-				<label for="rf-secret-code" class="bold">Secret code</label>
-				<input type="password" id="rf-secret-code" bind:value={secretCode} required />
-			</div>
-			{#if successMsg}
-			<p class="success-msg">{successMsg}</p>
-			{/if}
-			{#if errorMsg}
-			<p class="error-msg">{errorMsg}</p>
-			{/if}
-			<Button>Add</Button>
-		</form>
+		<div>
+			<h2>Add a recipe</h2>
+			<form on:submit|preventDefault={handleSubmitAdd}>
+				<div class="flex">
+					<label for="rf-name" class="bold">Name</label>
+					<input type="text" id="rf-name" bind:value={name} required />
+				</div>
+				<div class="flex">
+					<label for="rf-difficulty" class="bold">Difficulty</label>
+					<select id="rf-difficulty" bind:value={difficulty}>
+						<option value="easy">Easy</option>
+						<option value="medium">Medium</option>
+						<option value="hard">Hard</option>
+					</select>
+				</div>
+				<div class="flex">
+					<label for="rf-cooking-time" class="bold">Cooking time</label>
+					<select id="rf-cooking-time" bind:value={cookingTime}>
+						<option value="short">Short</option>
+						<option value="medium">Medium</option>
+						<option value="long">Long</option>
+					</select>
+				</div>
+				<div>
+					<GroupCheckboxes
+						title="Meal type"
+						name="meal-type"
+						values={["breakfast", "lunch", "tea", "dinner"]}
+						bind:groupValues={mealTypes}
+					/>
+				</div>
+				<div class="flex">
+					<label for="rf-servings" class="bold">Servings</label>
+					<select id="rf-servings" bind:value={servings}>
+						{#each ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] as nb}
+						<option value={nb}>{nb}</option>
+						{/each}
+					</select>
+				</div>
+				<div class="flex">
+					<label for="rf-image" class="bold">Image</label>
+					<input type="file" id="rf-image" accept="image/png,image/jpeg" bind:files={image} required />
+				</div>
+				<div>
+					<input type="checkbox" id="rf-homemade" bind:checked={homemade} />
+					<label for="rf-homemade">Homemade</label>
+				</div>
+				<div>
+					<input type="checkbox" id="rf-vegetarian" bind:checked={vegetarian} />
+					<label for="rf-vegetarian">Suitable for vegetarians</label>
+				</div>
+				<div class="flex">
+					<label for="rf-ingredients" class="bold">Ingredients</label>
+					<textarea id="rf-ingredients" bind:value={ingredients} rows="6" />
+				</div>
+				<div class="flex">
+					<label for="rf-directions" class="bold">Directions</label>
+					<textarea id="rf-directions" bind:value={directions} rows="6" />
+				</div>
+				<div class="flex">
+					<label for="rf-secret-code-add" class="bold">Secret code</label>
+					<input type="password" id="rf-secret-code-add" bind:value={secretCodeAdd} required />
+				</div>
+				{#if successMsgAdd}
+				<p class="success-msg">{successMsgAdd}</p>
+				{/if}
+				{#if errorMsgAdd}
+				<p class="error-msg">{errorMsgAdd}</p>
+				{/if}
+				<Button>Add</Button>
+			</form>
+		</div>
+		<div>
+			<h2>Remove a recipe</h2>
+			<form on:submit|preventDefault={handleSubmitRemove}>
+				<div class="flex">
+					<label for="rf-recipe" class="bold">Select recipe</label>
+					<select id="rf-recipe" bind:value={selectedRecipe}>
+						{#each recipes as recipe}
+						<option value={recipe}>{recipe.name}</option>
+						{/each}
+					</select>
+				</div>
+				<div class="flex">
+					<label for="rf-secret-code-remove" class="bold">Secret code</label>
+					<input type="password" id="rf-secret-code-remove" bind:value={secretCodeRemove} required />
+				</div>
+				{#if successMsgRemove}
+				<p class="success-msg">{successMsgRemove}</p>
+				{/if}
+				{#if errorMsgRemove}
+				<p class="error-msg">{errorMsgRemove}</p>
+				{/if}
+				<Button>Remove</Button>
+			</form>
+		</div>
 	</section>
 </main>
 
 <style>
-	main {
-		margin: auto;
-		width: 30%;
+	section {
+		align-items: flex-start;
+		display: flex;
+		column-gap: 2rem;
+		justify-content: center;
 	}
 
-	section {
+	section > div {
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
-		display: flex;
-		flex-direction: column;
+		flex: 0 0 500px;
 		padding: 1.5rem;
-		row-gap: 1.5rem;
 	}
 
 	form {
@@ -166,6 +228,7 @@
 	h2 {
 		font-size: 2.25rem;
 		line-height: 2.5rem;
+		margin-bottom: 1.5rem;
 		text-align: center;
 	}
 
