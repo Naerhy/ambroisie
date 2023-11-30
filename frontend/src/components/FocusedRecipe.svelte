@@ -16,10 +16,6 @@
 		<h2>{recipe.name}</h2>
 		<ul class="infos">
 			<li>
-				<span>Id</span>
-				{recipe.id}
-			</li>
-			<li>
 				<span>Meal types</span>
 				{recipe.mealTypes.join(", ")}
 			</li>
