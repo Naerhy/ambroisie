@@ -7,11 +7,11 @@
 
 <div class="title">{title}</div>
 {#each values as value}
-{@const id = `gc-${name}-${value}`}
-<div>
-	<input type="checkbox" {id} {value} bind:group={groupValues}/>
-	<label for={id}>{value.charAt(0).toUpperCase() + value.slice(1)}</label>
-</div>
+	{@const id = `gc-${name}-${value}`}
+	<div>
+		<input type="checkbox" {id} {value} bind:group={groupValues}/>
+		<label for={id}>{value.charAt(0).toUpperCase() + value.slice(1)}</label>
+	</div>
 {/each}
 
 <style>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import axios from "axios";
 	import '@fontsource-variable/inter';
+	import type { ComponentEvents } from "svelte";
 	import type { Recipe } from "./types";
 	import Footer from "./components/Footer.svelte";
 	import RecipesList from "./components/RecipesList.svelte";
@@ -20,8 +21,8 @@
 		recipes = _recipes;
 	}
 
-	function handleClickRecipe(event: any): void {
-		focusedRecipe = event.detail.recipe;
+	function handleClickRecipe(event: ComponentEvents<RecipesList>["clickrecipe"]): void {
+		focusedRecipe = event.detail;
 	}
 
 	function handleKeyDown(event: KeyboardEvent): void {
@@ -34,27 +35,27 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 {#if focusedRecipe !== null}
-<FocusedRecipe recipe={focusedRecipe} on:click={() => focusedRecipe = null} />
+	<FocusedRecipe recipe={focusedRecipe} on:click={() => focusedRecipe = null} />
 {/if}
 <Header bind:currentPage />
 {#await loadRecipes() then}
-{#if currentPage === "home"}
-<RecipesList recipes={[...recipes]} on:clickrecipe={handleClickRecipe} />
-{:else}
-<RecipeForm bind:recipes />
-{/if}
+	{#if currentPage === "home"}
+		<RecipesList recipes={[...recipes]} on:clickrecipe={handleClickRecipe} />
+	{:else}
+		<RecipeForm bind:recipes />
+	{/if}
 {:catch error}
-{@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}
-<main>
-	<div>
-		<h2>Oops!</h2>
-		<p>
-			The website encountered an error while trying to load the recipes.<br>
-			Reason: {errMsg}.
-		</p>
-		<Button type="button" on:click={() => location.reload()}>Reload</Button>
-	</div>
-</main>
+	{@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}
+	<main>
+		<div>
+			<h2>Oops!</h2>
+			<p>
+				The website encountered an error while trying to load the recipes.<br>
+				Reason: {errMsg}.
+			</p>
+			<Button type="button" on:click={() => location.reload()}>Reload</Button>
+		</div>
+	</main>
 {/await}
 <Footer />
 

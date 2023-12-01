@@ -6,7 +6,7 @@
 
 	export let recipes: Recipe[];
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ clickrecipe: Recipe }>();
 
 	let filter = "";
 	let mealTypes = ["breakfast", "lunch", "tea", "dinner"];
@@ -16,7 +16,7 @@
 
 	function clickRecipe(recipe: Recipe): void {
 		if (recipe.isHomemade) {
-			dispatch("clickrecipe", { recipe });
+			dispatch("clickrecipe", recipe);
 		}
 	}
 
@@ -68,13 +68,13 @@
 	<section>
 		<ul>
 			{#each recipes as recipe}
-			{@const isVisible = recipe.name.toLowerCase().includes(filter)
-				&& recipe.mealTypes.some((mealType) => mealTypes.includes(mealType))
-				&& difficulties.includes(recipe.difficulty)
-				&& cookingTimes.includes(recipe.cookingTime)
-				&& (!vegetarian || recipe.isVegetarian)
-			}
-			<RecipeCard {recipe} {isVisible} on:click={() => clickRecipe(recipe)} />
+				{@const isVisible = recipe.name.toLowerCase().includes(filter)
+					&& recipe.mealTypes.some((mealType) => mealTypes.includes(mealType))
+					&& difficulties.includes(recipe.difficulty)
+					&& cookingTimes.includes(recipe.cookingTime)
+					&& (!vegetarian || recipe.isVegetarian)
+				}
+				<RecipeCard {recipe} {isVisible} on:click={() => clickRecipe(recipe)} />
 			{/each}
 		</ul>
 	</section>
