@@ -2,7 +2,7 @@
 	import axios from "axios";
 	import '@fontsource-variable/inter';
 	import type { ComponentEvents } from "svelte";
-	import type { Recipe } from "./types";
+	import type { Page, Recipe } from "./types";
 	import Footer from "./components/Footer.svelte";
 	import RecipesList from "./components/RecipesList.svelte";
 	import Button from "./components/Button.svelte";
@@ -10,7 +10,7 @@
 	import Header from "./components/Header.svelte";
 	import RecipeForm from './components/RecipeForm.svelte';
 
-	let currentPage: "home" | "form" = "home";
+	let currentPage: Page = "home";
 	let focusedRecipe: Recipe | null = null;
 	let recipes: Recipe[] = [];
 

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import axios from "axios";
-	import Button from "./Button.svelte";
-	import GroupCheckboxes from "./GroupCheckboxes.svelte";
 	import type { Recipe } from "../types";
+	import Form from "./Form.svelte";
+	import GroupCheckboxes from "./GroupCheckboxes.svelte";
 
 	export let recipes: Recipe[];
 
@@ -16,16 +16,13 @@
 	let vegetarian = false;
 	let ingredients = "";
 	let directions = "";
-	let secretCodeAdd = "";
-
-	let successMsgAdd = "";
-	let errorMsgAdd = "";
 
 	let selectedRecipe: Recipe | undefined = undefined;
-	let secretCodeRemove = "";
 
-	let successMsgRemove = "";
-	let errorMsgRemove = "";
+	let secretCodes = ["", ""];
+
+	let successMsgs = ["", ""];
+	let errorMsgs = ["", ""];
 
 	async function handleSubmitAdd(): Promise<void> {
 		if (image !== undefined && image.length > 0) {
@@ -43,26 +40,17 @@
 						servings: Number(servings),
 						ingredients: ingredients === "" ? [] : ingredients.split("\n"),
 						directions: directions === "" ? [] : directions.split("\n"),
-						secretCode: Number(secretCodeAdd)
+						secretCode: Number(secretCodes[0])
 					};
 					const { data: recipe } = await axios.post("http://localhost:3000/recipes", _data);
 					recipes = [recipe, ...recipes];
-					successMsgAdd = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
+					errorMsgs[0] = "";
+					successMsgs[0] = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
 				} else {
 					throw new Error("type of image base64 is not valid");
 				}
 			} catch (error: unknown) {
-				// pass error message to errorMsg variable
-				if (axios.isAxiosError(error)) {
-					if (error.response?.data) {
-						errorMsgAdd = error.response.data.message;
-					} else {
-						errorMsgAdd = `axios: ${error.message}`;
-					}
-				} else {
-					// TODO: check if error has generic string message first
-					console.log("unexpected error");
-				}
+				displayErrorMsg(error, 0);
 			}
 		}
 	}
@@ -71,24 +59,13 @@
 		if (selectedRecipe) {
 			try {
 				const res = await axios.delete(`http://localhost:3000/recipes/${selectedRecipe.id}`, {
-					data: {
-						secretCode: Number(secretCodeRemove)
-					}
+					data: { secretCode: Number(secretCodes[1]) }
 				});
 				recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
-				successMsgRemove = "recipe has been succesfully deleted";
+				errorMsgs[1] = "";
+				successMsgs[1] = "recipe has been succesfully deleted";
 			} catch (error: unknown) {
-				// pass error message to errorMsg variable
-				if (axios.isAxiosError(error)) {
-					if (error.response?.data) {
-						errorMsgRemove = error.response.data.message;
-					} else {
-						errorMsgRemove = `axios: ${error.message}`;
-					}
-				} else {
-					// TODO: check if error has generic string message first
-					console.log("unexpected error");
-				}
+				displayErrorMsg(error, 1);
 			}
 		}
 	}
@@ -101,13 +78,27 @@
 			reader.readAsDataURL(file);
 		});
 	}
+
+	function displayErrorMsg(error: unknown, index: number): void {
+		if (axios.isAxiosError(error)) {
+			errorMsgs[index] = error.response?.data ? error.response.data.message : `axios: ${error.message}`;
+		} else {
+			// TODO: check if error has generic string message first
+			errorMsgs[index] = "unexpected error";
+		}
+	}
 </script>
 
 <main>
 	<section>
 		<div>
-			<h2>Add a recipe</h2>
-			<form on:submit|preventDefault={handleSubmitAdd}>
+			<Form
+				title="Add a recipe"
+				btnText="Add"
+				successMsg={successMsgs[0]}
+				errorMsg={errorMsgs[0]}
+				on:submit={handleSubmitAdd}
+			>
 				<div class="flex">
 					<label for="rf-name" class="bold">Name</label>
 					<input type="text" id="rf-name" bind:value={name} required />
@@ -166,40 +157,31 @@
 				</div>
 				<div class="flex">
 					<label for="rf-secret-code-add" class="bold">Secret code</label>
-					<input type="password" id="rf-secret-code-add" bind:value={secretCodeAdd} required />
+					<input type="password" id="rf-secret-code-add" bind:value={secretCodes[0]} required />
 				</div>
-				{#if successMsgAdd}
-				<p class="success-msg">{successMsgAdd}</p>
-				{/if}
-				{#if errorMsgAdd}
-				<p class="error-msg">{errorMsgAdd}</p>
-				{/if}
-				<Button>Add</Button>
-			</form>
+			</Form>
 		</div>
 		<div>
-			<h2>Remove a recipe</h2>
-			<form on:submit|preventDefault={handleSubmitRemove}>
+			<Form
+				title="Remove a recipe"
+				btnText="Remove"
+				successMsg={successMsgs[1]}
+				errorMsg={errorMsgs[1]}
+				on:submit={handleSubmitRemove}
+			>
 				<div class="flex">
 					<label for="rf-recipe" class="bold">Select recipe</label>
 					<select id="rf-recipe" bind:value={selectedRecipe}>
 						{#each recipes as recipe}
-						<option value={recipe}>{recipe.name}</option>
+							<option value={recipe}>{recipe.name}</option>
 						{/each}
 					</select>
 				</div>
 				<div class="flex">
 					<label for="rf-secret-code-remove" class="bold">Secret code</label>
-					<input type="password" id="rf-secret-code-remove" bind:value={secretCodeRemove} required />
+					<input type="password" id="rf-secret-code-remove" bind:value={secretCodes[1]} required />
 				</div>
-				{#if successMsgRemove}
-				<p class="success-msg">{successMsgRemove}</p>
-				{/if}
-				{#if errorMsgRemove}
-				<p class="error-msg">{errorMsgRemove}</p>
-				{/if}
-				<Button>Remove</Button>
-			</form>
+			</Form>
 		</div>
 	</section>
 </main>
@@ -217,19 +199,6 @@
 		border-radius: 0.25rem;
 		flex: 0 0 500px;
 		padding: 1.5rem;
-	}
-
-	form {
-		display: flex;
-		flex-direction: column;
-		row-gap: 1rem;
-	}
-
-	h2 {
-		font-size: 2.25rem;
-		line-height: 2.5rem;
-		margin-bottom: 1.5rem;
-		text-align: center;
 	}
 
 	.bold {
@@ -257,17 +226,5 @@
 
 	input[type=text]:focus, input[type=password]:focus, textarea:focus {
 		outline: 2px solid var(--highlight);
-	}
-
-	.success-msg {
-		background-color: #dcfff1;
-		border: 1px solid #22a06b;
-		padding: 0.75rem;
-	}
-
-	.error-msg {
-		background-color: #ffeceb;
-		border: 1px solid #e2483d;
-		padding: 0.75rem;
 	}
 </style>

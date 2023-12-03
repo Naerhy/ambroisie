@@ -11,3 +11,5 @@ export interface Recipe {
 	ingredients: string[];
 	directions: string[];
 }
+
+export type Page = "home" | "form";
