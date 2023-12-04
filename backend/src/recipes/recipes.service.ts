@@ -13,7 +13,7 @@ export class RecipesService {
 	) {}
 
 	add(addRecipeDto: AddRecipeDto): Promise<Recipe> {
-		if (addRecipeDto.secretCode !== this.configService.get<number>("BACKEND_SECRET_CODE")) {
+		if (addRecipeDto.secretCode !== this.configService.get<number>("SECRET_CODE")) {
 			throw new ForbiddenException("invalid secret code");
 		}
 		const newRecipe = this.recipesRepository.create(addRecipeDto);
@@ -21,7 +21,7 @@ export class RecipesService {
 	}
 
 	async remove(id: number, secretCode: number): Promise<void> {
-		if (secretCode !== this.configService.get<number>("BACKEND_SECRET_CODE")) {
+		if (secretCode !== this.configService.get<number>("SECRET_CODE")) {
 			throw new ForbiddenException("invalid secret code");
 		}
 		const recipe = await this.recipesRepository.findOneBy({ id });
