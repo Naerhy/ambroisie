@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    depends_on:
+      - database
+    restart: always
+    environment:
+      - BACKEND_PORT
+      - SECRET_CODE
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+  database:
+    image: "postgres:16.1-alpine3.18"
+    restart: always
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
