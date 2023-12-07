@@ -45,7 +45,18 @@
 					const { data: recipe } = await axios.post("http://localhost:8080/api/recipes", _data);
 					recipes = [recipe, ...recipes];
 					errorMsgs[0] = "";
-					successMsgs[0] = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
+					successMsgs[0] = `Recipe "${recipe.name}" has been successfully added!`;
+					name = "";
+					difficulty = "easy";
+					cookingTime = "short";
+					mealTypes = [];
+					servings = "0";
+					image = undefined;
+					homemade = false;
+					vegetarian = false;
+					ingredients = "";
+					directions = "";
+					secretCodes[0] = "";
 				} else {
 					throw new Error("type of image base64 is not valid");
 				}
@@ -56,17 +67,20 @@
 	}
 
 	async function handleSubmitRemove(): Promise<void> {
-		if (selectedRecipe) {
-			try {
-				const res = await axios.delete(`http://localhost:8080/api/recipes/${selectedRecipe.id}`, {
-					data: { secretCode: Number(secretCodes[1]) }
-				});
-				recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
-				errorMsgs[1] = "";
-				successMsgs[1] = "recipe has been succesfully deleted";
-			} catch (error: unknown) {
-				displayErrorMsg(error, 1);
+		try {
+			if (!selectedRecipe) {
+				throw new Error("No selected recipe");
 			}
+			await axios.delete(`http://localhost:8080/api/recipes/${selectedRecipe.id}`, {
+				data: { secretCode: Number(secretCodes[1]) }
+			});
+			recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
+			errorMsgs[1] = "";
+			successMsgs[1] = `recipe "${selectedRecipe.name}" has been succesfully deleted`;
+			selectedRecipe = undefined;
+			secretCodes[1] = "";
+		} catch (error: unknown) {
+			displayErrorMsg(error, 1);
 		}
 	}
 
@@ -80,8 +94,11 @@
 	}
 
 	function displayErrorMsg(error: unknown, index: number): void {
+		successMsgs[index] = "";
 		if (axios.isAxiosError(error)) {
 			errorMsgs[index] = error.response?.data ? error.response.data.message : `axios: ${error.message}`;
+		} else if (error instanceof Error) {
+			errorMsgs[index] = error.message;
 		} else {
 			// TODO: check if error has generic string message first
 			errorMsgs[index] = "unexpected error";
