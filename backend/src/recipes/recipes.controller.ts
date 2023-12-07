@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, UseGuards } from "@nestjs/common";
 import { RecipesService } from "./recipes.service";
 import { Recipe } from "./recipe.entity";
 import { AddRecipeDto, RemoveRecipeDto } from "src/dto";
@@ -15,6 +15,7 @@ export class RecipesController {
 	}
 
 	@Delete(":id")
+	@HttpCode(204)
 	async remove(
 		@Param("id", ParseIntPipe) id: number,
 		@Body() removeRecipeDto: RemoveRecipeDto

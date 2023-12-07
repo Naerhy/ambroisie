@@ -27,7 +27,8 @@ import { ThrottlerModule } from "@nestjs/throttler";
 				username: configService.get<string>("POSTGRES_USER"),
 				password: configService.get<string>("POSTGRES_PASSWORD"),
 				database: configService.get<string>("POSTGRES_DB"),
-				entities: [Recipe]
+				entities: [Recipe],
+				synchronize: true
 			}),
 			inject: [ConfigService]
 		}),

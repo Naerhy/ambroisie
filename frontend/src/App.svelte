@@ -17,7 +17,7 @@
 	async function loadRecipes(): Promise<void> {
 		// no need to wrap into try/catch because Svelte already wraps it when
 		// calling it from html
-		const { data: _recipes } = await axios.get<Recipe[]>("http://localhost:3000/recipes");
+		const { data: _recipes } = await axios.get<Recipe[]>("http://localhost:8080/api/recipes");
 		recipes = _recipes;
 	}
 

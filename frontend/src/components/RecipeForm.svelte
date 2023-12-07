@@ -42,7 +42,7 @@
 						directions: directions === "" ? [] : directions.split("\n"),
 						secretCode: Number(secretCodes[0])
 					};
-					const { data: recipe } = await axios.post("http://localhost:3000/recipes", _data);
+					const { data: recipe } = await axios.post("http://localhost:8080/api/recipes", _data);
 					recipes = [recipe, ...recipes];
 					errorMsgs[0] = "";
 					successMsgs[0] = `Recipe ${recipe.name} (#${recipe.id}) has been successfully added!`;
@@ -58,7 +58,7 @@
 	async function handleSubmitRemove(): Promise<void> {
 		if (selectedRecipe) {
 			try {
-				const res = await axios.delete(`http://localhost:3000/recipes/${selectedRecipe.id}`, {
+				const res = await axios.delete(`http://localhost:8080/api/recipes/${selectedRecipe.id}`, {
 					data: { secretCode: Number(secretCodes[1]) }
 				});
 				recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
