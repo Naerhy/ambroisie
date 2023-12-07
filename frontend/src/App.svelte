@@ -37,13 +37,14 @@
 {#if focusedRecipe !== null}
 	<FocusedRecipe recipe={focusedRecipe} on:click={() => focusedRecipe = null} />
 {/if}
-<Header bind:currentPage />
 {#await loadRecipes() then}
+	<Header bind:currentPage />
 	{#if currentPage === "home"}
 		<RecipesList recipes={[...recipes]} on:clickrecipe={handleClickRecipe} />
 	{:else}
 		<RecipeForm bind:recipes />
 	{/if}
+	<Footer />
 {:catch error}
 	{@const errMsg = (error instanceof Error && error.message) ? error.message : "unexpected error"}
 	<main>
@@ -57,7 +58,6 @@
 		</div>
 	</main>
 {/await}
-<Footer />
 
 <style>
 	:global(:root) {

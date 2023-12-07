@@ -10,7 +10,7 @@
 	<button type="button" on:click={() => currentPage = "home"}>
 		<h1>Ambroisie</h1>
 	</button>
-	<Button type="button" on:click={() => currentPage = "form"}>Add recipe</Button>
+	<Button type="button" on:click={() => currentPage = "form"}>Update recipes</Button>
 </header>
 
 <style>
