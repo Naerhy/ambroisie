@@ -1,11 +1,17 @@
 services:
   frontend:
-    build: frontend
+    build:
+      context: frontend
+      args:
+        BACKEND_PORT: ${BACKEND_PORT}
+        SERVER_IP: ${SERVER_IP}
+        SERVER_PORT: ${SERVER_PORT}
     ports:
       - 8080:80
     depends_on:
       - backend
     restart: unless-stopped
+
   backend:
     build: backend
     depends_on:
@@ -17,6 +23,7 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
+
   database:
     image: "postgres:16.1-alpine3.18"
     volumes:

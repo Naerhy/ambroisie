@@ -9,6 +9,7 @@
 	import FocusedRecipe from "./components/FocusedRecipe.svelte";
 	import Header from "./components/Header.svelte";
 	import RecipeForm from './components/RecipeForm.svelte';
+	import { requestsUrl } from "./requests";
 
 	let currentPage: Page = "home";
 	let focusedRecipe: Recipe | null = null;
@@ -17,7 +18,7 @@
 	async function loadRecipes(): Promise<void> {
 		// no need to wrap into try/catch because Svelte already wraps it when
 		// calling it from html
-		const { data: _recipes } = await axios.get<Recipe[]>("http://localhost:8080/api/recipes");
+		const { data: _recipes } = await axios.get<Recipe[]>(requestsUrl);
 		recipes = _recipes;
 	}
 

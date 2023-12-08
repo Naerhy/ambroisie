@@ -3,6 +3,7 @@
 	import type { Recipe } from "../types";
 	import Form from "./Form.svelte";
 	import GroupCheckboxes from "./GroupCheckboxes.svelte";
+	import { requestsUrl } from "../requests";
 
 	export let recipes: Recipe[];
 
@@ -42,7 +43,7 @@
 						directions: directions === "" ? [] : directions.split("\n"),
 						secretCode: Number(secretCodes[0])
 					};
-					const { data: recipe } = await axios.post("http://localhost:8080/api/recipes", _data);
+					const { data: recipe } = await axios.post(requestsUrl, _data);
 					recipes = [recipe, ...recipes];
 					errorMsgs[0] = "";
 					successMsgs[0] = `Recipe "${recipe.name}" has been successfully added!`;
@@ -71,7 +72,7 @@
 			if (!selectedRecipe) {
 				throw new Error("No selected recipe");
 			}
-			await axios.delete(`http://localhost:8080/api/recipes/${selectedRecipe.id}`, {
+			await axios.delete(`${requestsUrl}/${selectedRecipe.id}`, {
 				data: { secretCode: Number(secretCodes[1]) }
 			});
 			recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
