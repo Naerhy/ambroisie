@@ -12,13 +12,13 @@
 	let cookingTime = "short";
 	let mealTypes: string[] = [];
 	let servings = "0";
-	let image: FileList | undefined = undefined;
+	let image: FileList | null = null;
 	let homemade = false;
 	let vegetarian = false;
 	let ingredients = "";
 	let directions = "";
 
-	let selectedRecipe: Recipe | undefined = undefined;
+	let selectedRecipe: Recipe | null = null;
 
 	let secretCodes = ["", ""];
 
@@ -26,44 +26,48 @@
 	let errorMsgs = ["", ""];
 
 	async function handleSubmitAdd(): Promise<void> {
-		if (image !== undefined && image.length > 0) {
-			try {
-				const imageBase64 = await imageToBase64(image.item(0)!);
-				if (typeof imageBase64 === "string") {
-					const _data = {
-						name,
-						imageBase64,
-						isHomemade: homemade,
-						mealTypes,
-						difficulty,
-						cookingTime,
-						isVegetarian: vegetarian,
-						servings: Number(servings),
-						ingredients: ingredients === "" ? [] : ingredients.split("\n"),
-						directions: directions === "" ? [] : directions.split("\n"),
-						secretCode: Number(secretCodes[0])
-					};
-					const { data: recipe } = await axios.post(requestsUrl, _data);
-					recipes = [recipe, ...recipes];
-					errorMsgs[0] = "";
-					successMsgs[0] = `Recipe "${recipe.name}" has been successfully added!`;
-					name = "";
-					difficulty = "easy";
-					cookingTime = "short";
-					mealTypes = [];
-					servings = "0";
-					image = undefined;
-					homemade = false;
-					vegetarian = false;
-					ingredients = "";
-					directions = "";
-					secretCodes[0] = "";
-				} else {
-					throw new Error("type of image base64 is not valid");
-				}
-			} catch (error: unknown) {
-				displayErrorMsg(error, 0);
+		try {
+			const _image = image?.item(0) ?? null;
+			if (_image === null) {
+				throw new Error("No image have been submitted");
 			}
+			if (_image.size > 2500000) {
+				throw new Error("Image size cannot exceed 2.5mb");
+			}
+			const imageBase64 = await imageToBase64(_image);
+			if (typeof imageBase64 !== "string") {
+				throw new Error("type of image base64 is not valid");
+			}
+			const _data = {
+				name,
+				imageBase64,
+				isHomemade: homemade,
+				mealTypes,
+				difficulty,
+				cookingTime,
+				isVegetarian: vegetarian,
+				servings: Number(servings),
+				ingredients: ingredients === "" ? [] : ingredients.split("\n"),
+				directions: directions === "" ? [] : directions.split("\n"),
+				secretCode: Number(secretCodes[0])
+			};
+			const { data: recipe } = await axios.post(requestsUrl, _data);
+			recipes = [recipe, ...recipes];
+			errorMsgs[0] = "";
+			successMsgs[0] = `Recipe "${recipe.name}" has been successfully added!`;
+			name = "";
+			difficulty = "easy";
+			cookingTime = "short";
+			mealTypes = [];
+			servings = "0";
+			image = null;
+			homemade = false;
+			vegetarian = false;
+			ingredients = "";
+			directions = "";
+			secretCodes[0] = "";
+		} catch (error: unknown) {
+			displayErrorMsg(error, 0);
 		}
 	}
 
@@ -78,7 +82,7 @@
 			recipes = recipes.filter((recipe) => recipe.id !== selectedRecipe?.id);
 			errorMsgs[1] = "";
 			successMsgs[1] = `recipe "${selectedRecipe.name}" has been succesfully deleted`;
-			selectedRecipe = undefined;
+			selectedRecipe = null;
 			secretCodes[1] = "";
 		} catch (error: unknown) {
 			displayErrorMsg(error, 1);
