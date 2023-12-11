@@ -22,6 +22,10 @@ export class MealsService {
 		}
 	}
 
+	findOne(id: number): Promise<Meal | null> {
+		return this.mealsRepository.findOneBy({ id })
+	}
+
 	findAll(): Promise<Meal[]> {
 		return this.mealsRepository.find();
 	}

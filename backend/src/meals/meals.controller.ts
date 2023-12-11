@@ -33,6 +33,11 @@ export class MealsController {
 		await this.mealsService.remove(id);
 	}
 
+	@Get(":id")
+	findOne(@Param("id", ParseIntPipe) id: number): Promise<Meal | null> {
+		return this.mealsService.findOne(id);
+	}
+
 	@Get()
 	find(): Promise<Meal[]> {
 		return this.mealsService.findAll();
