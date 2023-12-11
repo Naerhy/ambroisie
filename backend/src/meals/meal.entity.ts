@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Recipe {
+export class Meal {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -9,19 +9,16 @@ export class Recipe {
 	name: string;
 
 	@Column()
-	imageBase64: string;
-
-	@Column()
-	isHomemade: boolean;
+	isRecipe: boolean;
 
 	@Column("simple-array")
-	mealTypes: string[];
+	types: string[];
 
 	@Column()
-	difficulty: string;
+	difficulty: number;
 
 	@Column()
-	cookingTime: string;
+	cookingTime: number;
 
 	@Column()
 	isVegetarian: boolean;
@@ -29,9 +26,12 @@ export class Recipe {
 	@Column()
 	servings: number;
 
-	@Column("simple-array")
-	ingredients: string[];
+	@Column()
+	ingredients: string;
 
-	@Column("simple-array")
-	directions: string[];
+	@Column()
+	directions: string;
+
+	@Column()
+	imageBase64: string;
 }

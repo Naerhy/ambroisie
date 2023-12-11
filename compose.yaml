@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     environment:
       - BACKEND_PORT
-      - SECRET_CODE
+      - ADMIN_PASSWORD
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB

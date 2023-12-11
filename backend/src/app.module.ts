@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
-import { RecipesModule } from "./recipes/recipes.module";
+import { MealsModule } from "./meals/meals.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Recipe } from "./recipes/recipe.entity";
+import { Meal } from "./meals/meal.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { ThrottlerModule } from "@nestjs/throttler";
@@ -11,7 +11,7 @@ import { ThrottlerModule } from "@nestjs/throttler";
 		ConfigModule.forRoot({
 			validationSchema: Joi.object({
 				BACKEND_PORT: Joi.number().required(),
-				SECRET_CODE: Joi.number().required(),
+				ADMIN_PASSWORD: Joi.string().required(),
 				POSTGRES_USER: Joi.string().required(),
 				POSTGRES_PASSWORD: Joi.string().required(),
 				POSTGRES_DB: Joi.string().required()
@@ -27,12 +27,12 @@ import { ThrottlerModule } from "@nestjs/throttler";
 				username: configService.get<string>("POSTGRES_USER"),
 				password: configService.get<string>("POSTGRES_PASSWORD"),
 				database: configService.get<string>("POSTGRES_DB"),
-				entities: [Recipe],
+				entities: [Meal],
 				synchronize: true
 			}),
 			inject: [ConfigService]
 		}),
-		RecipesModule
+		MealsModule
 	],
 	controllers: [],
 	providers: []

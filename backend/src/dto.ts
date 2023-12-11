@@ -1,4 +1,3 @@
-import { PickType } from "@nestjs/mapped-types";
 import {
 	ArrayNotEmpty,
 	IsArray,
@@ -12,51 +11,44 @@ import {
 	Min
 } from "class-validator";
 
-export class AddRecipeDto {
+export class AddMealDto {
 	@IsString()
 	@IsNotEmpty()
 	name: string;
 
-	@IsString()
-	@Matches(/^data:image\/(jpeg|png);base64,.+$/)
-	imageBase64: string;
-
 	@IsBoolean()
-	isHomemade: boolean;
+	isRecipe: boolean;
 
 	@IsArray()
 	@ArrayNotEmpty()
 	@IsIn(["breakfast", "lunch", "tea", "dinner"], { each: true })
-	mealTypes: string[];
+	types: string[];
 
-	@IsString()
-	@IsIn(["easy", "medium", "hard"])
-	difficulty: string;
+	@IsNumber()
+	@Min(1)
+	@Max(3)
+	difficulty: number;
 
-	@IsString()
-	@IsIn(["short", "medium", "long"])
-	cookingTime: string;
+	@IsNumber()
+	@Min(1)
+	@Max(3)
+	cookingTime: number;
 
 	@IsBoolean()
 	isVegetarian: boolean;
 
 	@IsNumber()
 	@Min(0)
-	@Max(10)
+	@Max(12)
 	servings: number;
 
-	@IsArray()
-	@IsString({ each: true })
-	@IsNotEmpty({ each: true })
-	ingredients: string[];
+	@IsString()
+	ingredients: string;
 
-	@IsArray()
-	@IsString({ each: true })
-	@IsNotEmpty({ each: true })
-	directions: string[];
+	@IsString()
+	directions: string;
 
-	@IsNumber()
-	secretCode: number;
+	@IsString()
+	@Matches(/^data:image\/(jpeg|png);base64,.+$/)
+	imageBase64: string;
 }
-
-export class RemoveRecipeDto extends PickType(AddRecipeDto, ["secretCode"] as const) {}
