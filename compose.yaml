@@ -20,6 +20,7 @@ services:
     environment:
       - BACKEND_PORT
       - ADMIN_PASSWORD
+      - JWT_SECRET
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB

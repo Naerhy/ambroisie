@@ -52,3 +52,8 @@ export class AddMealDto {
 	@Matches(/^data:image\/(jpeg|png);base64,.+$/)
 	imageBase64: string;
 }
+
+export class PasswordDto {
+	@IsString()
+	password: string;
+}

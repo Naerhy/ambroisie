@@ -5,6 +5,7 @@ import { Meal } from "./meals/meal.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { ThrottlerModule } from "@nestjs/throttler";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
 	imports: [
@@ -12,6 +13,7 @@ import { ThrottlerModule } from "@nestjs/throttler";
 			validationSchema: Joi.object({
 				BACKEND_PORT: Joi.number().required(),
 				ADMIN_PASSWORD: Joi.string().required(),
+				JWT_SECRET: Joi.string().required(),
 				POSTGRES_USER: Joi.string().required(),
 				POSTGRES_PASSWORD: Joi.string().required(),
 				POSTGRES_DB: Joi.string().required()
@@ -32,9 +34,8 @@ import { ThrottlerModule } from "@nestjs/throttler";
 			}),
 			inject: [ConfigService]
 		}),
+		AuthModule,
 		MealsModule
-	],
-	controllers: [],
-	providers: []
+	]
 })
 export class AppModule {}
