@@ -31,7 +31,7 @@ export class AddMealDto {
 
 	@IsNumber()
 	@Min(1)
-	@Max(3)
+	@Max(4)
 	cookingTime: number;
 
 	@IsBoolean()
