@@ -16,6 +16,12 @@
 		addMeal: (meal: Meal): void => {
 			meals.value = [meal, ...meals.value]
 		},
+		modifyMeal: (updatedMeal: Meal): void => {
+			const id = meals.value.findIndex((meal) => meal.id === updatedMeal.id);
+			if (id !== -1) {
+				meals.value[id] = updatedMeal;
+			}
+		},
 		deleteMeal: (id: number): void => {
 			meals.value = meals.value.filter((meal) => meal.id !== id);
 		}

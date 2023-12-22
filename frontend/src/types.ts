@@ -41,5 +41,6 @@ export interface IsAdminProvider {
 export interface MealsProvider {
 	meals: Ref<Meal[]>;
 	addMeal: (meal: Meal) => void;
+	modifyMeal: (meal: Meal) => void;
 	deleteMeal: (id: number) => void;
 }

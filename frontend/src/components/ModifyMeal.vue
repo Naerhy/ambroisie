@@ -19,7 +19,7 @@
 		imageBase64: ""
 	};
 
-	const { meals, deleteMeal } = inject(mealsKey) as MealsProvider;
+	const { meals, modifyMeal } = inject(mealsKey) as MealsProvider;
 
 	const selectedMeal = ref<Meal | null>(null);
 	const inputs = ref<Inputs>(baseInputs);
@@ -30,14 +30,15 @@
 			try {
 				const accessToken = sessionStorage.getItem("accessToken");
 				const id = selectedMeal.value.id;
-				await axios.delete(
+				const { data: updatedMeal } = await axios.put<Meal>(
 					`http://localhost:3000/meals/${id}`,
+					inputs.value,
 					{ headers: { "Authorization": `Bearer ${accessToken}` }}
 				);
-				deleteMeal(id);
+				modifyMeal(updatedMeal);
 				formMessage.value = {
 					level: "success",
-					message: `recipe ${selectedMeal.value.name} has been succesfully deleted`
+					message: `recipe ${selectedMeal.value.name} has been succesfully updated`
 				};
 				selectedMeal.value = null;
 			} catch (error: unknown) {
@@ -48,13 +49,13 @@
 </script>
 
 <template>
-	<div v-if="selectedMeal === null" class="flex-col">
-		<label class="bold" for="meal">Select meal to modify</label>
-		<select id="meal" v-model="selectedMeal" class="select">
-			<option v-for="meal in meals" :value="meal">{{ meal.name }}</option>
-		</select>
-	</div>
-	<Form v-else @submit.prevent="handleSubmit()" btn-text="Modify" :form-message="formMessage">
-		<MealInputs :base-inputs="{ ...selectedMeal, imageBase64: '' }" @inputs-change="(newInputs) => inputs = newInputs" />
+	<Form @submit.prevent="handleSubmit()" btn-text="Modify" :form-message="formMessage">
+		<div v-if="selectedMeal === null" class="flex-col">
+			<label class="bold" for="meal">Select meal to modify</label>
+			<select id="meal" v-model="selectedMeal" class="select">
+				<option v-for="meal in meals" :value="meal">{{ meal.name }}</option>
+			</select>
+		</div>
+		<MealInputs v-else :base-inputs="{ ...selectedMeal, imageBase64: '' }" @inputs-change="(newInputs) => inputs = newInputs" />
 	</Form>
 </template>

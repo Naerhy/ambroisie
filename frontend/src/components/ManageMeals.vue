@@ -28,7 +28,7 @@
 				@click="view = v"
 			>{{ capitalize(v) }}</button>
 		</nav>
-		<div class="container">
+		<div>
 			<h2>{{ titles[view] }}</h2>
 			<AddMeal v-if="view === 'add'" />
 			<ModifyMeal v-else-if="view === 'modify'" />
@@ -48,7 +48,7 @@
 		margin-bottom: 1rem;
 	}
 
-	.container {
+	div {
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		padding: 1.5rem;
