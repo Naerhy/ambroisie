@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Meal } from "./meal.entity";
 import { Repository } from "typeorm";
-import { AddMealDto } from "src/dto";
+import { AddMealDto, UpdateMealDto } from "src/dto";
 
 @Injectable()
 export class MealsService {
@@ -13,6 +13,11 @@ export class MealsService {
 	add(addMealDto: AddMealDto): Promise<Meal> {
 		const newMeal = this.mealsRepository.create(addMealDto);
 		return this.mealsRepository.save(newMeal);
+	}
+
+	async update(id: number, updateMealDto: UpdateMealDto): Promise<Meal> {
+		await this.mealsRepository.update(id, updateMealDto);
+		return this.findOne(id) as Promise<Meal>;
 	}
 
 	async remove(id: number): Promise<void> {

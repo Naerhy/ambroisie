@@ -10,6 +10,7 @@ import {
 	Max,
 	Min
 } from "class-validator";
+import { PartialType } from "@nestjs/mapped-types";
 
 export class AddMealDto {
 	@IsString()
@@ -52,6 +53,8 @@ export class AddMealDto {
 	@Matches(/^data:image\/(jpeg|png);base64,.+$/)
 	imageBase64: string;
 }
+
+export class UpdateMealDto extends PartialType(AddMealDto) {}
 
 export class PasswordDto {
 	@IsString()
