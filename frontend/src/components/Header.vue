@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import "@fontsource-variable/dancing-script";
 	import { inject, ref } from 'vue';
 	import axios from "axios";
 	import { FormMessage, IsAdminProvider, LoadedView } from "../types";
@@ -76,6 +77,7 @@
 
 	h1 {
 		color: var(--highlight);
+		font-family: "Dancing Script Variable", Arial;
 		font-size: 3.75rem;
 		line-height: 1;
 	}

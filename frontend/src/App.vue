@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import "@fontsource-variable/inter";
 	import { onMounted, provide, ref } from "vue";
 	import type { Meal } from "./types";
 	import axios from "axios";
@@ -71,6 +72,7 @@
 		--text-highlight: #f5f5f5;
 		background-color: var(--background);
 		color: var(--text-default);
+		font-family: "Inter Variable", Arial;
 	}
 
 	#app {
