@@ -2,7 +2,7 @@
 	import { inject, ref } from 'vue';
 	import axios from "axios";
 	import { FormMessage, IsAdminProvider, LoadedView } from "../types";
-	import { getErrorMessage, isAdminKey } from '../constants';
+	import { getErrorMessage, isAdminKey, requestsBaseUrl } from '../constants';
 	import Form from "./Form.vue";
 
 	const isDropdownVisible = ref<boolean>(false);
@@ -16,7 +16,7 @@
 	async function handleSubmit(): Promise<void> {
 		try {
 			const { data } = await axios.post<{ accessToken: string }>(
-				"http://localhost:3000/auth",
+				requestsBaseUrl + "/auth",
 				{ password: password.value }
 			);
 			sessionStorage.setItem("accessToken", data.accessToken);

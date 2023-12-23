@@ -2,7 +2,7 @@
 	import { FormMessage, Inputs, Meal, MealsProvider } from "../types";
 	import MealInputs from "./MealInputs.vue";
 	import Form from "./Form.vue";
-	import { getErrorMessage, mealsKey } from "../constants";
+	import { getErrorMessage, mealsKey, requestsBaseUrl } from "../constants";
 	import { inject, ref } from "vue";
 	import axios from "axios";
 
@@ -31,7 +31,7 @@
 				const accessToken = sessionStorage.getItem("accessToken");
 				const id = selectedMeal.value.id;
 				const { data: updatedMeal } = await axios.put<Meal>(
-					`http://localhost:3000/meals/${id}`,
+					requestsBaseUrl + `/meals/${id}`,
 					inputs.value,
 					{ headers: { "Authorization": `Bearer ${accessToken}` }}
 				);

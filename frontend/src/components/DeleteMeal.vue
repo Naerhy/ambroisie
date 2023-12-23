@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { inject, ref } from "vue";
 	import { FormMessage, MealsProvider } from "../types";
-	import { getErrorMessage, mealsKey } from "../constants";
+	import { getErrorMessage, mealsKey, requestsBaseUrl } from "../constants";
 	import { Meal } from "../types";
 	import axios from "axios";
 	import Form from "./Form.vue";
@@ -17,7 +17,7 @@
 				const accessToken = sessionStorage.getItem("accessToken");
 				const id = selectedMeal.value.id;
 				await axios.delete(
-					`http://localhost:3000/meals/${id}`,
+					requestsBaseUrl + `/meals/${id}`,
 					{ headers: { "Authorization": `Bearer ${accessToken}` }}
 				);
 				deleteMeal(id);

@@ -2,7 +2,7 @@
 	import { FormMessage, Inputs, Meal, MealsProvider } from "../types";
 	import MealInputs from "./MealInputs.vue";
 	import Form from "./Form.vue";
-	import { getErrorMessage, mealsKey } from "../constants";
+	import { getErrorMessage, mealsKey, requestsBaseUrl } from "../constants";
 	import { inject, ref } from "vue";
 	import axios from "axios";
 
@@ -28,7 +28,7 @@
 		try {
 			const accessToken = sessionStorage.getItem("accessToken");
 			const { data: newMeal } = await axios.post<Meal>(
-				"http://localhost:3000/meals",
+				requestsBaseUrl + "/meals",
 				inputs.value,
 				{ headers: { "Authorization": `Bearer ${accessToken}` }}
 			);

@@ -5,7 +5,7 @@
 	import Loading from "./components/Loading.vue";
 	import Loaded from "./components/Loaded.vue";
 	import Error from "./components/Error.vue";
-	import { isAdminKey, mealsKey } from "./constants";
+	import { isAdminKey, mealsKey, requestsBaseUrl } from "./constants";
 
 	const state = ref<"loading" | "loaded" | "error">("loading");
 	const meals = ref<Meal[]>([]);
@@ -36,7 +36,7 @@
 
 	onMounted(async () => {
 		try {
-			const { data: loadedMeals } = await axios.get<Meal[]>("http://localhost:3000/meals");
+			const { data: loadedMeals } = await axios.get<Meal[]>(requestsBaseUrl + "/meals");
 			shuffleMeals(loadedMeals);
 			meals.value = loadedMeals;
 			state.value = "loaded";
