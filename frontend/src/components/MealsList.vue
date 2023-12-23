@@ -26,11 +26,13 @@
 
 <template>
 	<Teleport to="body">
-		<FocusedMeal
-			v-if="focusedMeal !== null"
-			:meal="focusedMeal"
-			@modal-close="focusedMeal = null"
-		/>
+		<Transition>
+			<FocusedMeal
+				v-if="focusedMeal !== null"
+				:meal="focusedMeal"
+				@modal-close="focusedMeal = null"
+			/>
+		</Transition>
 	</Teleport>
 	<section>
 		<ul>
@@ -54,5 +56,13 @@
 		display: grid;
 		gap: 1rem;
 		grid-template-columns: repeat(4, minmax(150px, 1fr));
+	}
+
+	.v-enter-active, .v-leave-active {
+		transition: opacity 0.25s ease;
+	}
+
+	.v-enter-from, .v-leave-to {
+		opacity: 0;
 	}
 </style>
