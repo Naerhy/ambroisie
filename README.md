@@ -18,10 +18,11 @@ In order to succesfully launch the project, you have to create an `.env` file in
 
 ```
 BACKEND_PORT=3000
-SECRET_CODE=123456789
+ADMIN_PASSWORD=123456789abcde
+JWT_SECRET=randomstring
 POSTGRES_USER=dbuser
 POSTGRES_PASSWORD=dbpassword
-POSTGRES_DB=ambroisie
+POSTGRES_DB=db
 SERVER_IP=0.0.0.0
 SERVER_PORT=80
 ```
