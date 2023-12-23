@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { FormMessage } from '../types';
 
+	// @ts-ignore
 	const props = defineProps<{ btnText: string; formMessage: FormMessage }>();
 </script>
 
