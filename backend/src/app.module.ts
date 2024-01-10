@@ -4,8 +4,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Meal } from "./meals/meal.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
-import { ThrottlerModule } from "@nestjs/throttler";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from "@nestjs/core";
 
 @Module({
 	imports: [
@@ -20,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
 			}),
 			isGlobal: true
 		}),
-		ThrottlerModule.forRoot([{ ttl: 60000, limit: 20 }]),
+		ThrottlerModule.forRoot([{ ttl: 60000, limit: 60 }]),
 		TypeOrmModule.forRootAsync({
 			useFactory: (configService: ConfigService) => ({
 				type: "postgres",
@@ -36,6 +37,12 @@ import { AuthModule } from './auth/auth.module';
 		}),
 		AuthModule,
 		MealsModule
+	],
+	providers: [
+		{
+			provide: APP_GUARD,
+			useClass: ThrottlerGuard
+		}
 	]
 })
 export class AppModule {}

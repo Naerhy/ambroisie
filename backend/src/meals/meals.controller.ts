@@ -14,11 +14,9 @@ import {
 import { MealsService } from "./meals.service";
 import { Meal } from "./meal.entity";
 import { AddMealDto, UpdateMealDto } from "src/dto";
-import { ThrottlerGuard } from "@nestjs/throttler";
 import { AuthGuard } from "src/auth/auth.guard";
 
 @Controller("meals")
-@UseGuards(ThrottlerGuard)
 export class MealsController {
 	constructor(private mealsService: MealsService) {}
 
