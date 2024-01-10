@@ -7,7 +7,7 @@ import { json } from "express";
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-	app.use(json({ limit: "3mb" }));
+	app.use(json({ limit: "600kb" }));
 	await app.listen(app.get(ConfigService).get<number>("BACKEND_PORT")!);
 }
 
