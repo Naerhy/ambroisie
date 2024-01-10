@@ -10,10 +10,11 @@
 	const view = ref<View>("add");
 
 	const views: View[] = ["add", "modify", "delete"];
+	const viewsFR = ["ajouter", "modifier", "supprimer"];
 	const titles = {
-		add: "Add new meal",
-		modify: "Modify meal",
-		delete: "Delete meal"
+		add: "Ajouter un repas",
+		modify: "Modifier un repas",
+		delete: "Supprimer un repas"
 	};
 </script>
 
@@ -21,12 +22,12 @@
 	<section>
 		<nav>
 			<button
-				v-for="v in views"
+				v-for="(v, i) in views"
 				type="button"
 				class="btn-text"
 				:class="{ selected: view === v }"
 				@click="view = v"
-			>{{ capitalize(v) }}</button>
+			>{{ capitalize(viewsFR[i]) }}</button>
 		</nav>
 		<div>
 			<h2>{{ titles[view] }}</h2>

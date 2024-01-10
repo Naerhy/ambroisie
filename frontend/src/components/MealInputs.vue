@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { reactive, watch } from 'vue';
 	import { Inputs } from '../types';
-	import { capitalize, cookingTimes, difficulties, types } from '../constants';
+	import { capitalize, cookingTimes, difficulties, types, typesFR } from '../constants';
 
 	const props = defineProps<{ baseInputs: Inputs }>();
 
@@ -33,48 +33,48 @@
 
 <template>
 	<div class="flex-col">
-		<label for="name" class="bold">Name</label>
+		<label for="name" class="bold">Nom</label>
 		<input type="text" id="name" class="input" v-model="inputs.name" required />
 	</div>
 	<div>
 		<input type="checkbox" id="is-recipe" v-model="inputs.isRecipe" />
-		<label for="is-recipe">Tick if the meal is a recipe</label>
+		<label for="is-recipe">Cochez si le repas est une recette</label>
 	</div>
 	<div>
 		<div class="bold">Type</div>
-		<div v-for="type in types" :key="type">
+		<div v-for="(type, i) in types" :key="type">
 			<input type="checkbox" :id="`type-${type}`" :value="type" v-model="inputs.types" />
-			<label :for="`type-${type}`">{{ capitalize(type) }}</label>
+			<label :for="`type-${type}`">{{ capitalize(typesFR[i]) }}</label>
 		</div>
 	</div>
 	<div class="flex-col">
-		<label for="difficulty" class="bold">Difficulty</label>
+		<label for="difficulty" class="bold">Difficulté</label>
 		<select id="difficulty" class="select" v-model="inputs.difficulty">
 			<option v-for="i in 3" :value="i">{{ capitalize(difficulties[i - 1]) }}</option>
 		</select>
 	</div>
 	<div class="flex-col">
-		<label for="cooking-time" class="bold">Cooking time</label>
+		<label for="cooking-time" class="bold">Temps de préparation</label>
 		<select id="cooking-time" class="select" v-model="inputs.cookingTime">
 			<option v-for="i in 4" :value="i">{{ capitalize(cookingTimes[i - 1]) }}</option>
 		</select>
 	</div>
 	<div>
 		<input type="checkbox" id="is-vegetarian" v-model="inputs.isVegetarian" />
-		<label for="is-vegetarian">Tick if the meal is suitable for vegetarians</label>
+		<label for="is-vegetarian">Cochez si le repas convient aux végétariens</label>
 	</div>
 	<div v-if="inputs.isRecipe" class="flex-col">
-		<label for="servings" class="bold">Servings</label>
+		<label for="servings" class="bold">Nombre de parts</label>
 		<select id="servings" class="select" v-model="inputs.servings">
 			<option v-for="i in 13" :value="i - 1">{{ i - 1 }}</option>
 		</select>
 	</div>
 	<div v-if="inputs.isRecipe" class="flex-col">
-		<label for="ingredients" class="bold">Ingredients</label>
+		<label for="ingredients" class="bold">Ingrédients</label>
 		<textarea id="ingredients" class="input" v-model="inputs.ingredients" :disabled="!inputs.isRecipe" rows="6"></textarea>
 	</div>
 	<div v-if="inputs.isRecipe" class="flex-col">
-		<label for="directions" class="bold">Directions</label>
+		<label for="directions" class="bold">Préparation</label>
 		<textarea id="directions" class="input" v-model="inputs.directions" :disabled="!inputs.isRecipe" rows="6"></textarea>
 	</div>
 	<div class="flex-col">

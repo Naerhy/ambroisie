@@ -13,7 +13,7 @@
 
 <template>
 	<li>
-		<img :src="imgSrc" alt="Thumbnail of the meal" @error="handleError()" />
+		<img :src="imgSrc" alt="Miniature du repas" @error="handleError()" />
 		<h6>{{ meal.name }}</h6>
 	</li>
 </template>

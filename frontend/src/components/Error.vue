@@ -7,12 +7,12 @@
 <template>
 	<main>
 		<div>
-			<h2>Oops!</h2>
+			<h2>Oups !</h2>
 			<p>
-				The website encountered an error while trying to load the list of meals.<br>
-				Either try to reload the page, or wait for us to resolve this issue.
+				Le site a rencontré une erreur lors du chargement de la liste des repas.<br>
+				Essayez de recharger la page, ou attendez que nous résolvions le problème.
 			</p>
-			<button type="button" class="btn-contained" @click="handleClick()">Reload</button>
+			<button type="button" class="btn-contained" @click="handleClick()">Recharger</button>
 		</div>
 	</main>
 </template>

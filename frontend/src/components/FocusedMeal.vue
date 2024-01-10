@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue';
 	import { Meal } from '../types';
-	import { difficulties, cookingTimes, capitalize } from "../constants";
+	import { difficulties, cookingTimes, capitalize, typesFR } from "../constants";
 
 	interface Infos {
 		title: string;
@@ -14,11 +14,11 @@
 
 	const infos = computed<Infos[]>(() => {
 		return [
-			{ title: "Types", value: props.meal.types.map((type) => capitalize(type)).join(" | ") },
-			{ title: "Difficulty", value: capitalize(difficulties[props.meal.difficulty - 1]) },
-			{ title: "Cooking time", value: capitalize(cookingTimes[props.meal.cookingTime - 1]) },
-			{ title: "Vegetarian", value: props.meal.isVegetarian ? "🟢" : "🔴" },
-			{ title: "Servings", value: props.meal.isRecipe ? props.meal.servings.toString() : "-" }
+			{ title: "Types", value: props.meal.types.map((_type, i) => capitalize(typesFR[i])).join(" | ") },
+			{ title: "Difficulté", value: capitalize(difficulties[props.meal.difficulty - 1]) },
+			{ title: "Temps de préparation", value: capitalize(cookingTimes[props.meal.cookingTime - 1]) },
+			{ title: "Végétarisme", value: props.meal.isVegetarian ? "🟢" : "🔴" },
+			{ title: "Nombre de parts", value: props.meal.isRecipe ? props.meal.servings.toString() : "-" }
 		];
 	});
 
@@ -44,20 +44,20 @@
 					</li>
 				</ul>
 				<div class="image">
-					<img :src="imgSrc" alt="Meal" @error="handleError()" />
+					<img :src="imgSrc" alt="Repas" @error="handleError()" />
 				</div>
 				<div class="ingredients">
-					<h3>Ingredients</h3>
-					<p v-if="!meal.isRecipe">This is not a recipe. No ingredients to display.</p>
-					<p v-else-if="meal.ingredients.length === 0">No ingredients have been added to the recipe.</p>
+					<h3>Ingrédients</h3>
+					<p v-if="!meal.isRecipe">Ce repas n'est pas une recette, aucun ingrédient à afficher.</p>
+					<p v-else-if="meal.ingredients.length === 0">Aucun ingrédient n'a été ajouté à la recette.</p>
 					<ul v-else>
 						<li v-for="ingredient in meal.ingredients.split('\n')">{{ ingredient }}</li>
 					</ul>
 				</div>
 				<div class="directions">
-					<h3>Directions</h3>
-					<p v-if="!meal.isRecipe">This is not a recipe. No directions to display.</p>
-					<p v-else-if="meal.directions.length === 0">No directions have been added to the recipe.</p>
+					<h3>Préparation</h3>
+					<p v-if="!meal.isRecipe">Ce repas n'est pas une recette, aucune étape de preparation à afficher.</p>
+					<p v-else-if="meal.directions.length === 0">Aucune étape de préparation n'a été ajoutée à la recette.</p>
 					<ol v-else>
 						<li v-for="direction in meal.directions.split('\n')">{{ direction }}</li>
 					</ol>

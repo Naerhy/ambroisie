@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { reactive, watch } from 'vue';
 	import { Filters } from '../types';
-	import { types, difficulties, cookingTimes, capitalize } from "../constants";
+	import { types, typesFR, difficulties, cookingTimes, capitalize } from "../constants";
 
 	const props = defineProps<{ baseFilters: Filters }>();
 
@@ -16,21 +16,21 @@
 
 <template>
 	<aside>
-		<input type="text" class="input" v-model="filters.name" placeholder="Filter by name..." />
+		<input type="text" class="input" v-model="filters.name" placeholder="Filtrer par nom" />
 		<div>
 			<div class="bold">Type</div>
-			<div v-for="type in types" :key="type">
+			<div v-for="(type, i) in types" :key="type">
 				<input
 					type="checkbox"
 					:id="`type-${type}`"
 					:value="type"
 					v-model="filters.types"
 				/>
-				<label :for="`type-${type}`">{{ capitalize(type) }}</label>
+				<label :for="`type-${type}`">{{ capitalize(typesFR[i]) }}</label>
 			</div>
 		</div>
 		<div>
-			<div class="bold">Difficulty</div>
+			<div class="bold">Difficulté</div>
 			<div v-for="n in 3" :key="n">
 				<input
 					type="checkbox"
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<div>
-			<div class="bold">Cooking time</div>
+			<div class="bold">Temps de préparation</div>
 			<div v-for="n in 4" :key="n">
 				<input
 					type="checkbox"
@@ -54,10 +54,10 @@
 			</div>
 		</div>
 		<div>
-			<div class="bold">Dietary practice</div>
+			<div class="bold">Pratique alimentaire</div>
 			<div>
 				<input type="checkbox" id="vegetarian" v-model="filters.vegetarian" />
-				<label for="vegetarian">Vegetarianism</label>
+				<label for="vegetarian">Végétarisme</label>
 			</div>
 		</div>
 	</aside>

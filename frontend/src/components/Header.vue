@@ -52,14 +52,14 @@
 	<header>
 		<button type="button" @click="emit('changeView', 'list')"><h1>Ambroisie</h1></button>
 		<div v-if="isAdmin">
-			<button type="button" class="btn-text" @click="emit('changeView', 'manage')">Manage meals</button>
-			<button type="button" class="btn-text" @click="handleDisconnect()">Disconnect</button>
+			<button type="button" class="btn-text" @click="emit('changeView', 'manage')">Gérer les repas</button>
+			<button type="button" class="btn-text" @click="handleDisconnect()">Déconnexion</button>
 		</div>
 		<div class="dropdown" v-else>
-			<button type="button" class="btn-text" @click="handleDropdown()">Sign in as admin</button>
+			<button type="button" class="btn-text" @click="handleDropdown()">Admin</button>
 			<div class="dropdown-content" v-if="isDropdownVisible">
-				<Form @submit.prevent="handleSubmit()" btn-text="Sign in" :form-message="formMessage">
-					<input type="password" class="input" v-model="password" placeholder="Password" />
+				<Form @submit.prevent="handleSubmit()" btn-text="Connexion" :form-message="formMessage">
+					<input type="password" class="input" v-model="password" placeholder="Mot de passe" />
 				</Form>
 			</div>
 		</div>

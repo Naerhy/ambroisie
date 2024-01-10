@@ -35,7 +35,7 @@
 			addMeal(newMeal);
 			formMessage.value = {
 				level: "success",
-				message: `recipe ${newMeal.name} has been succesfully added`
+				message: `Le repas "${newMeal.name}" a été ajouté`
 			};
 		} catch (error: unknown) {
 			formMessage.value = { level: "error", message: getErrorMessage(error) };
@@ -44,7 +44,7 @@
 </script>
 
 <template>
-	<Form @submit.prevent="handleSubmit()" btn-text="Add" :form-message="formMessage">
+	<Form @submit.prevent="handleSubmit()" btn-text="Ajouter" :form-message="formMessage">
 		<MealInputs :base-inputs="baseInputs" @inputs-change="(newInputs) => inputs = newInputs" />
 	</Form>
 </template>

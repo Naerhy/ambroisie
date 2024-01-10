@@ -38,7 +38,7 @@
 				modifyMeal(updatedMeal);
 				formMessage.value = {
 					level: "success",
-					message: `recipe ${selectedMeal.value.name} has been succesfully updated`
+					message: `Le repas "${selectedMeal.value.name}" a été mis a jour`
 				};
 				selectedMeal.value = null;
 			} catch (error: unknown) {
@@ -49,9 +49,9 @@
 </script>
 
 <template>
-	<Form @submit.prevent="handleSubmit()" btn-text="Modify" :form-message="formMessage">
+	<Form @submit.prevent="handleSubmit()" btn-text="Modifier" :form-message="formMessage">
 		<div v-if="selectedMeal === null" class="flex-col">
-			<label class="bold" for="meal">Select meal to modify</label>
+			<label class="bold" for="meal">Sélectionnez le repas à modifier</label>
 			<select id="meal" v-model="selectedMeal" class="select">
 				<option v-for="meal in meals" :value="meal">{{ meal.name }}</option>
 			</select>

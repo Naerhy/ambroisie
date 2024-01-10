@@ -6,8 +6,9 @@ const { VITE_SERVER_IP: ip, VITE_SERVER_PORT: port } = import.meta.env;
 export const requestsBaseUrl = `http://${ip}:${port}/api`;
 
 export const types = ["breakfast", "lunch", "tea", "dinner"];
-export const difficulties = ["easy", "medium", "hard"];
-export const cookingTimes = ["0-10 minutes", "10-30 minutes", "30-60 minutes", "over 1 hour"];
+export const typesFR = ["petit-déjeuner", "déjeuner", "goûter", "dîner"];
+export const difficulties = ["Facile", "Moyenne", "Difficile"];
+export const cookingTimes = ["0-10 minutes", "10-30 minutes", "30-60 minutes", "Plus d'une heure"];
 
 export function capitalize(text: string): string {
 	return text.charAt(0).toUpperCase() + text.slice(1);

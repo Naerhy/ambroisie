@@ -5,7 +5,7 @@
 <template>
 	<main>
 		<Loader />
-		<div>Website is loading, please wait.</div>
+		<div>Chargement du site web, veuillez patienter.</div>
 	</main>
 </template>
 

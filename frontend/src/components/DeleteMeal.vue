@@ -23,7 +23,7 @@
 				deleteMeal(id);
 				formMessage.value = {
 					level: "success",
-					message: `recipe ${selectedMeal.value.name} has been succesfully deleted`
+					message: `Le repas "${selectedMeal.value.name}" a été supprimé`
 				};
 				selectedMeal.value = null;
 			} catch (error: unknown) {
@@ -34,9 +34,9 @@
 </script>
 
 <template>
-	<Form @submit.prevent="handleSubmit()" btn-text="Delete" :form-message="formMessage">
+	<Form @submit.prevent="handleSubmit()" btn-text="Supprimer" :form-message="formMessage">
 		<div class="flex-col">
-			<label class="bold" for="meal">Select meal to delete</label>
+			<label class="bold" for="meal">Sélectionnez le repas à supprimer</label>
 			<select id="meal" v-model="selectedMeal" class="select">
 				<option v-for="meal in meals" :value="meal">{{ meal.name }}</option>
 			</select>
