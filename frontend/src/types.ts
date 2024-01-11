@@ -1,12 +1,10 @@
 import { Ref } from "vue";
 
-export type Types = "breakfast" | "lunch" | "tea" | "dinner";
-
 export interface Meal {
 	id: number;
 	name: string;
 	isRecipe: boolean;
-	types: Types[];
+	types: number[];
 	difficulty: number;
 	cookingTime: number;
 	isVegetarian: boolean;
@@ -27,7 +25,7 @@ export type FormMessage = {
 
 export interface Filters {
 	name: string;
-	types: Types[];
+	types: number[];
 	difficulties: number[];
 	cookingTimes: number[];
 	vegetarian: boolean;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue';
 	import { Meal } from '../types';
-	import { difficulties, cookingTimes, capitalize, typesFR } from "../constants";
+	import { difficulties, cookingTimes, capitalize, types } from "../constants";
 
 	interface Infos {
 		title: string;
@@ -14,7 +14,7 @@
 
 	const infos = computed<Infos[]>(() => {
 		return [
-			{ title: "Types", value: props.meal.types.map((_type, i) => capitalize(typesFR[i])).join(" | ") },
+			{ title: "Types", value: props.meal.types.map((type) => capitalize(types[type - 1])).join(" | ") },
 			{ title: "Difficulté", value: capitalize(difficulties[props.meal.difficulty - 1]) },
 			{ title: "Temps de préparation", value: capitalize(cookingTimes[props.meal.cookingTime - 1]) },
 			{ title: "Végétarisme", value: props.meal.isVegetarian ? "🟢" : "🔴" },

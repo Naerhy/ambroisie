@@ -22,8 +22,8 @@ export class AddMealDto {
 
 	@IsArray()
 	@ArrayNotEmpty()
-	@IsIn(["breakfast", "lunch", "tea", "dinner"], { each: true })
-	types: string[];
+	@IsIn([1, 2, 3, 4], { each: true })
+	types: number[];
 
 	@IsNumber()
 	@Min(1)

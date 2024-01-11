@@ -11,27 +11,27 @@ export class Meal {
 	@Column()
 	isRecipe: boolean;
 
-	@Column("simple-array")
-	types: string[];
+	@Column("smallint", { array: true })
+	types: number[];
 
-	@Column()
+	@Column("smallint")
 	difficulty: number;
 
-	@Column()
+	@Column("smallint")
 	cookingTime: number;
 
 	@Column()
 	isVegetarian: boolean;
 
-	@Column()
+	@Column("smallint")
 	servings: number;
 
-	@Column()
+	@Column("text")
 	ingredients: string;
 
-	@Column()
+	@Column("text")
 	directions: string;
 
-	@Column()
+	@Column("text")
 	imageBase64: string;
 }

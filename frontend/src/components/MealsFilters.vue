@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { reactive, watch } from 'vue';
 	import { Filters } from '../types';
-	import { types, typesFR, difficulties, cookingTimes, capitalize } from "../constants";
+	import { types, difficulties, cookingTimes, capitalize } from "../constants";
 
 	const props = defineProps<{ baseFilters: Filters }>();
 
@@ -19,14 +19,14 @@
 		<input type="text" class="input" v-model="filters.name" placeholder="Filtrer par nom" />
 		<div>
 			<div class="bold">Type</div>
-			<div v-for="(type, i) in types" :key="type">
+			<div v-for="n in 4" :key="n">
 				<input
 					type="checkbox"
-					:id="`type-${type}`"
-					:value="type"
+					:id="`type-${n}`"
+					:value="n"
 					v-model="filters.types"
 				/>
-				<label :for="`type-${type}`">{{ capitalize(typesFR[i]) }}</label>
+				<label :for="`type-${n}`">{{ capitalize(types[n - 1]) }}</label>
 			</div>
 		</div>
 		<div>

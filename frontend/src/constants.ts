@@ -5,8 +5,7 @@ import axios from "axios";
 const { VITE_SERVER_IP: ip, VITE_SERVER_PORT: port } = import.meta.env;
 export const requestsBaseUrl = `http://${ip}:${port}/api`;
 
-export const types = ["breakfast", "lunch", "tea", "dinner"];
-export const typesFR = ["petit-déjeuner", "déjeuner", "goûter", "dîner"];
+export const types = ["petit-déjeuner", "déjeuner", "goûter", "dîner"];
 export const difficulties = ["Facile", "Moyenne", "Difficile"];
 export const cookingTimes = ["0-10 minutes", "10-30 minutes", "30-60 minutes", "Plus d'une heure"];
 

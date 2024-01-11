@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { reactive, watch } from 'vue';
 	import { Inputs } from '../types';
-	import { capitalize, cookingTimes, difficulties, types, typesFR } from '../constants';
+	import { capitalize, cookingTimes, difficulties, types } from '../constants';
 
 	const props = defineProps<{ baseInputs: Inputs }>();
 
@@ -42,9 +42,9 @@
 	</div>
 	<div>
 		<div class="bold">Type</div>
-		<div v-for="(type, i) in types" :key="type">
-			<input type="checkbox" :id="`type-${type}`" :value="type" v-model="inputs.types" />
-			<label :for="`type-${type}`">{{ capitalize(typesFR[i]) }}</label>
+		<div v-for="i in 4" :key="i">
+			<input type="checkbox" :id="`type-${i}`" :value="i" v-model="inputs.types" />
+			<label :for="`type-${i}`">{{ capitalize(types[i - 1]) }}</label>
 		</div>
 	</div>
 	<div class="flex-col">

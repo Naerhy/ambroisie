@@ -9,7 +9,7 @@
 
 	const baseFilters: Filters = {
 		name: "",
-		types: ["breakfast", "lunch", "tea", "dinner"],
+		types: [1, 2, 3, 4],
 		difficulties: [1, 2, 3],
 		cookingTimes: [1, 2, 3, 4],
 		vegetarian: false
