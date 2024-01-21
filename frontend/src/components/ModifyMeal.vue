@@ -53,7 +53,7 @@
 		<div v-if="selectedMeal === null" class="flex-col">
 			<label class="bold" for="meal">Sélectionnez le repas à modifier</label>
 			<select id="meal" v-model="selectedMeal" class="select">
-				<option v-for="meal in meals" :value="meal">{{ meal.name }}</option>
+				<option v-for="meal in meals.data" :value="meal">{{ meal.name }}</option>
 			</select>
 		</div>
 		<MealInputs v-else :base-inputs="{ ...selectedMeal, imageBase64: '' }" @inputs-change="(newInputs) => inputs = newInputs" />

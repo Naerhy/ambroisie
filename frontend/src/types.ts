@@ -14,9 +14,14 @@ export interface Meal {
 	imageBase64: string;
 }
 
-export type Inputs = Omit<Meal, "id">;
+type State = "loading" | "loaded" | "error";
 
-export type LoadedView = "manage" | "list";
+export interface Meals {
+	data: Meal[];
+	state: State;
+}
+
+export type Inputs = Omit<Meal, "id">;
 
 export type FormMessage = {
 	level: "success" | "error";
@@ -31,14 +36,14 @@ export interface Filters {
 	vegetarian: boolean;
 }
 
-export interface IsAdminProvider {
-	isAdmin: Ref<boolean>;
-	updateIsAdmin: (bool: boolean) => void;
-}
-
 export interface MealsProvider {
-	meals: Ref<Meal[]>;
+	meals: Ref<Meals>;
 	addMeal: (meal: Meal) => void;
 	modifyMeal: (meal: Meal) => void;
 	deleteMeal: (id: number) => void;
+}
+
+export interface IsAdminProvider {
+	isAdmin: Ref<boolean>;
+	updateIsAdmin: (bool: boolean) => void;
 }

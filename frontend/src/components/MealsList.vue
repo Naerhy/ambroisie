@@ -1,18 +1,15 @@
 <script setup lang="ts">
-	import { computed, inject, ref } from "vue";
-	import type { Filters, Meal, MealsProvider } from "../types";
+	import { computed, inject } from "vue";
+	import type { Filters, MealsProvider } from "../types";
 	import MealCard from "./MealCard.vue";
-	import FocusedMeal from "./FocusedMeal.vue";
 	import { mealsKey } from "../constants";
 
 	const props = defineProps<{ filters: Filters }>();
 
 	const { meals } = inject(mealsKey) as MealsProvider;
 
-	const focusedMeal = ref<Meal | null>(null);
-
 	const visibleMeals = computed<boolean[]>(() => {
-		return meals.value.map((meal) => {
+		return meals.value.data.map((meal) => {
 			return (
 				meal.name.toLowerCase().includes(props.filters.name)
 				&& meal.types.some((type) => props.filters.types.includes(type))
@@ -25,25 +22,17 @@
 </script>
 
 <template>
-	<Teleport to="body">
-		<Transition>
-			<FocusedMeal
-				v-if="focusedMeal !== null"
-				:meal="focusedMeal"
-				@modal-close="focusedMeal = null"
-			/>
-		</Transition>
-	</Teleport>
 	<section>
-		<ul>
+		<div v-if="meals.state === 'loading'">Chargement des repas...</div>
+		<ul v-else-if="meals.state === 'loaded'">
 			<MealCard
-				v-for="(meal, index) in meals"
+				v-for="(meal, index) in meals.data"
 				:key="meal.id"
 				v-show="visibleMeals[index]"
 				:meal="meal"
-				@click="focusedMeal = meal"
 			/>
 		</ul>
+		<p v-else>Error!</p>
 	</section>
 </template>
 
@@ -55,14 +44,6 @@
 	ul {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(4, minmax(150px, 1fr));
-	}
-
-	.v-enter-active, .v-leave-active {
-		transition: opacity 0.25s ease;
-	}
-
-	.v-enter-from, .v-leave-to {
-		opacity: 0;
+		grid-template-columns: repeat(5, minmax(150px, 1fr));
 	}
 </style>

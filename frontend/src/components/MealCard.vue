@@ -13,8 +13,10 @@
 
 <template>
 	<li>
-		<img :src="imgSrc" alt="Miniature du repas" @error="handleError()" />
-		<h6>{{ meal.name }}</h6>
+		<router-link :to="`/repas/${meal.id}`">
+			<img :src="imgSrc" alt="Miniature du repas" @error="handleError()" />
+			<h6>{{ meal.name }}</h6>
+		</router-link>
 	</li>
 </template>
 

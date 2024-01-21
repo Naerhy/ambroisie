@@ -1,30 +1,28 @@
 <script setup lang="ts">
 	import "@fontsource-variable/inter";
 	import { onMounted, provide, ref } from "vue";
-	import type { Meal } from "./types";
 	import axios from "axios";
-	import Loading from "./components/Loading.vue";
-	import Loaded from "./components/Loaded.vue";
-	import Error from "./components/Error.vue";
 	import { isAdminKey, mealsKey, requestsBaseUrl } from "./constants";
+	import type { Meal, Meals } from "./types";
+	import Header from "./components/Header.vue";
+	import Footer from "./components/Footer.vue";
 
-	const state = ref<"loading" | "loaded" | "error">("loading");
-	const meals = ref<Meal[]>([]);
+	const meals = ref<Meals>({ data: [], state: "loading" });
 	const isAdmin = ref<boolean>(sessionStorage.getItem("accessToken") !== null);
 
 	provide(mealsKey, {
 		meals,
 		addMeal: (meal: Meal): void => {
-			meals.value = [meal, ...meals.value]
+			meals.value.data = [meal, ...meals.value.data]
 		},
 		modifyMeal: (updatedMeal: Meal): void => {
-			const id = meals.value.findIndex((meal) => meal.id === updatedMeal.id);
+			const id = meals.value.data.findIndex((meal) => meal.id === updatedMeal.id);
 			if (id !== -1) {
-				meals.value[id] = updatedMeal;
+				meals.value.data[id] = updatedMeal;
 			}
 		},
 		deleteMeal: (id: number): void => {
-			meals.value = meals.value.filter((meal) => meal.id !== id);
+			meals.value.data = meals.value.data.filter((meal) => meal.id !== id);
 		}
 	});
 
@@ -37,12 +35,12 @@
 
 	onMounted(async () => {
 		try {
-			const { data: loadedMeals } = await axios.get<Meal[]>(requestsBaseUrl + "/meals");
+			const { data: loadedMeals } = await axios.get<Meal[]>(`${requestsBaseUrl}/meals`);
 			shuffleMeals(loadedMeals);
-			meals.value = loadedMeals;
-			state.value = "loaded";
+			meals.value.data = loadedMeals;
+			meals.value.state = "loaded";
 		} catch {
-			state.value = "error";
+			meals.value.state = "error";
 		}
 	});
 
@@ -55,9 +53,9 @@
 </script>
 
 <template>
-	<Loading v-if="state === 'loading'" />
-	<Loaded v-else-if="state === 'loaded'" />
-	<Error v-else />
+	<Header />
+	<router-view />
+	<Footer />
 </template>
 
 <style>

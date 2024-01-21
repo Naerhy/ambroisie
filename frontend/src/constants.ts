@@ -1,6 +1,6 @@
+import axios from "axios";
 import { InjectionKey } from "vue";
 import { IsAdminProvider, MealsProvider } from "./types";
-import axios from "axios";
 
 const { VITE_SERVER_IP: ip, VITE_SERVER_PORT: port } = import.meta.env;
 export const requestsBaseUrl = `http://${ip}:${port}/api`;
@@ -13,8 +13,8 @@ export function capitalize(text: string): string {
 	return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-export const isAdminKey = Symbol() as InjectionKey<IsAdminProvider>;
 export const mealsKey = Symbol() as InjectionKey<MealsProvider>;
+export const isAdminKey = Symbol() as InjectionKey<IsAdminProvider>;
 
 export function getErrorMessage(error: unknown): string {
 	if (axios.isAxiosError(error)) {

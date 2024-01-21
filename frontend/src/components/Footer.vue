@@ -25,7 +25,7 @@
 		color: #f5f5f5;
 		display: flex;
 		flex-direction: column;
-		padding: 2rem 0;
+		padding: 1rem 0;
 		row-gap: 0.5rem;
 	}
 
