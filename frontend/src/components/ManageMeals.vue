@@ -19,7 +19,7 @@
 </script>
 
 <template>
-	<section>
+	<div>
 		<nav>
 			<button
 				v-for="(v, i) in views"
@@ -29,30 +29,32 @@
 				@click="view = v"
 			>{{ capitalize(viewsFR[i]) }}</button>
 		</nav>
-		<div>
+		<section>
 			<h2>{{ titles[view] }}</h2>
 			<AddMeal v-if="view === 'add'" />
 			<ModifyMeal v-else-if="view === 'modify'" />
 			<DeleteMeal v-else />
-		</div>
-	</section>
+		</section>
+	</div>
 </template>
 
 <style scoped>
-	section {
-		width: 500px;
+	div {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
 	}
 
 	nav {
 		display: flex;
 		justify-content: center;
-		margin-bottom: 1rem;
 	}
 
-	div {
+	section {
 		border: 1px solid var(--stroke);
 		border-radius: 0.25rem;
 		padding: 1.5rem;
+		width: 500px;
 	}
 
 	h2 {

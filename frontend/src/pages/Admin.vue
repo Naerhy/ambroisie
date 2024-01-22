@@ -27,12 +27,37 @@
 
 <template>
 	<main>
-		<Form v-if="!isAdmin" @submit.prevent="handleSubmit" btn-text="Connexion" :form-message="formMessage">
-			<div class="flex-col">
-				<label for="password" class="bold">Password</label>
-				<input type="password" id="password" class="input" v-model="password" autofocus />
-			</div>
-		</Form>
+		<section v-if="!isAdmin">
+			<h2>Connexion à l'interface admin</h2>
+			<Form @submit.prevent="handleSubmit" btn-text="Connexion" :form-message="formMessage">
+				<div class="flex-col">
+					<label for="password" class="bold">Mot de passe</label>
+					<input type="password" id="password" class="input" v-model="password" autofocus />
+				</div>
+			</Form>
+		</section>
 		<ManageMeals v-else />
 	</main>
 </template>
+
+<style scoped>
+	main {
+		align-items: flex-start;
+		display: flex;
+		justify-content: center;
+	}
+
+	section {
+		border: 1px solid var(--stroke);
+		border-radius: 0.25rem;
+		padding: 1.5rem;
+		width: 500px;
+	}
+
+	h2 {
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		margin-bottom: 1.5rem;
+		text-align: center;
+	}
+</style>
