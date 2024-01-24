@@ -21,8 +21,11 @@
 		<router-link to="/"><h1>Ambroisie</h1></router-link>
 		<div>
 			<router-link to="/repas">Liste de repas</router-link>
-			<router-link to="/admin">Admin</router-link>
-			<button v-if="isAdmin" type="button" class="btn-text" @click="handleDisconnect">Déconnexion</button>
+			<router-link v-if="!isAdmin" to="/connexion">Connexion</router-link>
+			<template v-else>
+				<router-link to="/admin">Admin</router-link>
+				<button type="button" class="btn-text" @click="handleDisconnect">Déconnexion</button>
+			</template>
 		</div>
 	</header>
 </template>
