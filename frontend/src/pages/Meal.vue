@@ -1,22 +1,22 @@
 <script setup lang="ts">
-	import { computed, inject } from "vue";
-	import type { MealsProvider } from "../types";
-	import { capitalize, cookingTimes, difficulties, mealsKey, types } from "../constants";
+	import { computed } from "vue";
+	import { capitalize, cookingTimes, difficulties, types } from "../constants";
 	import { useRoute } from "vue-router";
+	import { useMealsStore } from "../stores";
 
 	interface Infos {
 		title: string;
 		value: string;
 	}
 
-	const { meals } = inject(mealsKey) as MealsProvider;
+	const mealsStore = useMealsStore();
 
 	const route = useRoute();
 	const id = parseInt(route.params.id as string);
 
 	const meal = computed(() => {
 		if (isNaN(id)) { return null; }
-		return meals.value.data.find((meal) => meal.id === id) ?? null;
+		return mealsStore.meals.find((meal) => meal.id === id) ?? null;
 	});
 
 	const infos = computed<Infos[]>(() => {
@@ -33,8 +33,8 @@
 </script>
 
 <template>
-	<div v-if="meals.state === 'loading'">Chargement...</div>
-	<div v-else-if="meals.state === 'error'">Erreur...</div>
+	<div v-if="mealsStore.state === 'loading'">Chargement...</div>
+	<div v-else-if="mealsStore.state === 'error'">Erreur...</div>
 	<main v-else-if="meal !== null">
 		<article>
 			<h2>{{ meal.name }}</h2>

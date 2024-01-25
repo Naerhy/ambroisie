@@ -1,46 +1,23 @@
 <script setup lang="ts">
 	import "@fontsource-variable/inter";
-	import { onMounted, provide, ref } from "vue";
+	import { onMounted } from "vue";
 	import axios from "axios";
-	import { isAdminKey, mealsKey, requestsBaseUrl } from "./constants";
-	import type { Meal, Meals } from "./types";
+	import { requestsBaseUrl } from "./constants";
+	import type { Meal } from "./types";
 	import Header from "./components/Header.vue";
 	import Footer from "./components/Footer.vue";
+	import { useMealsStore } from "./stores";
 
-	const meals = ref<Meals>({ data: [], state: "loading" });
-	const isAdmin = ref<boolean>(sessionStorage.getItem("accessToken") !== null);
-
-	provide(mealsKey, {
-		meals,
-		addMeal: (meal: Meal): void => {
-			meals.value.data = [meal, ...meals.value.data]
-		},
-		modifyMeal: (updatedMeal: Meal): void => {
-			const id = meals.value.data.findIndex((meal) => meal.id === updatedMeal.id);
-			if (id !== -1) {
-				meals.value.data[id] = updatedMeal;
-			}
-		},
-		deleteMeal: (id: number): void => {
-			meals.value.data = meals.value.data.filter((meal) => meal.id !== id);
-		}
-	});
-
-	provide(isAdminKey, {
-		isAdmin,
-		updateIsAdmin: (bool: boolean): void => {
-			isAdmin.value = bool;
-		}
-	});
+	const mealsStore = useMealsStore();
 
 	onMounted(async () => {
 		try {
 			const { data: loadedMeals } = await axios.get<Meal[]>(`${requestsBaseUrl}/meals`);
 			shuffleMeals(loadedMeals);
-			meals.value.data = loadedMeals;
-			meals.value.state = "loaded";
+			mealsStore.meals = loadedMeals;
+			mealsStore.state = "loaded";
 		} catch {
-			meals.value.state = "error";
+			mealsStore.state = "error";
 		}
 	});
 

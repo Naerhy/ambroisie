@@ -1,15 +1,15 @@
 <script setup lang="ts">
-	import { computed, inject } from "vue";
-	import type { Filters, MealsProvider } from "../types";
+	import { computed } from "vue";
+	import type { Filters } from "../types";
 	import MealCard from "./MealCard.vue";
-	import { mealsKey } from "../constants";
+	import { useMealsStore } from "../stores";
 
 	const props = defineProps<{ filters: Filters }>();
 
-	const { meals } = inject(mealsKey) as MealsProvider;
+	const mealsStore = useMealsStore();
 
 	const visibleMeals = computed<boolean[]>(() => {
-		return meals.value.data.map((meal) => {
+		return mealsStore.meals.map((meal) => {
 			return (
 				meal.name.toLowerCase().includes(props.filters.name)
 				&& meal.types.some((type) => props.filters.types.includes(type))
@@ -23,10 +23,10 @@
 
 <template>
 	<section>
-		<div v-if="meals.state === 'loading'">Chargement des repas...</div>
-		<ul v-else-if="meals.state === 'loaded'">
+		<div v-if="mealsStore.state === 'loading'">Chargement des repas...</div>
+		<ul v-else-if="mealsStore.state === 'loaded'">
 			<MealCard
-				v-for="(meal, index) in meals.data"
+				v-for="(meal, index) in mealsStore.meals"
 				:key="meal.id"
 				v-show="visibleMeals[index]"
 				:meal="meal"

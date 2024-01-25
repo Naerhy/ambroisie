@@ -1,17 +1,15 @@
 <script setup lang="ts">
 	import "@fontsource-variable/dancing-script";
-	import { inject } from "vue";
-	import { isAdminKey } from "../constants";
-	import { IsAdminProvider } from "../types";
 	import { useRouter } from "vue-router";
+	import { useAdminStore } from "../stores";
 
 	const router = useRouter();
 
-	const { isAdmin, updateIsAdmin } = inject(isAdminKey) as IsAdminProvider;
+	const adminStore = useAdminStore();
 
 	function handleDisconnect(): void {
 		sessionStorage.removeItem("accessToken");
-		updateIsAdmin(false);
+		adminStore.isAdmin = false;
 		router.push({ path: "/" });
 	}
 </script>
@@ -21,7 +19,7 @@
 		<router-link to="/"><h1>Ambroisie</h1></router-link>
 		<div>
 			<router-link to="/repas">Liste de repas</router-link>
-			<router-link v-if="!isAdmin" to="/connexion">Connexion</router-link>
+			<router-link v-if="!adminStore.isAdmin" to="/connexion">Connexion</router-link>
 			<template v-else>
 				<router-link to="/admin">Admin</router-link>
 				<button type="button" class="btn-text" @click="handleDisconnect">Déconnexion</button>

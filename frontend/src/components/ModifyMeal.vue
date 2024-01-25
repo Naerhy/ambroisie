@@ -1,10 +1,13 @@
 <script setup lang="ts">
-	import { FormMessage, Inputs, Meal, MealsProvider } from "../types";
+	import { FormMessage, Inputs, Meal } from "../types";
 	import MealInputs from "./MealInputs.vue";
 	import Form from "./Form.vue";
-	import { getErrorMessage, mealsKey, requestsBaseUrl } from "../constants";
-	import { inject, ref } from "vue";
+	import { getErrorMessage, requestsBaseUrl } from "../constants";
+	import { ref } from "vue";
 	import axios from "axios";
+	import { useMealsStore } from "../stores";
+
+	const mealsStore = useMealsStore();
 
 	const baseInputs: Inputs = {
 		name: "",
@@ -18,8 +21,6 @@
 		directions: "",
 		imageBase64: ""
 	};
-
-	const { meals, modifyMeal } = inject(mealsKey) as MealsProvider;
 
 	const selectedMeal = ref<Meal | null>(null);
 	const inputs = ref<Inputs>(baseInputs);
@@ -46,6 +47,11 @@
 			}
 		}
 	}
+
+	function modifyMeal(meal: Meal): void {
+		const id = mealsStore.meals.findIndex((m) => m.id === meal.id);
+		if (id !== -1) { mealsStore.meals[id] = meal; }
+	}
 </script>
 
 <template>
@@ -53,7 +59,7 @@
 		<div v-if="selectedMeal === null" class="flex-col">
 			<label class="bold" for="meal">Sélectionnez le repas à modifier</label>
 			<select id="meal" v-model="selectedMeal" class="select">
-				<option v-for="meal in meals.data" :value="meal">{{ meal.name }}</option>
+				<option v-for="meal in mealsStore.meals" :value="meal">{{ meal.name }}</option>
 			</select>
 		</div>
 		<MealInputs v-else :base-inputs="{ ...selectedMeal, imageBase64: '' }" @inputs-change="(newInputs) => inputs = newInputs" />

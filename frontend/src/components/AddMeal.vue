@@ -1,10 +1,11 @@
 <script setup lang="ts">
-	import { FormMessage, Inputs, Meal, MealsProvider } from "../types";
+	import { FormMessage, Inputs, Meal } from "../types";
 	import MealInputs from "./MealInputs.vue";
 	import Form from "./Form.vue";
-	import { getErrorMessage, mealsKey, requestsBaseUrl } from "../constants";
-	import { inject, ref } from "vue";
+	import { getErrorMessage, requestsBaseUrl } from "../constants";
+	import { ref } from "vue";
 	import axios from "axios";
+	import { useMealsStore } from "../stores";
 
 	const baseInputs: Inputs = {
 		name: "",
@@ -19,7 +20,7 @@
 		imageBase64: ""
 	};
 
-	const { addMeal } = inject(mealsKey) as MealsProvider;
+	const mealsStore = useMealsStore();
 
 	const inputs = ref<Inputs>(baseInputs);
 	const formMessage = ref<FormMessage>(null);
@@ -32,7 +33,7 @@
 				inputs.value,
 				{ headers: { "Authorization": `Bearer ${accessToken}` }}
 			);
-			addMeal(newMeal);
+			mealsStore.meals = [newMeal, ...mealsStore.meals];
 			formMessage.value = {
 				level: "success",
 				message: `Le repas "${newMeal.name}" a été ajouté`

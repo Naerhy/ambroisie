@@ -4,6 +4,9 @@
 	import { ref } from "vue";
 	import { FormMessage } from "../types";
 	import Form from "../components/Form.vue";
+	import { useAdminStore } from "../stores";
+
+	const adminStore = useAdminStore();
 
 	const password = ref<string>("");
 	const formMessage = ref<FormMessage>(null);
@@ -15,7 +18,7 @@
 				{ password: password.value }
 			);
 			sessionStorage.setItem("accessToken", data.accessToken);
-			// updateIsAdmin(true);
+			adminStore.isAdmin = true;
 		} catch (error: unknown) {
 			formMessage.value = { level: "error", message: getErrorMessage(error) };
 		}

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-	import { inject, ref } from "vue";
-	import { FormMessage, MealsProvider } from "../types";
-	import { getErrorMessage, mealsKey, requestsBaseUrl } from "../constants";
+	import { ref } from "vue";
+	import { FormMessage } from "../types";
+	import { getErrorMessage, requestsBaseUrl } from "../constants";
 	import { Meal } from "../types";
 	import axios from "axios";
 	import Form from "./Form.vue";
+	import { useMealsStore } from "../stores";
 
 	const selectedMeal = ref<Meal | null>(null);
 	const formMessage = ref<FormMessage>(null);
 
-	const { meals, deleteMeal } = inject(mealsKey) as MealsProvider;
+	const mealsStore = useMealsStore();
 
 	async function handleSubmit(): Promise<void> {
 		if (selectedMeal.value !== null) {
@@ -20,7 +21,7 @@
 					requestsBaseUrl + `/meals/${id}`,
 					{ headers: { "Authorization": `Bearer ${accessToken}` }}
 				);
-				deleteMeal(id);
+				mealsStore.meals = mealsStore.meals.filter((meal) => meal.id !== id);
 				formMessage.value = {
 					level: "success",
 					message: `Le repas "${selectedMeal.value.name}" a été supprimé`
@@ -38,7 +39,7 @@
 		<div class="flex-col">
 			<label class="bold" for="meal">Sélectionnez le repas à supprimer</label>
 			<select id="meal" v-model="selectedMeal" class="select">
-				<option v-for="meal in meals.data" :value="meal">{{ meal.name }}</option>
+				<option v-for="meal in mealsStore.meals" :value="meal">{{ meal.name }}</option>
 			</select>
 		</div>
 	</Form>
