@@ -1,8 +1,8 @@
 <template>
 	<main>
 		<section>
-			<img src="/404.svg" width="500px" alt="Illustration erreur 404" />
-			<h1>Page introuvable !</h1>
+			<img src="/404.svg" alt="Erreur 404" />
+			<h2>Page introuvable !</h2>
 			<p>Assurez-vous d'avoir entré la bonne adresse web.</p>
 			<router-link to="/">Retourner à l'accueil</router-link>
 		</section>
@@ -22,7 +22,12 @@
 		text-align: center;
 	}
 
-	h1 {
+	img {
+		margin-bottom: 2rem;
+		width: 500px;
+	}
+
+	h2 {
 		font-size: 2.25rem;
 		line-height: 2.5rem;
 	}
