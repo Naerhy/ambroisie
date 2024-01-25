@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { ref } from 'vue';
+	import { ref } from "vue";
 	import ModifyMeal from "./ModifyMeal.vue";
 	import DeleteMeal from "./DeleteMeal.vue";
 	import AddMeal from "./AddMeal.vue";
-	import { capitalize } from '../constants';
+	import { capitalize } from "../constants";
 
 	type View = "add" | "modify" | "delete";
 
@@ -27,7 +27,9 @@
 				class="btn-text"
 				:class="{ selected: view === v }"
 				@click="view = v"
-			>{{ capitalize(viewsFR[i]) }}</button>
+			>
+				{{ capitalize(viewsFR[i]) }}
+			</button>
 		</nav>
 		<section>
 			<h2>{{ titles[view] }}</h2>

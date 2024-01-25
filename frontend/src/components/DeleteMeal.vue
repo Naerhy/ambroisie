@@ -17,10 +17,9 @@
 			try {
 				const accessToken = sessionStorage.getItem("accessToken");
 				const id = selectedMeal.value.id;
-				await axios.delete(
-					requestsBaseUrl + `/meals/${id}`,
-					{ headers: { "Authorization": `Bearer ${accessToken}` }}
-				);
+				await axios.delete(`${requestsBaseUrl}/meals/${id}`, {
+					headers: { Authorization: `Bearer ${accessToken}` }
+				});
 				mealsStore.meals = mealsStore.meals.filter((meal) => meal.id !== id);
 				formMessage.value = {
 					level: "success",

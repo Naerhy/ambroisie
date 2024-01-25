@@ -28,11 +28,8 @@ export class MealsController {
 
 	@UseGuards(AuthGuard)
 	@Put(":id")
-	async update(
-		@Param("id", ParseIntPipe) id: number,
-		@Body() updateMealDto: UpdateMealDto
-	): Promise<Meal> {
-		if (await this.mealsService.findOne(id) === null) {
+	async update(@Param("id", ParseIntPipe) id: number, @Body() updateMealDto: UpdateMealDto): Promise<Meal> {
+		if ((await this.mealsService.findOne(id)) === null) {
 			throw new BadRequestException("id is invalid");
 		} else if (Object.keys(updateMealDto).length === 0) {
 			throw new BadRequestException("update meal cannot be empty");

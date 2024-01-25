@@ -11,11 +11,11 @@
 	const visibleMeals = computed<boolean[]>(() => {
 		return mealsStore.meals.map((meal) => {
 			return (
-				meal.name.toLowerCase().includes(props.filters.name)
-				&& meal.types.some((type) => props.filters.types.includes(type))
-				&& props.filters.difficulties.includes(meal.difficulty)
-				&& props.filters.cookingTimes.includes(meal.cookingTime)
-				&& (!props.filters.vegetarian || meal.isVegetarian)
+				meal.name.toLowerCase().includes(props.filters.name) &&
+				meal.types.some((type) => props.filters.types.includes(type)) &&
+				props.filters.difficulties.includes(meal.difficulty) &&
+				props.filters.cookingTimes.includes(meal.cookingTime) &&
+				(!props.filters.vegetarian || meal.isVegetarian)
 			);
 		});
 	});

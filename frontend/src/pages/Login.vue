@@ -15,10 +15,9 @@
 
 	async function handleSubmit(): Promise<void> {
 		try {
-			const { data } = await axios.post<{ accessToken: string }>(
-				`${requestsBaseUrl}/auth`,
-				{ password: password.value }
-			);
+			const { data } = await axios.post<{ accessToken: string }>(`${requestsBaseUrl}/auth`, {
+				password: password.value
+			});
 			sessionStorage.setItem("accessToken", data.accessToken);
 			adminStore.isAdmin = true;
 			router.push({ path: "/" });

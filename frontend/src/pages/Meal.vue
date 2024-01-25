@@ -15,13 +15,13 @@
 	const id = parseInt(route.params.id as string);
 
 	const meal = computed(() => {
-		if (isNaN(id)) { return null; }
+		if (isNaN(id)) return null;
 		return mealsStore.meals.find((meal) => meal.id === id) ?? null;
 	});
 
 	const infos = computed<Infos[]>(() => {
 		const m = meal.value;
-		if (m === null) { return []; }
+		if (m === null) return [];
 		return [
 			{ title: "Types", value: m.types.map((type) => capitalize(types[type - 1])).join(" | ") },
 			{ title: "Difficulté", value: capitalize(difficulties[m.difficulty - 1]) },
@@ -55,7 +55,9 @@
 			<div class="directions">
 				<h3>Préparation</h3>
 				<p v-if="!meal.isRecipe">Ce repas n'est pas une recette, aucune étape de preparation à afficher.</p>
-				<p v-else-if="meal.directions.length === 0">Aucune étape de préparation n'a été ajoutée à la recette.</p>
+				<p v-else-if="meal.directions.length === 0">
+					Aucune étape de préparation n'a été ajoutée à la recette.
+				</p>
 				<ol v-else>
 					<li v-for="direction in meal.directions.split('\n')">{{ direction }}</li>
 				</ol>

@@ -8,7 +8,7 @@
 	<div>
 		<h3>Oups !</h3>
 		<p>
-			Une erreur s'est malheusement produite....<br>
+			Une erreur s'est malheusement produite....<br />
 			Essayez de recharger la page, ou attendez que le problème soit résolu.
 		</p>
 		<button type="button" class="btn-contained" @click="handleClick()">Recharger</button>

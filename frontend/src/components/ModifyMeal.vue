@@ -31,11 +31,9 @@
 			try {
 				const accessToken = sessionStorage.getItem("accessToken");
 				const id = selectedMeal.value.id;
-				const { data: updatedMeal } = await axios.put<Meal>(
-					requestsBaseUrl + `/meals/${id}`,
-					inputs.value,
-					{ headers: { "Authorization": `Bearer ${accessToken}` }}
-				);
+				const { data: updatedMeal } = await axios.put<Meal>(`${requestsBaseUrl}/meals/${id}`, inputs.value, {
+					headers: { Authorization: `Bearer ${accessToken}` }
+				});
 				modifyMeal(updatedMeal);
 				formMessage.value = {
 					level: "success",
@@ -50,7 +48,7 @@
 
 	function modifyMeal(meal: Meal): void {
 		const id = mealsStore.meals.findIndex((m) => m.id === meal.id);
-		if (id !== -1) { mealsStore.meals[id] = meal; }
+		if (id !== -1) mealsStore.meals[id] = meal;
 	}
 </script>
 
@@ -62,6 +60,10 @@
 				<option v-for="meal in mealsStore.meals" :value="meal">{{ meal.name }}</option>
 			</select>
 		</div>
-		<MealInputs v-else :base-inputs="{ ...selectedMeal, imageBase64: '' }" @inputs-change="(newInputs) => inputs = newInputs" />
+		<MealInputs
+			v-else
+			:base-inputs="{ ...selectedMeal, imageBase64: '' }"
+			@inputs-change="(newInputs) => (inputs = newInputs)"
+		/>
 	</Form>
 </template>

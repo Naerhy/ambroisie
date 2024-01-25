@@ -28,11 +28,9 @@
 	async function handleSubmit(): Promise<void> {
 		try {
 			const accessToken = sessionStorage.getItem("accessToken");
-			const { data: newMeal } = await axios.post<Meal>(
-				requestsBaseUrl + "/meals",
-				inputs.value,
-				{ headers: { "Authorization": `Bearer ${accessToken}` }}
-			);
+			const { data: newMeal } = await axios.post<Meal>(`${requestsBaseUrl}/meals`, inputs.value, {
+				headers: { Authorization: `Bearer ${accessToken}` }
+			});
 			mealsStore.meals = [newMeal, ...mealsStore.meals];
 			formMessage.value = {
 				level: "success",
@@ -46,6 +44,6 @@
 
 <template>
 	<Form @submit.prevent="handleSubmit()" btn-text="Ajouter" :form-message="formMessage">
-		<MealInputs :base-inputs="baseInputs" @inputs-change="(newInputs) => inputs = newInputs" />
+		<MealInputs :base-inputs="baseInputs" @inputs-change="(newInputs) => (inputs = newInputs)" />
 	</Form>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { reactive, watch } from 'vue';
-	import { Filters } from '../types';
+	import { reactive, watch } from "vue";
+	import { Filters } from "../types";
 	import { types, difficulties, cookingTimes, capitalize } from "../constants";
 
 	const props = defineProps<{ baseFilters: Filters }>();
@@ -20,36 +20,21 @@
 		<div>
 			<div class="bold">Type</div>
 			<div v-for="n in 4" :key="n">
-				<input
-					type="checkbox"
-					:id="`type-${n}`"
-					:value="n"
-					v-model="filters.types"
-				/>
+				<input type="checkbox" :id="`type-${n}`" :value="n" v-model="filters.types" />
 				<label :for="`type-${n}`">{{ capitalize(types[n - 1]) }}</label>
 			</div>
 		</div>
 		<div>
 			<div class="bold">Difficulté</div>
 			<div v-for="n in 3" :key="n">
-				<input
-					type="checkbox"
-					:id="`difficulty-${n}`"
-					:value="n"
-					v-model="filters.difficulties"
-				/>
+				<input type="checkbox" :id="`difficulty-${n}`" :value="n" v-model="filters.difficulties" />
 				<label :for="`difficulty-${n}`">{{ capitalize(difficulties[n - 1]) }}</label>
 			</div>
 		</div>
 		<div>
 			<div class="bold">Temps de préparation</div>
 			<div v-for="n in 4" :key="n">
-				<input
-					type="checkbox"
-					:id="`cooking-time-${n}`"
-					:value="n"
-					v-model="filters.cookingTimes" 
-				/>
+				<input type="checkbox" :id="`cooking-time-${n}`" :value="n" v-model="filters.cookingTimes" />
 				<label :for="`cooking-time-${n}`">{{ capitalize(cookingTimes[n - 1]) }}</label>
 			</div>
 		</div>

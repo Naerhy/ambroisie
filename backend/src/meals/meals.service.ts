@@ -6,9 +6,7 @@ import { AddMealDto, UpdateMealDto } from "src/dto";
 
 @Injectable()
 export class MealsService {
-	constructor(
-		@InjectRepository(Meal) private mealsRepository: Repository<Meal>
-	) {}
+	constructor(@InjectRepository(Meal) private mealsRepository: Repository<Meal>) {}
 
 	add(addMealDto: AddMealDto): Promise<Meal> {
 		const newMeal = this.mealsRepository.create(addMealDto);
@@ -28,7 +26,7 @@ export class MealsService {
 	}
 
 	findOne(id: number): Promise<Meal | null> {
-		return this.mealsRepository.findOneBy({ id })
+		return this.mealsRepository.findOneBy({ id });
 	}
 
 	findAll(): Promise<Meal[]> {

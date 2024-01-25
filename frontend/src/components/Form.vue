@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { FormMessage } from '../types';
+	import { FormMessage } from "../types";
 
 	// @ts-ignore
 	const props = defineProps<{ btnText: string; formMessage: FormMessage }>();
@@ -20,14 +20,15 @@
 		row-gap: 1rem;
 	}
 
-	.success, .error {
+	.success,
+	.error {
 		padding: 0.5rem;
 	}
 
 	.success {
 		background-color: #dcfff1;
 		border: 1px solid #22a06b;
-	}	
+	}
 
 	.error {
 		background-color: #ffeceb;

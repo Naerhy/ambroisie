@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { reactive, watch } from 'vue';
-	import { Inputs } from '../types';
-	import { capitalize, cookingTimes, difficulties, types } from '../constants';
+	import { reactive, watch } from "vue";
+	import { Inputs } from "../types";
+	import { capitalize, cookingTimes, difficulties, types } from "../constants";
 
 	const props = defineProps<{ baseInputs: Inputs }>();
 
@@ -71,11 +71,23 @@
 	</div>
 	<div v-if="inputs.isRecipe" class="flex-col">
 		<label for="ingredients" class="bold">Ingrédients</label>
-		<textarea id="ingredients" class="input" v-model="inputs.ingredients" :disabled="!inputs.isRecipe" rows="6"></textarea>
+		<textarea
+			id="ingredients"
+			class="input"
+			v-model="inputs.ingredients"
+			:disabled="!inputs.isRecipe"
+			rows="6"
+		></textarea>
 	</div>
 	<div v-if="inputs.isRecipe" class="flex-col">
 		<label for="directions" class="bold">Préparation</label>
-		<textarea id="directions" class="input" v-model="inputs.directions" :disabled="!inputs.isRecipe" rows="6"></textarea>
+		<textarea
+			id="directions"
+			class="input"
+			v-model="inputs.directions"
+			:disabled="!inputs.isRecipe"
+			rows="6"
+		></textarea>
 	</div>
 	<div class="flex-col">
 		<label for="image" class="bold">Image</label>
@@ -84,7 +96,7 @@
 </template>
 
 <style scoped>
-	input[type=checkbox] + label {
+	input[type="checkbox"] + label {
 		margin-left: 0.3rem;
 	}
 

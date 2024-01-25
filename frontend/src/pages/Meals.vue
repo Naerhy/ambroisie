@@ -17,10 +17,7 @@
 
 <template>
 	<main>
-		<MealsFilters
-			:base-filters="baseFilters"
-			@filters-change="(newFilters) => filters = newFilters"
-		/>
+		<MealsFilters :base-filters="baseFilters" @filters-change="(newFilters) => (filters = newFilters)" />
 		<MealsList :filters="filters" />
 	</main>
 </template>

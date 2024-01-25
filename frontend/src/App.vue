@@ -61,7 +61,13 @@
 		flex: 1 1 auto;
 	}
 
-	h1, h2, h3, h4, h5, h6, .bold {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	.bold {
 		font-weight: 700;
 	}
 
@@ -70,7 +76,8 @@
 		flex-direction: column;
 	}
 
-	.input, .select {
+	.input,
+	.select {
 		border: 1px solid var(--stroke);
 		border-radius: 0.375rem;
 		padding: 0.25rem 0.5rem;
@@ -88,7 +95,8 @@
 		outline: 2px solid var(--highlight);
 	}
 
-	.btn-contained, .btn-text {
+	.btn-contained,
+	.btn-text {
 		border-radius: 0.25rem;
 		padding: 0.5rem 0.8rem;
 	}

@@ -5,7 +5,7 @@ import { Meal } from "./meals/meal.entity";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from "./auth/auth.module";
 import { APP_GUARD } from "@nestjs/core";
 
 @Module({
