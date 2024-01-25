@@ -5,8 +5,10 @@
 	import { FormMessage } from "../types";
 	import Form from "../components/Form.vue";
 	import { useAdminStore } from "../stores";
+	import { useRouter } from "vue-router";
 
 	const adminStore = useAdminStore();
+	const router = useRouter();
 
 	const password = ref<string>("");
 	const formMessage = ref<FormMessage>(null);
@@ -19,6 +21,7 @@
 			);
 			sessionStorage.setItem("accessToken", data.accessToken);
 			adminStore.isAdmin = true;
+			router.push({ path: "/" });
 		} catch (error: unknown) {
 			formMessage.value = { level: "error", message: getErrorMessage(error) };
 		}
