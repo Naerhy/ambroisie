@@ -1,8 +1,8 @@
 <template>
 	<footer>
-		<q cite="https://en.wikipedia.org/wiki/Joaquin_Phoenix">
-			It takes nothing away from a human to be kind to an animal.
-		</q>
+		<p>
+			L'ambroisie est une substance divine de la mythologie grecque, nourriture délicieuse des dieux qui leur assure avec le nectar leur immortalité.
+		</p>
 		<div class="links">
 			<a href="https://github.com/Naerhy" target="_blank">
 				<svg
@@ -53,7 +53,7 @@
 		row-gap: 0.5rem;
 	}
 
-	q {
+	p {
 		color: #bdbdbd;
 		font-size: 0.875rem;
 		font-style: italic;

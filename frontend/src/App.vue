@@ -47,7 +47,7 @@
 		--text-highlight: #f5f5f5;
 		background-color: var(--background);
 		color: var(--text-default);
-		font-family: "Inter Variable", Arial;
+		font-family: sans-serif, Arial;
 	}
 
 	#app {
@@ -71,9 +71,24 @@
 		font-weight: 700;
 	}
 
-	.flex-col {
+	.bdr {
+		border: 1px solid var(--stroke);
+		border-radius: 0.25rem;
+	}
+
+	.link {
+		color: var(--highlight);
+		text-decoration: underline;
+	}
+
+	.link:hover {
+		color: var(--highlight-dark);
+	}
+
+	.form-field {
 		display: flex;
 		flex-direction: column;
+		row-gap: 0.25rem;
 	}
 
 	.input,
@@ -112,5 +127,24 @@
 
 	.btn-text:hover {
 		background-color: var(--background-dark);
+	}
+
+	@supports (font-variation-settings: normal) {
+		html {
+			font-family: "Inter Variable", sans-serif, Arial;
+			font-variation-settings: "wght" 400;
+			font-weight: 400;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		.bold {
+			font-variation-settings: "wght" 700;
+			font-weight: 700;
+		}
 	}
 </style>

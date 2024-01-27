@@ -15,7 +15,7 @@
 </script>
 
 <template>
-	<aside>
+	<aside class="bdr">
 		<input type="text" class="input" v-model="filters.name" placeholder="Filtrer par nom" />
 		<div>
 			<div class="bold">Type</div>
@@ -50,8 +50,6 @@
 
 <style scoped>
 	aside {
-		border: 1px solid var(--stroke);
-		border-radius: 0.25rem;
 		display: flex;
 		flex-direction: column;
 		padding: 1rem;

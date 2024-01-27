@@ -44,6 +44,6 @@
 	ul {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(5, minmax(150px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	}
 </style>

@@ -27,6 +27,6 @@
 		align-items: flex-start;
 		column-gap: 2rem;
 		display: flex;
-		margin: 0rem 2rem;
+		margin: 0 2rem;
 	}
 </style>

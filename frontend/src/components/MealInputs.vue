@@ -32,7 +32,7 @@
 </script>
 
 <template>
-	<div class="flex-col">
+	<div class="form-field">
 		<label for="name" class="bold">Nom</label>
 		<input type="text" id="name" class="input" v-model="inputs.name" required />
 	</div>
@@ -47,13 +47,13 @@
 			<label :for="`type-${i}`">{{ capitalize(types[i - 1]) }}</label>
 		</div>
 	</div>
-	<div class="flex-col">
+	<div class="form-field">
 		<label for="difficulty" class="bold">Difficulté</label>
 		<select id="difficulty" class="select" v-model="inputs.difficulty">
 			<option v-for="i in 3" :value="i">{{ capitalize(difficulties[i - 1]) }}</option>
 		</select>
 	</div>
-	<div class="flex-col">
+	<div class="form-field">
 		<label for="cooking-time" class="bold">Temps de préparation</label>
 		<select id="cooking-time" class="select" v-model="inputs.cookingTime">
 			<option v-for="i in 4" :value="i">{{ capitalize(cookingTimes[i - 1]) }}</option>
@@ -63,13 +63,13 @@
 		<input type="checkbox" id="is-vegetarian" v-model="inputs.isVegetarian" />
 		<label for="is-vegetarian">Cochez si le repas convient aux végétariens</label>
 	</div>
-	<div v-if="inputs.isRecipe" class="flex-col">
+	<div v-if="inputs.isRecipe" class="form-field">
 		<label for="servings" class="bold">Nombre de parts</label>
 		<select id="servings" class="select" v-model="inputs.servings">
 			<option v-for="i in 13" :value="i - 1">{{ i - 1 }}</option>
 		</select>
 	</div>
-	<div v-if="inputs.isRecipe" class="flex-col">
+	<div v-if="inputs.isRecipe" class="form-field">
 		<label for="ingredients" class="bold">Ingrédients</label>
 		<textarea
 			id="ingredients"
@@ -79,7 +79,7 @@
 			rows="6"
 		></textarea>
 	</div>
-	<div v-if="inputs.isRecipe" class="flex-col">
+	<div v-if="inputs.isRecipe" class="form-field">
 		<label for="directions" class="bold">Préparation</label>
 		<textarea
 			id="directions"
@@ -89,7 +89,7 @@
 			rows="6"
 		></textarea>
 	</div>
-	<div class="flex-col">
+	<div class="form-field">
 		<label for="image" class="bold">Image</label>
 		<input type="file" id="image" accept="image/png,image/jpeg" @change="handleFileChange" required />
 	</div>

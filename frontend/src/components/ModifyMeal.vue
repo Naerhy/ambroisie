@@ -54,8 +54,8 @@
 
 <template>
 	<Form @submit.prevent="handleSubmit()" btn-text="Modifier" :form-message="formMessage">
-		<div v-if="selectedMeal === null" class="flex-col">
-			<label class="bold" for="meal">Sélectionnez le repas à modifier</label>
+		<div v-if="selectedMeal === null" class="form-field">
+			<label for="meal" class="bold">Sélectionnez le repas à modifier</label>
 			<select id="meal" v-model="selectedMeal" class="select">
 				<option v-for="meal in mealsStore.meals" :value="meal">{{ meal.name }}</option>
 			</select>

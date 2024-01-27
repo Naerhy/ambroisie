@@ -35,8 +35,8 @@
 
 <template>
 	<Form @submit.prevent="handleSubmit()" btn-text="Supprimer" :form-message="formMessage">
-		<div class="flex-col">
-			<label class="bold" for="meal">Sélectionnez le repas à supprimer</label>
+		<div class="form-field">
+			<label for="meal" class="bold">Sélectionnez le repas à supprimer</label>
 			<select id="meal" v-model="selectedMeal" class="select">
 				<option v-for="meal in mealsStore.meals" :value="meal">{{ meal.name }}</option>
 			</select>
