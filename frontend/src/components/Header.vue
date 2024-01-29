@@ -33,13 +33,12 @@
 		border-bottom: 1px solid var(--stroke);
 		display: flex;
 		justify-content: space-between;
-		padding: 0.5rem 2rem;
+		padding: 0 2rem;
 	}
 
 	h1 {
 		color: var(--highlight);
-		font-size: 3.75rem;
-		line-height: 1;
+		font-size: 2.25rem;
 	}
 
 	nav {

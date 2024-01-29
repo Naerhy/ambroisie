@@ -54,11 +54,13 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
-		row-gap: 2rem;
+		margin: auto;
+		max-width: 80rem;
 	}
 
 	main {
 		flex: 1 1 auto;
+		padding: 2rem;
 	}
 
 	h1,

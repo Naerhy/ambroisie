@@ -29,8 +29,9 @@
 
 <template>
 	<main>
-		<section class="bdr">
+		<section>
 			<h2>Se connecter</h2>
+			<p>Connectez-vous en tant qu'administrateur afin de pouvoir ajouter, modifier et supprimer les repas affichés sur le site.</p>
 			<Form @submit.prevent="handleSubmit" btn-text="Connexion" :form-message="formMessage">
 				<div class="form-field">
 					<label for="password" class="bold">Mot de passe</label>
@@ -43,22 +44,15 @@
 
 <style scoped>
 	section {
-		margin: 0 auto;
-		padding: 1.5rem;
-		width: 500px;
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+		max-width: 24rem;
+		row-gap: 1rem;
 	}
 
 	h2 {
-		font-size: 1.5rem;
-		line-height: 2rem;
-		margin-bottom: 1rem;
+		font-size: 2.25rem;
 		text-align: center;
-	}
-
-	@media screen and (max-width: 500px) {
-		section {
-			border: none;
-			width: 100%;
-		}
 	}
 </style>

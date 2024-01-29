@@ -10,24 +10,17 @@
 </template>
 
 <style scoped>
-	main {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-	}
-
 	section {
-		padding: 2rem;
+		margin: auto;
+		max-width: 48rem;
 		text-align: center;
 	}
 
 	img {
 		margin-bottom: 2rem;
-		width: 500px;
 	}
 
 	h2 {
 		font-size: 2.25rem;
-		line-height: 2.5rem;
 	}
 </style>

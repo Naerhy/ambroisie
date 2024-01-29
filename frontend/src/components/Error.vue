@@ -27,7 +27,6 @@
 
 	h2 {
 		font-size: 2.25rem;
-		line-height: 2.5rem;
 		text-align: center;
 	}
 </style>

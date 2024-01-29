@@ -7,7 +7,7 @@
 	const imgSrc = ref<string>(props.meal.imageBase64);
 
 	function handleError(): void {
-		imgSrc.value = new URL("../../assets/no-image.png", import.meta.url).href;
+		imgSrc.value = new URL("../../public/no-image.png", import.meta.url).href;
 	}
 </script>
 
@@ -23,7 +23,6 @@
 <style scoped>
 	li {
 		border: 1px solid var(--stroke);
-		cursor: pointer;
 	}
 
 	img {

@@ -19,18 +19,12 @@
 		display: flex;
 		flex-direction: column;
 		margin: auto;
-		max-width: 800px;
-		padding: 0 1.5rem;
+		max-width: 48rem;
 		row-gap: 1rem;
 	}
 
 	h2 {
 		font-size: 2.25rem;
-		line-height: 2.5rem;
 		text-align: center;
-	}
-
-	img {
-		width: 600px;
 	}
 </style>

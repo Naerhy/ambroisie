@@ -25,8 +25,7 @@
 <style scoped>
 	main {
 		align-items: flex-start;
-		column-gap: 2rem;
+		column-gap: 1rem;
 		display: flex;
-		margin: 0 2rem;
 	}
 </style>
