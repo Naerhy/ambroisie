@@ -1,21 +1,19 @@
 <script setup lang="ts">
 	import { computed } from "vue";
-	import type { Filters } from "../types";
 	import MealCard from "./MealCard.vue";
-	import { useMealsStore } from "../stores";
-
-	const props = defineProps<{ filters: Filters }>();
+	import { useFiltersStore, useMealsStore } from "../stores";
 
 	const mealsStore = useMealsStore();
+	const filtersStore = useFiltersStore();
 
 	const visibleMeals = computed<boolean[]>(() => {
 		return mealsStore.meals.map((meal) => {
 			return (
-				meal.name.toLowerCase().includes(props.filters.name) &&
-				meal.types.some((type) => props.filters.types.includes(type)) &&
-				props.filters.difficulties.includes(meal.difficulty) &&
-				props.filters.cookingTimes.includes(meal.cookingTime) &&
-				(!props.filters.vegetarian || meal.isVegetarian)
+				meal.name.toLowerCase().includes(filtersStore.filters.name) &&
+				meal.types.some((type) => filtersStore.filters.types.includes(type)) &&
+				filtersStore.filters.difficulties.includes(meal.difficulty) &&
+				filtersStore.filters.cookingTimes.includes(meal.cookingTime) &&
+				(!filtersStore.filters.vegetarian || meal.isVegetarian)
 			);
 		});
 	});
